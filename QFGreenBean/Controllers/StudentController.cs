@@ -7,12 +7,16 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using QFGreenBean.Models;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace QFGreenBean.Controllers
 {
     public class StudentController : Controller
     {
         private PlannerDbEntities db = new PlannerDbEntities();
+        public static Boolean IsLoggedIn { get; set; } = false;
+        public static int? LoggedInStudentID { get; private set; }
 
         // GET: Student
         public ActionResult Index()
@@ -115,6 +119,51 @@ namespace QFGreenBean.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: /Student/Login
+        [AllowAnonymous]
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        // POST: /Student/Login
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(Student student)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = db.Students.Where(model => (model.StudentNumber == student.StudentNumber) && (model.Password == student.Password)).FirstOrDefault();
+                Student s = (Student)user;
+                if (user != null)
+                {
+                    Session["StudentID"] = s.StudentId.ToString();
+                    LoggedInStudentID = Convert.ToInt32(Session["StudentID"].ToString());
+                    Session["StudentNumber"] = s.StudentNumber.ToString();
+                    IsLoggedIn = true;
+                }
+                else
+                {
+                    return RedirectToAction("FailLogin");
+                }
+            }
+
+            return RedirectToAction("Index", "");
+        }
+
+        //
+        // POST: /Student/LogOff
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOff()
+        {
+            Session["StudentID"] = "";
+            LoggedInStudentID = null;
+            Session["StudentNumber"] = "";
+            IsLoggedIn = false;
+            return RedirectToAction("Index", "Home");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -123,5 +172,6 @@ namespace QFGreenBean.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

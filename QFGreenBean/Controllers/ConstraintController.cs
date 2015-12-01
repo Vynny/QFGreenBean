@@ -16,21 +16,31 @@ namespace QFGreenBean.Controllers
         // GET: Constraint
         public ActionResult Index()
         {
-            return View();
+            //int studentID = -1;
+            //Int32.TryParse(Session["StudentID"].ToString(), out studentID)
+            if (StudentController.IsLoggedIn)
+            {
+                int? studentID = StudentController.LoggedInStudentID;
+                var constraints = listDB.Students.Find(studentID).StudentConstraints.ToList();
+                ViewBag.StudentNumber = listDB.Students.Find(studentID).StudentNumber.ToString();
+                return View(constraints);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Student");
+            }
+
         }
 
 
-        // GET: Constraint
-        public ActionResult Add()
-        {
-            return View();
-        }
 
         // POST: Constraint/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SubmitConstraint([Bind(Include = "Day,StartHour,EndHour,StartMinute,EndMinute")] StudentConstraint constraint)
         {
+            int? id = StudentController.LoggedInStudentID;
+            Student s = listDB.Students.Find(id);
 
             int start = Convert.ToInt32(constraint.StartHour + constraint.StartMinute);
             int end = Convert.ToInt32(constraint.EndHour + constraint.EndMinute);
@@ -41,11 +51,12 @@ namespace QFGreenBean.Controllers
 
             if (ModelState.IsValid)
             {
-                listDB.StudentConstraints.Add(constraint);
+                s.StudentConstraints.Add(constraint);
+                //listDB.StudentConstraints.Add(constraint);
                 listDB.SaveChanges();
             }
 
-            return RedirectToAction("ViewConstraints");
+            return RedirectToAction("Index");
         }
 
         // POST: Constraint/Delete
@@ -57,7 +68,7 @@ namespace QFGreenBean.Controllers
             listDB.StudentConstraints.Remove(c);
             listDB.SaveChanges();
 
-            return RedirectToAction("ViewConstraints");
+            return RedirectToAction("Index");
         }
 
         public string TestConstraint(StudentConstraint c)
@@ -70,11 +81,6 @@ namespace QFGreenBean.Controllers
             return s;
         }
 
-        // GET: Constraint
-        public ActionResult ViewConstraints()
-        {
-            return View(listDB.StudentConstraints.ToList());
-        }
 
     }
 }
