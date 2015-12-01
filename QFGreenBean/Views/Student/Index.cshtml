@@ -3,8 +3,85 @@
 @{
     ViewBag.Title = "Index";
 }
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+<h2>Student Record</h2>
 
-<h2>Index</h2>
+<table style="width:100%">
+    <tr>
+        <td>First name: </td>
+        <td>Last name: </td>
+    </tr>
+    <tr>
+        <td>Telephone</td>
+        <td>Email</td>
+
+    </tr>
+
+</table>
+
+@foreach (var item in Model)
+{
+    <!--<option value="@Html.DisplayFor(modelItem => item.StudentId)"> @Html.DisplayFor(modelItem => item.StudentId)</option>-->
+}
+</br>
+
+
+<div id="showStudentRecord">
+
+    <label>Course Taking</label>
+    <table style="width:100%">
+        <th>
+        <td>Course Code</td>
+        <td>Course Name</td>
+        <td>Unit</td>
+        </th>
+@foreach (var item in Model)
+{
+    
+        <tr>
+
+            <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => item.StudentId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.StudentId)</td>
+
+        </tr>
+}
+    </table>
+    </br>
+    <label>Course Taken</label>
+    <table style="width:100%">
+        <th>
+        <td>Course Code</td>
+        <td>Course Name</td>
+        <td>Unit</td>
+        </th>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@Html.DisplayFor(modelItem => item.StudentId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.StudentId)</td>
+                     <td>@Html.DisplayFor(modelItem => item.StudentId)</td>
+
+            </tr>
+        }
+    </table>
+
+
+
+
+
+    test
+    <p>@ViewBag.getStudentId</p>
+
+</div>
+
 
 <p>
     @Html.ActionLink("Create New", "Create")
