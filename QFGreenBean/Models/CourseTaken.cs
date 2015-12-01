@@ -12,13 +12,13 @@ namespace QFGreenBean.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class IsEnrollingIn
+    public partial class CourseTaken
     {
-        public int IsEnrollingInId { get; set; }
-        public Nullable<int> StudentRecordId { get; set; }
+        public int CourseTakenId { get; set; }
+        public Nullable<int> StudentId { get; set; }
         public Nullable<int> SectionId { get; set; }
     
-        public virtual StudentRecord StudentRecord { get; set; }
         public virtual Section Section { get; set; }
+        public virtual Student Student { get; set; }
     }
 }

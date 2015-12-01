@@ -93,6 +93,14 @@
           <Property Name="Description" Type="varchar" MaxLength="1000" />
           <Property Name="DepartmentId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="CourseTaken">
+          <Key>
+            <PropertyRef Name="CourseTakenId" />
+          </Key>
+          <Property Name="CourseTakenId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" />
+          <Property Name="SectionId" Type="int" />
+        </EntityType>
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentId" />
@@ -152,15 +160,6 @@
             <PropertyRef Name="IsEnrolledId" />
           </Key>
           <Property Name="IsEnrolledId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StudentRecordId" Type="int" />
-          <Property Name="SectionId" Type="int" />
-        </EntityType>
-        <EntityType Name="IsEnrollingIn">
-          <Key>
-            <PropertyRef Name="IsEnrollingInId" />
-          </Key>
-          <Property Name="IsEnrollingInId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StudentRecordId" Type="int" />
           <Property Name="SectionId" Type="int" />
         </EntityType>
         <EntityType Name="IsScheduledIn">
@@ -239,10 +238,10 @@
         </EntityType>
         <EntityType Name="StudentRecord">
           <Key>
-            <PropertyRef Name="StudentRecordId" />
+            <PropertyRef Name="StudentId" />
           </Key>
-          <Property Name="StudentRecordId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StudentId" Type="int" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="SectionId" Type="int" />
         </EntityType>
         <EntityType Name="StudentSchedule">
           <Key>
@@ -278,6 +277,30 @@
             </Principal>
             <Dependent Role="Course">
               <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseTaken_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
+          <End Role="CourseTaken" Type="Self.CourseTaken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="CourseTaken">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseTaken_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="CourseTaken" Type="Self.CourseTaken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="CourseTaken">
+              <PropertyRef Name="StudentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -334,54 +357,6 @@
             </Principal>
             <Dependent Role="AspNetUserRoles">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IsEnrolledIn_Section">
-          <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
-          <End Role="IsEnrolledIn" Type="Self.IsEnrolledIn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionId" />
-            </Principal>
-            <Dependent Role="IsEnrolledIn">
-              <PropertyRef Name="SectionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IsEnrolledIn_StudentRecord">
-          <End Role="StudentRecord" Type="Self.StudentRecord" Multiplicity="0..1" />
-          <End Role="IsEnrolledIn" Type="Self.IsEnrolledIn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StudentRecord">
-              <PropertyRef Name="StudentRecordId" />
-            </Principal>
-            <Dependent Role="IsEnrolledIn">
-              <PropertyRef Name="StudentRecordId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IsEnrollingIn_Section">
-          <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
-          <End Role="IsEnrollingIn" Type="Self.IsEnrollingIn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionId" />
-            </Principal>
-            <Dependent Role="IsEnrollingIn">
-              <PropertyRef Name="SectionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IsEnrollingIn_StudentRecord">
-          <End Role="StudentRecord" Type="Self.StudentRecord" Multiplicity="0..1" />
-          <End Role="IsEnrollingIn" Type="Self.IsEnrollingIn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StudentRecord">
-              <PropertyRef Name="StudentRecordId" />
-            </Principal>
-            <Dependent Role="IsEnrollingIn">
-              <PropertyRef Name="StudentRecordId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -445,9 +420,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_StudentRecord_Student">
-          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+        <Association Name="FK_StudentRecord_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
           <End Role="StudentRecord" Type="Self.StudentRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="StudentRecord">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentRecord_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="StudentRecord" Type="Self.StudentRecord" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Student">
               <PropertyRef Name="StudentId" />
@@ -478,13 +465,13 @@
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CourseTaken" EntityType="Self.CourseTaken" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepartmentAvdisor" EntityType="Self.DepartmentAvdisor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepartmentDirector" EntityType="Self.DepartmentDirector" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FallEvent" EntityType="Self.FallEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IsEnrolledIn" EntityType="Self.IsEnrolledIn" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IsEnrollingIn" EntityType="Self.IsEnrollingIn" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IsScheduledIn" EntityType="Self.IsScheduledIn" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProgramOption" EntityType="Self.ProgramOption" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SchoolUser" EntityType="Self.SchoolUser" Schema="dbo" store:Type="Tables" />
@@ -498,6 +485,14 @@
           <AssociationSet Name="FK_Course_Department" Association="Self.FK_Course_Department">
             <End Role="Department" EntitySet="Department" />
             <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseTaken_Section" Association="Self.FK_CourseTaken_Section">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="CourseTaken" EntitySet="CourseTaken" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseTaken_Student" Association="Self.FK_CourseTaken_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="CourseTaken" EntitySet="CourseTaken" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -514,22 +509,6 @@
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IsEnrolledIn_Section" Association="Self.FK_IsEnrolledIn_Section">
-            <End Role="Section" EntitySet="Section" />
-            <End Role="IsEnrolledIn" EntitySet="IsEnrolledIn" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IsEnrolledIn_StudentRecord" Association="Self.FK_IsEnrolledIn_StudentRecord">
-            <End Role="StudentRecord" EntitySet="StudentRecord" />
-            <End Role="IsEnrolledIn" EntitySet="IsEnrolledIn" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IsEnrollingIn_Section" Association="Self.FK_IsEnrollingIn_Section">
-            <End Role="Section" EntitySet="Section" />
-            <End Role="IsEnrollingIn" EntitySet="IsEnrollingIn" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IsEnrollingIn_StudentRecord" Association="Self.FK_IsEnrollingIn_StudentRecord">
-            <End Role="StudentRecord" EntitySet="StudentRecord" />
-            <End Role="IsEnrollingIn" EntitySet="IsEnrollingIn" />
           </AssociationSet>
           <AssociationSet Name="FK_IsScheduledIn_Section" Association="Self.FK_IsScheduledIn_Section">
             <End Role="Section" EntitySet="Section" />
@@ -550,6 +529,10 @@
           <AssociationSet Name="FK_StudentConstraint_Student" Association="Self.FK_StudentConstraint_Student">
             <End Role="Student" EntitySet="Student" />
             <End Role="StudentConstraint" EntitySet="StudentConstraint" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentRecord_Section" Association="Self.FK_StudentRecord_Section">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="StudentRecord" EntitySet="StudentRecord" />
           </AssociationSet>
           <AssociationSet Name="FK_StudentRecord_Student" Association="Self.FK_StudentRecord_Student">
             <End Role="Student" EntitySet="Student" />
@@ -675,23 +658,12 @@
           </AssociationSet>
           <EntitySet Name="Feedbacks" EntityType="PlannerDbModel.Feedback" />
           <EntitySet Name="Departments" EntityType="PlannerDbModel.Department" />
-          <EntitySet Name="StudentRecords" EntityType="PlannerDbModel.StudentRecord" />
-          <EntitySet Name="IsEnrolledIns" EntityType="PlannerDbModel.IsEnrolledIn" />
-          <AssociationSet Name="FK_IsEnrolledIn_StudentRecord" Association="PlannerDbModel.FK_IsEnrolledIn_StudentRecord">
-            <End Role="StudentRecord" EntitySet="StudentRecords" />
-            <End Role="IsEnrolledIn" EntitySet="IsEnrolledIns" />
-          </AssociationSet>
           <EntitySet Name="AccountUsers" EntityType="PlannerDbModel.AccountUser" />
-          <EntitySet Name="IsEnrollingIns" EntityType="PlannerDbModel.IsEnrollingIn" />
           <EntitySet Name="ProgramOptions" EntityType="PlannerDbModel.ProgramOption" />
           <EntitySet Name="SchoolUsers" EntityType="PlannerDbModel.SchoolUser" />
           <AssociationSet Name="FK_ProgramOption_Department" Association="PlannerDbModel.FK_ProgramOption_Department">
             <End Role="Department" EntitySet="Departments" />
             <End Role="ProgramOption" EntitySet="ProgramOptions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IsEnrollingIn_StudentRecord" Association="PlannerDbModel.FK_IsEnrollingIn_StudentRecord">
-            <End Role="StudentRecord" EntitySet="StudentRecords" />
-            <End Role="IsEnrollingIn" EntitySet="IsEnrollingIns" />
           </AssociationSet>
           <EntitySet Name="IsScheduledIns" EntityType="PlannerDbModel.IsScheduledIn" />
           <EntitySet Name="StudentSchedules" EntityType="PlannerDbModel.StudentSchedule" />
@@ -709,14 +681,6 @@
             <End Role="Course" EntitySet="Courses" />
             <End Role="Section" EntitySet="Sections" />
           </AssociationSet>
-          <AssociationSet Name="FK_IsEnrolledIn_Section" Association="PlannerDbModel.FK_IsEnrolledIn_Section">
-            <End Role="Section" EntitySet="Sections" />
-            <End Role="IsEnrolledIn" EntitySet="IsEnrolledIns" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IsEnrollingIn_Section" Association="PlannerDbModel.FK_IsEnrollingIn_Section">
-            <End Role="Section" EntitySet="Sections" />
-            <End Role="IsEnrollingIn" EntitySet="IsEnrollingIns" />
-          </AssociationSet>
           <AssociationSet Name="FK_IsScheduledIn_Section" Association="PlannerDbModel.FK_IsScheduledIn_Section">
             <End Role="Section" EntitySet="Sections" />
             <End Role="IsScheduledIn" EntitySet="IsScheduledIns" />
@@ -724,10 +688,6 @@
           <EntitySet Name="DepartmentAvdisors" EntityType="PlannerDbModel.DepartmentAvdisor" />
           <EntitySet Name="DepartmentDirectors" EntityType="PlannerDbModel.DepartmentDirector" />
           <EntitySet Name="Students" EntityType="PlannerDbModel.Student" />
-          <AssociationSet Name="FK_StudentRecord_Student" Association="PlannerDbModel.FK_StudentRecord_Student">
-            <End Role="Student" EntitySet="Students" />
-            <End Role="StudentRecord" EntitySet="StudentRecords" />
-          </AssociationSet>
           <AssociationSet Name="FK_StudentSchedule_Student" Association="PlannerDbModel.FK_StudentSchedule_Student">
             <End Role="Student" EntitySet="Students" />
             <End Role="StudentSchedule" EntitySet="StudentSchedules" />
@@ -739,6 +699,25 @@
           <AssociationSet Name="FK_StudentConstraint_Student" Association="PlannerDbModel.FK_StudentConstraint_Student">
             <End Role="Student" EntitySet="Students" />
             <End Role="StudentConstraint" EntitySet="StudentConstraints" />
+          </AssociationSet>
+          <EntitySet Name="CourseTakens" EntityType="PlannerDbModel.CourseTaken" />
+          <EntitySet Name="IsEnrolledIns" EntityType="PlannerDbModel.IsEnrolledIn" />
+          <EntitySet Name="StudentRecords" EntityType="PlannerDbModel.StudentRecord" />
+          <AssociationSet Name="FK_CourseTaken_Section" Association="PlannerDbModel.FK_CourseTaken_Section">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="CourseTaken" EntitySet="CourseTakens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseTaken_Student" Association="PlannerDbModel.FK_CourseTaken_Student">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="CourseTaken" EntitySet="CourseTakens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentRecord_Section" Association="PlannerDbModel.FK_StudentRecord_Section">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="StudentRecord" EntitySet="StudentRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentRecord_Student" Association="PlannerDbModel.FK_StudentRecord_Student">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentRecord" EntitySet="StudentRecords" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Feedback">
@@ -760,38 +739,6 @@
           <NavigationProperty Name="ProgramOptions" Relationship="PlannerDbModel.FK_ProgramOption_Department" FromRole="Department" ToRole="ProgramOption" />
           <NavigationProperty Name="Courses" Relationship="PlannerDbModel.FK_Course_Department" FromRole="Department" ToRole="Course" />
         </EntityType>
-        <EntityType Name="StudentRecord">
-          <Key>
-            <PropertyRef Name="StudentRecordId" />
-          </Key>
-          <Property Name="StudentId" Type="Int32" />
-          <Property Name="StudentRecordId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="IsEnrolledIns" Relationship="PlannerDbModel.FK_IsEnrolledIn_StudentRecord" FromRole="StudentRecord" ToRole="IsEnrolledIn" />
-          <NavigationProperty Name="IsEnrollingIns" Relationship="PlannerDbModel.FK_IsEnrollingIn_StudentRecord" FromRole="StudentRecord" ToRole="IsEnrollingIn" />
-          <NavigationProperty Name="Student" Relationship="PlannerDbModel.FK_StudentRecord_Student" FromRole="StudentRecord" ToRole="Student" />
-        </EntityType>
-        <EntityType Name="IsEnrolledIn">
-          <Key>
-            <PropertyRef Name="IsEnrolledId" />
-          </Key>
-          <Property Name="IsEnrolledId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentRecordId" Type="Int32" />
-          <Property Name="SectionId" Type="Int32" />
-          <NavigationProperty Name="StudentRecord" Relationship="PlannerDbModel.FK_IsEnrolledIn_StudentRecord" FromRole="IsEnrolledIn" ToRole="StudentRecord" />
-          <NavigationProperty Name="Section" Relationship="PlannerDbModel.FK_IsEnrolledIn_Section" FromRole="IsEnrolledIn" ToRole="Section" />
-        </EntityType>
-        <Association Name="FK_IsEnrolledIn_StudentRecord">
-          <End Type="PlannerDbModel.StudentRecord" Role="StudentRecord" Multiplicity="0..1" />
-          <End Type="PlannerDbModel.IsEnrolledIn" Role="IsEnrolledIn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StudentRecord">
-              <PropertyRef Name="StudentRecordId" />
-            </Principal>
-            <Dependent Role="IsEnrolledIn">
-              <PropertyRef Name="StudentRecordId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="AccountUser">
           <Key>
             <PropertyRef Name="AccountUserId" />
@@ -805,16 +752,6 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="UserType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="IsEnrollingIn">
-          <Key>
-            <PropertyRef Name="IsEnrollingInId" />
-          </Key>
-          <Property Name="IsEnrollingInId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentRecordId" Type="Int32" />
-          <Property Name="SectionId" Type="Int32" />
-          <NavigationProperty Name="StudentRecord" Relationship="PlannerDbModel.FK_IsEnrollingIn_StudentRecord" FromRole="IsEnrollingIn" ToRole="StudentRecord" />
-          <NavigationProperty Name="Section" Relationship="PlannerDbModel.FK_IsEnrollingIn_Section" FromRole="IsEnrollingIn" ToRole="Section" />
         </EntityType>
         <EntityType Name="ProgramOption">
           <Key>
@@ -848,18 +785,6 @@
             </Principal>
             <Dependent Role="ProgramOption">
               <PropertyRef Name="DepartmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IsEnrollingIn_StudentRecord">
-          <End Type="PlannerDbModel.StudentRecord" Role="StudentRecord" Multiplicity="0..1" />
-          <End Type="PlannerDbModel.IsEnrollingIn" Role="IsEnrollingIn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StudentRecord">
-              <PropertyRef Name="StudentRecordId" />
-            </Principal>
-            <Dependent Role="IsEnrollingIn">
-              <PropertyRef Name="StudentRecordId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -939,9 +864,9 @@
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="CourseId" Type="Int32" />
           <NavigationProperty Name="Course" Relationship="PlannerDbModel.FK_Section_Course" FromRole="Section" ToRole="Course" />
-          <NavigationProperty Name="IsEnrolledIns" Relationship="PlannerDbModel.FK_IsEnrolledIn_Section" FromRole="Section" ToRole="IsEnrolledIn" />
-          <NavigationProperty Name="IsEnrollingIns" Relationship="PlannerDbModel.FK_IsEnrollingIn_Section" FromRole="Section" ToRole="IsEnrollingIn" />
           <NavigationProperty Name="IsScheduledIns" Relationship="PlannerDbModel.FK_IsScheduledIn_Section" FromRole="Section" ToRole="IsScheduledIn" />
+          <NavigationProperty Name="CourseTakens" Relationship="PlannerDbModel.FK_CourseTaken_Section" FromRole="Section" ToRole="CourseTaken" />
+          <NavigationProperty Name="StudentRecords" Relationship="PlannerDbModel.FK_StudentRecord_Section" FromRole="Section" ToRole="StudentRecord" />
         </EntityType>
         <Association Name="FK_Section_Course">
           <End Type="PlannerDbModel.Course" Role="Course" Multiplicity="0..1" />
@@ -952,30 +877,6 @@
             </Principal>
             <Dependent Role="Section">
               <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IsEnrolledIn_Section">
-          <End Type="PlannerDbModel.Section" Role="Section" Multiplicity="0..1" />
-          <End Type="PlannerDbModel.IsEnrolledIn" Role="IsEnrolledIn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionId" />
-            </Principal>
-            <Dependent Role="IsEnrolledIn">
-              <PropertyRef Name="SectionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IsEnrollingIn_Section">
-          <End Type="PlannerDbModel.Section" Role="Section" Multiplicity="0..1" />
-          <End Type="PlannerDbModel.IsEnrollingIn" Role="IsEnrollingIn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionId" />
-            </Principal>
-            <Dependent Role="IsEnrollingIn">
-              <PropertyRef Name="SectionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1032,22 +933,11 @@
           <Property Name="Telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="StudentRecords" Relationship="PlannerDbModel.FK_StudentRecord_Student" FromRole="Student" ToRole="StudentRecord" />
           <NavigationProperty Name="StudentSchedules" Relationship="PlannerDbModel.FK_StudentSchedule_Student" FromRole="Student" ToRole="StudentSchedule" />
           <NavigationProperty Name="StudentConstraints" Relationship="PlannerDbModel.FK_StudentConstraint_Student" FromRole="Student" ToRole="StudentConstraint" />
+          <NavigationProperty Name="CourseTakens" Relationship="PlannerDbModel.FK_CourseTaken_Student" FromRole="Student" ToRole="CourseTaken" />
+          <NavigationProperty Name="StudentRecord" Relationship="PlannerDbModel.FK_StudentRecord_Student" FromRole="Student" ToRole="StudentRecord" />
         </EntityType>
-        <Association Name="FK_StudentRecord_Student">
-          <End Type="PlannerDbModel.Student" Role="Student" Multiplicity="0..1" />
-          <End Type="PlannerDbModel.StudentRecord" Role="StudentRecord" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Student">
-              <PropertyRef Name="StudentId" />
-            </Principal>
-            <Dependent Role="StudentRecord">
-              <PropertyRef Name="StudentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_StudentSchedule_Student">
           <End Type="PlannerDbModel.Student" Role="Student" Multiplicity="0..1" />
           <End Type="PlannerDbModel.StudentSchedule" Role="StudentSchedule" Multiplicity="*" />
@@ -1108,6 +998,80 @@
               <PropertyRef Name="StudentId" />
             </Principal>
             <Dependent Role="StudentConstraint">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CourseTaken">
+          <Key>
+            <PropertyRef Name="CourseTakenId" />
+          </Key>
+          <Property Name="CourseTakenId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" />
+          <Property Name="SectionId" Type="Int32" />
+          <NavigationProperty Name="Section" Relationship="PlannerDbModel.FK_CourseTaken_Section" FromRole="CourseTaken" ToRole="Section" />
+          <NavigationProperty Name="Student" Relationship="PlannerDbModel.FK_CourseTaken_Student" FromRole="CourseTaken" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="IsEnrolledIn">
+          <Key>
+            <PropertyRef Name="IsEnrolledId" />
+          </Key>
+          <Property Name="IsEnrolledId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SectionId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="StudentRecord">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="SectionId" Type="Int32" />
+          <NavigationProperty Name="Section" Relationship="PlannerDbModel.FK_StudentRecord_Section" FromRole="StudentRecord" ToRole="Section" />
+          <NavigationProperty Name="Student" Relationship="PlannerDbModel.FK_StudentRecord_Student" FromRole="StudentRecord" ToRole="Student" />
+        </EntityType>
+        <Association Name="FK_CourseTaken_Section">
+          <End Type="PlannerDbModel.Section" Role="Section" Multiplicity="0..1" />
+          <End Type="PlannerDbModel.CourseTaken" Role="CourseTaken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="CourseTaken">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseTaken_Student">
+          <End Type="PlannerDbModel.Student" Role="Student" Multiplicity="0..1" />
+          <End Type="PlannerDbModel.CourseTaken" Role="CourseTaken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="CourseTaken">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentRecord_Section">
+          <End Type="PlannerDbModel.Section" Role="Section" Multiplicity="0..1" />
+          <End Type="PlannerDbModel.StudentRecord" Role="StudentRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="StudentRecord">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentRecord_Student">
+          <End Type="PlannerDbModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="PlannerDbModel.StudentRecord" Role="StudentRecord" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="StudentRecord">
               <PropertyRef Name="StudentId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1200,23 +1164,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="StudentRecords">
-            <EntityTypeMapping TypeName="PlannerDbModel.StudentRecord">
-              <MappingFragment StoreEntitySet="StudentRecord">
-                <ScalarProperty Name="StudentRecordId" ColumnName="StudentRecordId" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="IsEnrolledIns">
-            <EntityTypeMapping TypeName="PlannerDbModel.IsEnrolledIn">
-              <MappingFragment StoreEntitySet="IsEnrolledIn">
-                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
-                <ScalarProperty Name="StudentRecordId" ColumnName="StudentRecordId" />
-                <ScalarProperty Name="IsEnrolledId" ColumnName="IsEnrolledId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AccountUsers">
             <EntityTypeMapping TypeName="PlannerDbModel.AccountUser">
               <MappingFragment StoreEntitySet="AccountUser">
@@ -1229,15 +1176,6 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="AccountUserId" ColumnName="AccountUserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="IsEnrollingIns">
-            <EntityTypeMapping TypeName="PlannerDbModel.IsEnrollingIn">
-              <MappingFragment StoreEntitySet="IsEnrollingIn">
-                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
-                <ScalarProperty Name="StudentRecordId" ColumnName="StudentRecordId" />
-                <ScalarProperty Name="IsEnrollingInId" ColumnName="IsEnrollingInId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1400,6 +1338,31 @@
                 <ScalarProperty Name="Day" ColumnName="Day" />
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
                 <ScalarProperty Name="StudentConstraintId" ColumnName="StudentConstraintId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CourseTakens">
+            <EntityTypeMapping TypeName="PlannerDbModel.CourseTaken">
+              <MappingFragment StoreEntitySet="CourseTaken">
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="CourseTakenId" ColumnName="CourseTakenId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IsEnrolledIns">
+            <EntityTypeMapping TypeName="PlannerDbModel.IsEnrolledIn">
+              <MappingFragment StoreEntitySet="IsEnrolledIn">
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="IsEnrolledId" ColumnName="IsEnrolledId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentRecords">
+            <EntityTypeMapping TypeName="PlannerDbModel.StudentRecord">
+              <MappingFragment StoreEntitySet="StudentRecord">
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

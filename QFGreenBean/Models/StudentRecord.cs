@@ -14,20 +14,10 @@ namespace QFGreenBean.Models
     
     public partial class StudentRecord
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public StudentRecord()
-        {
-            this.IsEnrolledIns = new HashSet<IsEnrolledIn>();
-            this.IsEnrollingIns = new HashSet<IsEnrollingIn>();
-        }
+        public int StudentId { get; set; }
+        public Nullable<int> SectionId { get; set; }
     
-        public Nullable<int> StudentId { get; set; }
-        public int StudentRecordId { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IsEnrolledIn> IsEnrolledIns { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IsEnrollingIn> IsEnrollingIns { get; set; }
+        public virtual Section Section { get; set; }
         public virtual Student Student { get; set; }
     }
 }

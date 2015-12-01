@@ -175,6 +175,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ConstraintController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\CourseTakenController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\FallEventController.cs" />
     <Compile Include="Controllers\FallScheduleCalendarController.cs" />
@@ -209,6 +210,9 @@
     <Compile Include="Models\Course.cs">
       <DependentUpon>PlannerDbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CourseTaken.cs">
+      <DependentUpon>PlannerDbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>PlannerDbModel.tt</DependentUpon>
     </Compile>
@@ -229,9 +233,6 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IsEnrolledIn.cs">
-      <DependentUpon>PlannerDbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\IsEnrollingIn.cs">
       <DependentUpon>PlannerDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IsScheduledIn.cs">
@@ -405,6 +406,11 @@
     <Content Include="Views\Constraint\ViewConstraints.cshtml" />
     <Content Include="Views\Constraint\_AddConstraint.cshtml" />
     <Content Include="Views\Constraint\_DeleteConstraint.cshtml" />
+    <Content Include="Views\CourseTaken\Create.cshtml" />
+    <Content Include="Views\CourseTaken\Delete.cshtml" />
+    <Content Include="Views\CourseTaken\Details.cshtml" />
+    <Content Include="Views\CourseTaken\Edit.cshtml" />
+    <Content Include="Views\CourseTaken\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

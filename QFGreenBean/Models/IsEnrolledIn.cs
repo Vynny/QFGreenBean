@@ -15,10 +15,6 @@ namespace QFGreenBean.Models
     public partial class IsEnrolledIn
     {
         public int IsEnrolledId { get; set; }
-        public Nullable<int> StudentRecordId { get; set; }
         public Nullable<int> SectionId { get; set; }
-    
-        public virtual StudentRecord StudentRecord { get; set; }
-        public virtual Section Section { get; set; }
     }
 }
