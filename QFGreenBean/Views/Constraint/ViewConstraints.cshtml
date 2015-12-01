@@ -1,0 +1,172 @@
+﻿@model List<QFGreenBean.Models.StudentConstraint>
+
+@{
+    ViewBag.Title = "View Constraints";
+}
+
+<style type="text/css">
+    footer {
+        clear: both;
+    }
+
+    table#list {
+        float: right;
+    }
+
+    .tg {
+        float: left;
+        border-collapse: collapse;
+        border-spacing: 0;
+        border-color: #aabcfe;
+    }
+
+        .tg td {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            padding: 10px 20px;
+            border-style: solid;
+            border-width: 1px;
+            overflow: hidden;
+            word-break: normal;
+            border-color: #aabcfe;
+            color: #669;
+            background-color: #e8edff;
+            text-align: center;
+        }
+
+        .tg th {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            padding: 10px 20px;
+            border-style: solid;
+            border-width: 1px;
+            overflow: hidden;
+            word-break: normal;
+            border-color: #aabcfe;
+            color: #039;
+            background-color: #b9c9fe;
+            text-align: center;
+        }
+
+        .tg .tg-yw4l {
+            vertical-align: top;
+        }
+
+        .tg .blocked {
+            background: rgba(210, 44, 44, 0.9);
+        }
+</style>
+
+@{
+    List<string> hourItems = new List<string>();
+    for (int i = 8; i <= 22; i++)
+    {
+        hourItems.Add(Convert.ToString(i));
+    }
+
+    List<string> minuteItems = new List<string>();
+    minuteItems.Add("00");
+    minuteItems.Add("15");
+    minuteItems.Add("30");
+    minuteItems.Add("45");
+
+    List<string> columns = new List<string>();
+    columns.Add("HOUR");
+    columns.Add("Monday");
+    columns.Add("Tuesday");
+    columns.Add("Wednesday");
+    columns.Add("Thursday");
+    columns.Add("Friday");
+}
+
+@functions {
+    public bool isConstrained(string day, string hour, string minute)
+    {
+        System.Diagnostics.Debug.WriteLine("Params:" + day + " " + hour + " " + minute);
+        List<QFGreenBean.Models.StudentConstraint> cList = Model;
+        foreach (QFGreenBean.Models.StudentConstraint constraint in cList)
+        {
+            System.Diagnostics.Debug.WriteLine("Constraint: " + constraint);
+            //Start
+            if (constraint.Day == day && constraint.StartHour == hour && constraint.StartMinute == minute)
+                return true;
+            //End
+            if (constraint.Day == day && constraint.EndHour == hour && constraint.EndMinute == minute)
+                return true;
+            //In Between
+            int start = Convert.ToInt32(constraint.StartHour + constraint.StartMinute);
+            int end = Convert.ToInt32(constraint.EndHour + constraint.EndMinute);
+            int param = Convert.ToInt32(hour + minute);
+            System.Diagnostics.Debug.WriteLine("Ints are: start[" + start + "], end[" + end + "], param[" + param + "]");
+            if ((param >= start) && (param <= end) && (constraint.Day == day.ToLower()))
+                return true;
+
+        }
+
+        return false;
+    }
+}
+
+<h2>View Constraints</h2>
+
+<table class="tg">
+    <tr>
+        @foreach (var col in columns)
+        {
+            if (col == "HOUR")
+            {
+                <th class="tg-yw4l"></th>
+            }
+            else
+            {
+                <th class="tg-yw4l">@col</th>}
+        }
+    </tr>
+
+    @foreach (var hour in hourItems)
+    {
+        foreach (var minute in minuteItems)
+        {
+            <tr>
+                @foreach (var col in columns)
+                {
+                    if (col == "HOUR")
+                    {
+                        //First column, print the time
+                        <td class="tg-yw41">@hour:@minute</td>
+                    }
+                    else
+                    {
+
+                        if (isConstrained(col, hour, minute))
+                        {
+                            <td class="tg-yw41 blocked"></td>
+                        }
+                        else
+                        {
+                            <td class="tg-yw41"></td>
+                        }
+
+
+                    }
+                }
+            </tr>
+        }
+    }
+</table>
+<table id="list" class="tg">
+    <tr>
+        <th class="tg-yw4l">Week Day</th>
+        <th class="tg-yw4l">Start Time</th>
+        <th class="tg-yw4l">End Time</th>
+        <th class="tg-yw4l"></th>
+    </tr>
+
+    @foreach (QFGreenBean.Models.StudentConstraint constraint in Model)
+    {
+        @Html.Partial("~/Views/Constraint/_DeleteConstraint.cshtml", constraint);
+    }
+
+    @Html.Partial("~/Views/Constraint/_AddConstraint.cshtml", new QFGreenBean.Models.StudentConstraint());
+</table>

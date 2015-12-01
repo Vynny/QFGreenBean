@@ -17,9 +17,9 @@ namespace QFGreenBean.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Student()
         {
-            this.StudentConstraints = new HashSet<StudentConstraint>();
             this.StudentRecords = new HashSet<StudentRecord>();
             this.StudentSchedules = new HashSet<StudentSchedule>();
+            this.StudentConstraints = new HashSet<StudentConstraint>();
         }
     
         public int StudentId { get; set; }
@@ -33,10 +33,10 @@ namespace QFGreenBean.Models
         public string UserType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StudentConstraint> StudentConstraints { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudentRecord> StudentRecords { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudentSchedule> StudentSchedules { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StudentConstraint> StudentConstraints { get; set; }
     }
 }

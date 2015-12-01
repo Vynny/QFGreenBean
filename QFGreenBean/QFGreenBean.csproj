@@ -173,6 +173,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ConstraintController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\FallEventController.cs" />
@@ -401,6 +402,9 @@
     <Content Include="Views\SummerEvent\Details.cshtml" />
     <Content Include="Views\SummerEvent\Edit.cshtml" />
     <Content Include="Views\SummerEvent\Index.cshtml" />
+    <Content Include="Views\Constraint\ViewConstraints.cshtml" />
+    <Content Include="Views\Constraint\_AddConstraint.cshtml" />
+    <Content Include="Views\Constraint\_DeleteConstraint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

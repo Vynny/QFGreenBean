@@ -15,10 +15,12 @@ namespace QFGreenBean.Models
     public partial class StudentConstraint
     {
         public int StudentConstraintId { get; set; }
-        public string Day { get; set; }
-        public Nullable<System.TimeSpan> StartTime { get; set; }
-        public Nullable<System.TimeSpan> EndTime { get; set; }
         public Nullable<int> StudentId { get; set; }
+        public string Day { get; set; }
+        public string StartHour { get; set; }
+        public string EndHour { get; set; }
+        public string StartMinute { get; set; }
+        public string EndMinute { get; set; }
     
         public virtual Student Student { get; set; }
     }

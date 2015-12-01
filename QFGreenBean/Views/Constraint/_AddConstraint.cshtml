@@ -1,0 +1,75 @@
+﻿
+@model QFGreenBean.Models.StudentConstraint
+
+@{
+    List<SelectListItem> hourItems = new List<SelectListItem>();
+    for (int i = 8; i <= 22; i++)
+    {
+        hourItems.Add(new SelectListItem
+        {
+            Text = Convert.ToString(i),
+            Value = Convert.ToString(i)
+        });
+    }
+
+    List<SelectListItem> minuteItems = new List<SelectListItem>();
+    minuteItems.Add(new SelectListItem
+    {
+        Text = "00",
+        Value = "00"
+    });
+    minuteItems.Add(new SelectListItem
+    {
+        Text = "15",
+        Value = "15"
+    });
+    minuteItems.Add(new SelectListItem
+    {
+        Text = "30",
+        Value = "30"
+    });
+    minuteItems.Add(new SelectListItem
+    {
+        Text = "45",
+        Value = "45"
+    });
+
+    List<SelectListItem> weekdayItems = new List<SelectListItem>();
+    weekdayItems.Add(new SelectListItem
+    {
+        Text = "Monday",
+        Value = "monday"
+    });
+    weekdayItems.Add(new SelectListItem
+    {
+        Text = "Tuesday",
+        Value = "tuesday"
+    });
+    weekdayItems.Add(new SelectListItem
+    {
+        Text = "Wednesday",
+        Value = "wednesday"
+    });
+    weekdayItems.Add(new SelectListItem
+    {
+        Text = "Thursday",
+        Value = "thursday"
+    });
+    weekdayItems.Add(new SelectListItem
+    {
+        Text = "Friday",
+        Value = "friday"
+    });
+
+}
+@using (Html.BeginForm("SubmitConstraint", "Constraint"))
+{
+    @Html.AntiForgeryToken()
+    <tr>
+        <td class="tg-yw4l">@Html.DropDownListFor(m => m.Day, new SelectList(weekdayItems, "Value", "Text"))</td>
+        <td class="tg-yw4l">@Html.DropDownListFor(m => m.StartHour, new SelectList(hourItems, "Value", "Text")):@Html.DropDownListFor(m => m.StartMinute, new SelectList(minuteItems, "Value", "Text"))</td>
+        <td class="tg-yw4l">@Html.DropDownListFor(m => m.EndHour, new SelectList(hourItems, "Value", "Text")):@Html.DropDownListFor(m => m.EndMinute, new SelectList(minuteItems, "Value", "Text"))</td>
+        <td class="tg-yw4l"><button name="Submit" value="SubmitConstraint">Add</button></td>
+    </tr>
+    <h3>@Html.ValidationMessageFor(m => m.EndHour)</h3>
+}

@@ -230,10 +230,12 @@
             <PropertyRef Name="StudentConstraintId" />
           </Key>
           <Property Name="StudentConstraintId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Day" Type="varchar" MaxLength="20" />
-          <Property Name="StartTime" Type="time" Precision="7" />
-          <Property Name="EndTime" Type="time" Precision="7" />
           <Property Name="StudentId" Type="int" />
+          <Property Name="Day" Type="varchar" MaxLength="20" />
+          <Property Name="StartHour" Type="varchar" MaxLength="7" />
+          <Property Name="EndHour" Type="varchar" MaxLength="7" />
+          <Property Name="StartMinute" Type="varchar" MaxLength="7" />
+          <Property Name="EndMinute" Type="varchar" MaxLength="7" />
         </EntityType>
         <EntityType Name="StudentRecord">
           <Key>
@@ -683,7 +685,6 @@
           <EntitySet Name="IsEnrollingIns" EntityType="PlannerDbModel.IsEnrollingIn" />
           <EntitySet Name="ProgramOptions" EntityType="PlannerDbModel.ProgramOption" />
           <EntitySet Name="SchoolUsers" EntityType="PlannerDbModel.SchoolUser" />
-          <EntitySet Name="StudentConstraints" EntityType="PlannerDbModel.StudentConstraint" />
           <AssociationSet Name="FK_ProgramOption_Department" Association="PlannerDbModel.FK_ProgramOption_Department">
             <End Role="Department" EntitySet="Departments" />
             <End Role="ProgramOption" EntitySet="ProgramOptions" />
@@ -723,10 +724,6 @@
           <EntitySet Name="DepartmentAvdisors" EntityType="PlannerDbModel.DepartmentAvdisor" />
           <EntitySet Name="DepartmentDirectors" EntityType="PlannerDbModel.DepartmentDirector" />
           <EntitySet Name="Students" EntityType="PlannerDbModel.Student" />
-          <AssociationSet Name="FK_StudentConstraint_Student" Association="PlannerDbModel.FK_StudentConstraint_Student">
-            <End Role="Student" EntitySet="Students" />
-            <End Role="StudentConstraint" EntitySet="StudentConstraints" />
-          </AssociationSet>
           <AssociationSet Name="FK_StudentRecord_Student" Association="PlannerDbModel.FK_StudentRecord_Student">
             <End Role="Student" EntitySet="Students" />
             <End Role="StudentRecord" EntitySet="StudentRecords" />
@@ -738,6 +735,11 @@
           <EntitySet Name="FallEvents" EntityType="PlannerDbModel.FallEvent" />
           <EntitySet Name="SummerEvents" EntityType="PlannerDbModel.SummerEvent" />
           <EntitySet Name="WinterEvents" EntityType="PlannerDbModel.WinterEvent" />
+          <EntitySet Name="StudentConstraints" EntityType="PlannerDbModel.StudentConstraint" />
+          <AssociationSet Name="FK_StudentConstraint_Student" Association="PlannerDbModel.FK_StudentConstraint_Student">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentConstraint" EntitySet="StudentConstraints" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Feedback">
           <Key>
@@ -836,17 +838,6 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="UserType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="StudentConstraint">
-          <Key>
-            <PropertyRef Name="StudentConstraintId" />
-          </Key>
-          <Property Name="StudentConstraintId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Day" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="StartTime" Type="Time" Precision="7" />
-          <Property Name="EndTime" Type="Time" Precision="7" />
-          <Property Name="StudentId" Type="Int32" />
-          <NavigationProperty Name="Student" Relationship="PlannerDbModel.FK_StudentConstraint_Student" FromRole="StudentConstraint" ToRole="Student" />
         </EntityType>
         <Association Name="FK_ProgramOption_Department">
           <End Type="PlannerDbModel.Department" Role="Department" Multiplicity="0..1" />
@@ -1041,22 +1032,10 @@
           <Property Name="Telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="StudentConstraints" Relationship="PlannerDbModel.FK_StudentConstraint_Student" FromRole="Student" ToRole="StudentConstraint" />
           <NavigationProperty Name="StudentRecords" Relationship="PlannerDbModel.FK_StudentRecord_Student" FromRole="Student" ToRole="StudentRecord" />
           <NavigationProperty Name="StudentSchedules" Relationship="PlannerDbModel.FK_StudentSchedule_Student" FromRole="Student" ToRole="StudentSchedule" />
+          <NavigationProperty Name="StudentConstraints" Relationship="PlannerDbModel.FK_StudentConstraint_Student" FromRole="Student" ToRole="StudentConstraint" />
         </EntityType>
-        <Association Name="FK_StudentConstraint_Student">
-          <End Type="PlannerDbModel.Student" Role="Student" Multiplicity="0..1" />
-          <End Type="PlannerDbModel.StudentConstraint" Role="StudentConstraint" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Student">
-              <PropertyRef Name="StudentId" />
-            </Principal>
-            <Dependent Role="StudentConstraint">
-              <PropertyRef Name="StudentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_StudentRecord_Student">
           <End Type="PlannerDbModel.Student" Role="Student" Multiplicity="0..1" />
           <End Type="PlannerDbModel.StudentRecord" Role="StudentRecord" Multiplicity="*" />
@@ -1108,6 +1087,31 @@
           <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="StudentConstraint">
+          <Key>
+            <PropertyRef Name="StudentConstraintId" />
+          </Key>
+          <Property Name="StudentConstraintId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" />
+          <Property Name="Day" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="StartHour" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="EndHour" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="StartMinute" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="EndMinute" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Student" Relationship="PlannerDbModel.FK_StudentConstraint_Student" FromRole="StudentConstraint" ToRole="Student" />
+        </EntityType>
+        <Association Name="FK_StudentConstraint_Student">
+          <End Type="PlannerDbModel.Student" Role="Student" Multiplicity="0..1" />
+          <End Type="PlannerDbModel.StudentConstraint" Role="StudentConstraint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="StudentConstraint">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1261,17 +1265,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="StudentConstraints">
-            <EntityTypeMapping TypeName="PlannerDbModel.StudentConstraint">
-              <MappingFragment StoreEntitySet="StudentConstraint">
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="Day" ColumnName="Day" />
-                <ScalarProperty Name="StudentConstraintId" ColumnName="StudentConstraintId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="IsScheduledIns">
             <EntityTypeMapping TypeName="PlannerDbModel.IsScheduledIn">
               <MappingFragment StoreEntitySet="IsScheduledIn">
@@ -1394,6 +1387,19 @@
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="WinterEventId" ColumnName="WinterEventId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentConstraints">
+            <EntityTypeMapping TypeName="PlannerDbModel.StudentConstraint">
+              <MappingFragment StoreEntitySet="StudentConstraint">
+                <ScalarProperty Name="EndMinute" ColumnName="EndMinute" />
+                <ScalarProperty Name="StartMinute" ColumnName="StartMinute" />
+                <ScalarProperty Name="EndHour" ColumnName="EndHour" />
+                <ScalarProperty Name="StartHour" ColumnName="StartHour" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="StudentConstraintId" ColumnName="StudentConstraintId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

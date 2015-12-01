@@ -1,0 +1,25 @@
+﻿@model QFGreenBean.Models.StudentConstraint
+
+@functions {
+    static string Capitalize(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+        {
+            return string.Empty;
+        }
+        return char.ToUpper(s[0]) + s.Substring(1);
+    }
+}
+
+@using (Html.BeginForm("DeleteConstraint", "Constraint"))
+{
+    @Html.AntiForgeryToken();
+    @Html.HiddenFor(m => m.StudentConstraintId);
+    <tr>
+        <td class="tg-yw4l">@Capitalize(Model.Day)</td>
+        <td class="tg-yw4l">@Model.StartHour : @Model.StartMinute</td>
+        <td class="tg-yw4l">@Model.EndHour : @Model.EndMinute</td>
+        <td class="tg-yw4l"><button name="Submit" value="DeleteConstraint">Delete</button></td>
+    </tr>
+}
+

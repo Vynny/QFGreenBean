@@ -39,7 +39,6 @@
         <EntityTypeShape EntityType="PlannerDbModel.IsEnrollingIn" Width="1.5" PointX="12.25" PointY="5.375" />
         <EntityTypeShape EntityType="PlannerDbModel.ProgramOption" Width="1.5" PointX="0.5" PointY="14.5" />
         <EntityTypeShape EntityType="PlannerDbModel.SchoolUser" Width="1.5" PointX="4.375" PointY="9.375" />
-        <EntityTypeShape EntityType="PlannerDbModel.StudentConstraint" Width="1.5" PointX="10" PointY="3.25" />
         <AssociationConnector Association="PlannerDbModel.FK_ProgramOption_Department" />
         <AssociationConnector Association="PlannerDbModel.FK_IsEnrollingIn_StudentRecord" />
         <EntityTypeShape EntityType="PlannerDbModel.IsScheduledIn" Width="1.5" PointX="12.25" PointY="14.125" />
@@ -55,12 +54,13 @@
         <EntityTypeShape EntityType="PlannerDbModel.DepartmentAvdisor" Width="1.5" PointX="6.375" PointY="6.75" />
         <EntityTypeShape EntityType="PlannerDbModel.DepartmentDirector" Width="1.5" PointX="12.375" PointY="0.75" />
         <EntityTypeShape EntityType="PlannerDbModel.Student" Width="1.5" PointX="7.75" PointY="10.625" />
-        <AssociationConnector Association="PlannerDbModel.FK_StudentConstraint_Student" />
         <AssociationConnector Association="PlannerDbModel.FK_StudentRecord_Student" />
         <AssociationConnector Association="PlannerDbModel.FK_StudentSchedule_Student" />
         <EntityTypeShape EntityType="PlannerDbModel.FallEvent" Width="1.5" PointX="15.125" PointY="6.125" />
         <EntityTypeShape EntityType="PlannerDbModel.SummerEvent" Width="1.5" PointX="15.125" PointY="10.75" />
         <EntityTypeShape EntityType="PlannerDbModel.WinterEvent" Width="1.5" PointX="15.125" PointY="8.375" />
+        <EntityTypeShape EntityType="PlannerDbModel.StudentConstraint" Width="1.5" PointX="10" PointY="11" />
+        <AssociationConnector Association="PlannerDbModel.FK_StudentConstraint_Student" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
