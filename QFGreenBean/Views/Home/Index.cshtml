@@ -8,7 +8,7 @@
     <h2>Student Scheduler</h2>
 </p>
 
-<p>Student Scheduler is a tool to generate recommended student schedules in the coming year and subsequent years until graduation. The student schedules can be readjusted automatically to meet specific needs of a student.</p>
+<p>Student Scheduler is a tool to generate recommended student schedules in the coming year and subsequent years until graduation. The schedules can be readjusted automatically to meet a student's specific needs or preferences.</p>
 <p>Please enter your student number and other scheduling parameters.</p>
 
 @using (Html.BeginForm())
@@ -21,7 +21,7 @@
             </td>
         </tr>
         <tr>
-            <td class="auto-style1">Term</td>
+            <td class="auto-style1">Starting Term</td>
             <td>
                 @Html.DropDownListFor(x => x.StartingSemester,
                                            new[] {new SelectListItem() { Text = "Fall 2015", Value = "Fall 2015" },
@@ -42,6 +42,13 @@
             <td class="auto-style1">Program Option</td>
             <td>
                 @Html.TextBoxFor(x => x.ProgramOption)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="auto-style1">Preferences / Constraints</td>
+            <td>
+                @Html.ActionLink("Enter Student Preferences", "ViewConstraints", "Constraint")
             </td>
         </tr>
 
