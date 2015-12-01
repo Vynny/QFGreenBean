@@ -1,0 +1,1 @@
+This app uses Dababase first approach for data.

@@ -1,0 +1,117 @@
+﻿@model IEnumerable<QFGreenBean.Models.Section>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Course            
+        </th>
+        <th>
+            Course Name
+        </th>
+        <th>
+            Section Name
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Units)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Day)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Room)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Instructor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <!--
+        <th>
+            @Html.DisplayNameFor(model => model.Course.Code)
+        </th>
+            -->
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @if (ViewBag.PreviousCourseCode != item.Course.Code)
+            {
+                @Html.DisplayFor(modelItem => item.Course.Code)
+            }           
+        </td>
+        <td>
+            @if (ViewBag.PreviousCourseCode != item.Course.Code)
+            {
+                @Html.DisplayFor(modelItem => item.Course.Name)
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Units)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Day)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Room)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Instructor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <!--
+        <td>
+            @Html.DisplayFor(modelItem => item.Course.Code)
+        </td>
+            -->
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SectionId }) 
+            <!--|
+            @Html.ActionLink("Details", "Details", new { id=item.SectionId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SectionId }) -->
+        </td>
+    </tr>
+    ViewBag.PreviousCourseCode = item.Course.Code;
+}
+
+</table>

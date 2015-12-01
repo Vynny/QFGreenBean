@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="871732d18ba3487caf1469bafb5a3d27" Name="Diagram1">
+        <EntityTypeShape EntityType="PlannerDbModel.C__MigrationHistory" Width="1.5" PointX="0.625" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlannerDbModel.AspNetRole" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlannerDbModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlannerDbModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlannerDbModel.AspNetUser" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="PlannerDbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="PlannerDbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="PlannerDbModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PlannerDbModel.Feedback" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PlannerDbModel.MSreplication_options" Width="1.5" PointX="7.75" PointY="3.75" />
+        <EntityTypeShape EntityType="PlannerDbModel.spt_fallback_db" Width="1.5" PointX="7.75" PointY="6.75" />
+        <EntityTypeShape EntityType="PlannerDbModel.spt_fallback_dev" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PlannerDbModel.spt_fallback_usg" Width="1.5" PointX="9.75" PointY="4.75" />
+        <EntityTypeShape EntityType="PlannerDbModel.spt_monitor" Width="1.5" PointX="9.75" PointY="8.75" />
+        <EntityTypeShape EntityType="PlannerDbModel.spt_values" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="PlannerDbModel.C__MigrationHistory1" Width="1.5" PointX="12.75" PointY="6.75" />
+        <EntityTypeShape EntityType="PlannerDbModel.AspNetRole1" Width="1.5" PointX="12.75" PointY="2.5" />
+        <EntityTypeShape EntityType="PlannerDbModel.AspNetUserClaim1" Width="1.5" PointX="17.25" PointY="1" />
+        <EntityTypeShape EntityType="PlannerDbModel.AspNetUserLogin1" Width="1.5" PointX="17.25" PointY="3.75" />
+        <EntityTypeShape EntityType="PlannerDbModel.AspNetUser1" Width="1.5" PointX="15" PointY="1.375" />
+        <EntityTypeShape EntityType="PlannerDbModel.Course1" Width="1.5" PointX="6" PointY="11" />
+        <EntityTypeShape EntityType="PlannerDbModel.Department" Width="1.5" PointX="1.625" PointY="7.375" />
+        <EntityTypeShape EntityType="PlannerDbModel.Feedback1" Width="1.5" PointX="8.75" PointY="12.75" />
+        <EntityTypeShape EntityType="PlannerDbModel.Student1" Width="1.5" PointX="0.75" PointY="13.75" />
+        <AssociationConnector Association="PlannerDbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId1" />
+        <AssociationConnector Association="PlannerDbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId1" />
+        <AssociationConnector Association="PlannerDbModel.AspNetUserRoles1" />
+        <EntityTypeShape EntityType="PlannerDbModel.StudentRecord" Width="1.5" PointX="10" PointY="6.25" />
+        <EntityTypeShape EntityType="PlannerDbModel.IsEnrolledIn" Width="1.5" PointX="11.875" PointY="8.25" />
+        <AssociationConnector Association="PlannerDbModel.FK_IsEnrolledIn_StudentRecord" />
+        <EntityTypeShape EntityType="PlannerDbModel.AccountUser" Width="1.5" PointX="0.5" PointY="9.875" />
+        <EntityTypeShape EntityType="PlannerDbModel.IsEnrollingIn" Width="1.5" PointX="12.25" PointY="5.375" />
+        <EntityTypeShape EntityType="PlannerDbModel.ProgramOption" Width="1.5" PointX="0.5" PointY="14.5" />
+        <EntityTypeShape EntityType="PlannerDbModel.SchoolUser" Width="1.5" PointX="4.375" PointY="9.375" />
+        <EntityTypeShape EntityType="PlannerDbModel.StudentConstraint" Width="1.5" PointX="10" PointY="3.25" />
+        <AssociationConnector Association="PlannerDbModel.FK_ProgramOption_Department" />
+        <AssociationConnector Association="PlannerDbModel.FK_IsEnrollingIn_StudentRecord" />
+        <EntityTypeShape EntityType="PlannerDbModel.IsScheduledIn" Width="1.5" PointX="12.25" PointY="14.125" />
+        <EntityTypeShape EntityType="PlannerDbModel.StudentSchedule" Width="1.5" PointX="10.125" PointY="17" />
+        <AssociationConnector Association="PlannerDbModel.FK_IsScheduledIn_StudentSchedule" />
+        <EntityTypeShape EntityType="PlannerDbModel.Course" Width="1.5" PointX="3.875" PointY="13.75" />
+        <AssociationConnector Association="PlannerDbModel.FK_Course_Department" />
+        <EntityTypeShape EntityType="PlannerDbModel.Section" Width="1.5" PointX="6" PointY="18.75" />
+        <AssociationConnector Association="PlannerDbModel.FK_Section_Course" />
+        <AssociationConnector Association="PlannerDbModel.FK_IsEnrolledIn_Section" />
+        <AssociationConnector Association="PlannerDbModel.FK_IsEnrollingIn_Section" />
+        <AssociationConnector Association="PlannerDbModel.FK_IsScheduledIn_Section" />
+        <EntityTypeShape EntityType="PlannerDbModel.DepartmentAvdisor" Width="1.5" PointX="6.375" PointY="6.75" />
+        <EntityTypeShape EntityType="PlannerDbModel.DepartmentDirector" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PlannerDbModel.Student" Width="1.5" PointX="7.75" PointY="10.625" />
+        <AssociationConnector Association="PlannerDbModel.FK_StudentConstraint_Student" />
+        <AssociationConnector Association="PlannerDbModel.FK_StudentRecord_Student" />
+        <AssociationConnector Association="PlannerDbModel.FK_StudentSchedule_Student" />
+        <EntityTypeShape EntityType="PlannerDbModel.FallEvent" Width="1.5" PointX="15.125" PointY="6.125" />
+        <EntityTypeShape EntityType="PlannerDbModel.SummerEvent" Width="1.5" PointX="15.125" PointY="10.75" />
+        <EntityTypeShape EntityType="PlannerDbModel.WinterEvent" Width="1.5" PointX="15.125" PointY="8.375" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
