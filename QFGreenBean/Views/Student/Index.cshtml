@@ -1,4 +1,4 @@
-﻿@model IEnumerable<QFGreenBean.Models.Student>
+﻿@model QFGreenBean.Models.Student
 
 @{
     ViewBag.Title = "Index";
@@ -24,10 +24,6 @@
 
 </table>
 
-@foreach (var item in Model)
-{
-    <!--<option value="@Html.DisplayFor(modelItem => item.StudentId)"> @Html.DisplayFor(modelItem => item.StudentId)</option>-->
-}
 </br>
 
 
@@ -40,17 +36,16 @@
         <td>Course Name</td>
         <td>Unit</td>
         </th>
-@foreach (var item in Model)
-{
+
     
         <tr>
 
-            <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
-                <td>@Html.DisplayFor(modelItem => item.StudentId)</td>
-                    <td>@Html.DisplayFor(modelItem => item.StudentId)</td>
+            <td>@Html.DisplayFor(modelItem => Model.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => Model.StudentId)</td>
+                    <td>@Html.DisplayFor(modelItem => Model.StudentId)</td>
 
         </tr>
-}
+
     </table>
     </br>
     <label>Course Taken</label>
@@ -61,16 +56,15 @@
         <td>Unit</td>
         </th>
 
-        @foreach (var item in Model)
-        {
+       
             <tr>
 
-                <td>@Html.DisplayFor(modelItem => item.StudentId)</td>
-                    <td>@Html.DisplayFor(modelItem => item.StudentId)</td>
-                     <td>@Html.DisplayFor(modelItem => item.StudentId)</td>
+                <td>@Html.DisplayFor(modelItem => Model.StudentId)</td>
+                    <td>@Html.DisplayFor(modelItem => Model.StudentId)</td>
+                     <td>@Html.DisplayFor(modelItem => Model.StudentId)</td>
 
             </tr>
-        }
+        
     </table>
 
 
@@ -106,7 +100,7 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@*@foreach (var item in Model) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.StudentNumber)
@@ -129,6 +123,6 @@
             @Html.ActionLink("Delete", "Delete", new { id=item.StudentId })
         </td>
     </tr>
-}
+}*@
 
 </table>

@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PlannerDbModelStoreContainer" CdmEntityContainer="PlannerDbEntities">
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="PlannerDbModel.C__MigrationHistory">
+        <MappingFragment StoreEntitySet="__MigrationHistory">
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="PlannerDbModel.AspNetRole">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="PlannerDbModel.AspNetUserClaim">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="PlannerDbModel.AspNetUserLogin">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="PlannerDbModel.AspNetUser">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="PlannerDbModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetRoles">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="Feedbacks">
+      <EntityTypeMapping TypeName="PlannerDbModel.Feedback">
+        <MappingFragment StoreEntitySet="Feedback">
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="PostDate" ColumnName="PostDate" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="FeedbackId" ColumnName="FeedbackId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Departments">
+      <EntityTypeMapping TypeName="PlannerDbModel.Department">
+        <MappingFragment StoreEntitySet="Department">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentRecords">
+      <EntityTypeMapping TypeName="PlannerDbModel.StudentRecord">
+        <MappingFragment StoreEntitySet="StudentRecord">
+          <ScalarProperty Name="StudentRecordId" ColumnName="StudentRecordId" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IsEnrolledIns">
+      <EntityTypeMapping TypeName="PlannerDbModel.IsEnrolledIn">
+        <MappingFragment StoreEntitySet="IsEnrolledIn">
+          <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+          <ScalarProperty Name="StudentRecordId" ColumnName="StudentRecordId" />
+          <ScalarProperty Name="IsEnrolledId" ColumnName="IsEnrolledId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AccountUsers">
+      <EntityTypeMapping TypeName="PlannerDbModel.AccountUser">
+        <MappingFragment StoreEntitySet="AccountUser">
+          <ScalarProperty Name="UserType" ColumnName="UserType" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="AccountUserId" ColumnName="AccountUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IsEnrollingIns">
+      <EntityTypeMapping TypeName="PlannerDbModel.IsEnrollingIn">
+        <MappingFragment StoreEntitySet="IsEnrollingIn">
+          <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+          <ScalarProperty Name="StudentRecordId" ColumnName="StudentRecordId" />
+          <ScalarProperty Name="IsEnrollingInId" ColumnName="IsEnrollingInId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProgramOptions">
+      <EntityTypeMapping TypeName="PlannerDbModel.ProgramOption">
+        <MappingFragment StoreEntitySet="ProgramOption">
+          <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ProgramOptionId" ColumnName="ProgramOptionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SchoolUsers">
+      <EntityTypeMapping TypeName="PlannerDbModel.SchoolUser">
+        <MappingFragment StoreEntitySet="SchoolUser">
+          <ScalarProperty Name="UserType" ColumnName="UserType" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SchoolUserId" ColumnName="SchoolUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IsScheduledIns">
+      <EntityTypeMapping TypeName="PlannerDbModel.IsScheduledIn">
+        <MappingFragment StoreEntitySet="IsScheduledIn">
+          <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+          <ScalarProperty Name="StudentScheduleId" ColumnName="StudentScheduleId" />
+          <ScalarProperty Name="IsScheduledInId" ColumnName="IsScheduledInId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentSchedules">
+      <EntityTypeMapping TypeName="PlannerDbModel.StudentSchedule">
+        <MappingFragment StoreEntitySet="StudentSchedule">
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+          <ScalarProperty Name="StudentScheduleId" ColumnName="StudentScheduleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="PlannerDbModel.Course">
+        <MappingFragment StoreEntitySet="Course">
+          <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ConcurrentPrerequisite" ColumnName="ConcurrentPrerequisite" />
+          <ScalarProperty Name="Prerequisite2" ColumnName="Prerequisite2" />
+          <ScalarProperty Name="Prerequisite1" ColumnName="Prerequisite1" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sections">
+      <EntityTypeMapping TypeName="PlannerDbModel.Section">
+        <MappingFragment StoreEntitySet="Section">
+          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Term" ColumnName="Term" />
+          <ScalarProperty Name="Instructor" ColumnName="Instructor" />
+          <ScalarProperty Name="Room" ColumnName="Room" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="Units" ColumnName="Units" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DepartmentAvdisors">
+      <EntityTypeMapping TypeName="PlannerDbModel.DepartmentAvdisor">
+        <MappingFragment StoreEntitySet="DepartmentAvdisor">
+          <ScalarProperty Name="UserType" ColumnName="UserType" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+          <ScalarProperty Name="DepartmentAvdisorId" ColumnName="DepartmentAvdisorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DepartmentDirectors">
+      <EntityTypeMapping TypeName="PlannerDbModel.DepartmentDirector">
+        <MappingFragment StoreEntitySet="DepartmentDirector">
+          <ScalarProperty Name="UserType" ColumnName="UserType" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+          <ScalarProperty Name="DepartmentDirectorId" ColumnName="DepartmentDirectorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="PlannerDbModel.Student">
+        <MappingFragment StoreEntitySet="Student">
+          <ScalarProperty Name="UserType" ColumnName="UserType" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="StudentNumber" ColumnName="StudentNumber" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FallEvents">
+      <EntityTypeMapping TypeName="PlannerDbModel.FallEvent">
+        <MappingFragment StoreEntitySet="FallEvent">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="FallEventId" ColumnName="FallEventId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SummerEvents">
+      <EntityTypeMapping TypeName="PlannerDbModel.SummerEvent">
+        <MappingFragment StoreEntitySet="SummerEvent">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="SummerEventId" ColumnName="SummerEventId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WinterEvents">
+      <EntityTypeMapping TypeName="PlannerDbModel.WinterEvent">
+        <MappingFragment StoreEntitySet="WinterEvent">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="WinterEventId" ColumnName="WinterEventId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentConstraints">
+      <EntityTypeMapping TypeName="PlannerDbModel.StudentConstraint">
+        <MappingFragment StoreEntitySet="StudentConstraint">
+          <ScalarProperty Name="EndMinute" ColumnName="EndMinute" />
+          <ScalarProperty Name="StartMinute" ColumnName="StartMinute" />
+          <ScalarProperty Name="EndHour" ColumnName="EndHour" />
+          <ScalarProperty Name="StartHour" ColumnName="StartHour" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+          <ScalarProperty Name="StudentConstraintId" ColumnName="StudentConstraintId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,551 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PlannerDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="PlannerDbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <EntitySet Name="Feedbacks" EntityType="PlannerDbModel.Feedback" />
+    <EntitySet Name="Departments" EntityType="PlannerDbModel.Department" />
+    <EntitySet Name="StudentRecords" EntityType="PlannerDbModel.StudentRecord" />
+    <EntitySet Name="IsEnrolledIns" EntityType="PlannerDbModel.IsEnrolledIn" />
+    <AssociationSet Name="FK_IsEnrolledIn_StudentRecord" Association="PlannerDbModel.FK_IsEnrolledIn_StudentRecord">
+      <End Role="StudentRecord" EntitySet="StudentRecords" />
+      <End Role="IsEnrolledIn" EntitySet="IsEnrolledIns" />
+    </AssociationSet>
+    <EntitySet Name="AccountUsers" EntityType="PlannerDbModel.AccountUser" />
+    <EntitySet Name="IsEnrollingIns" EntityType="PlannerDbModel.IsEnrollingIn" />
+    <EntitySet Name="ProgramOptions" EntityType="PlannerDbModel.ProgramOption" />
+    <EntitySet Name="SchoolUsers" EntityType="PlannerDbModel.SchoolUser" />
+    <AssociationSet Name="FK_ProgramOption_Department" Association="PlannerDbModel.FK_ProgramOption_Department">
+      <End Role="Department" EntitySet="Departments" />
+      <End Role="ProgramOption" EntitySet="ProgramOptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IsEnrollingIn_StudentRecord" Association="PlannerDbModel.FK_IsEnrollingIn_StudentRecord">
+      <End Role="StudentRecord" EntitySet="StudentRecords" />
+      <End Role="IsEnrollingIn" EntitySet="IsEnrollingIns" />
+    </AssociationSet>
+    <EntitySet Name="IsScheduledIns" EntityType="PlannerDbModel.IsScheduledIn" />
+    <EntitySet Name="StudentSchedules" EntityType="PlannerDbModel.StudentSchedule" />
+    <AssociationSet Name="FK_IsScheduledIn_StudentSchedule" Association="PlannerDbModel.FK_IsScheduledIn_StudentSchedule">
+      <End Role="StudentSchedule" EntitySet="StudentSchedules" />
+      <End Role="IsScheduledIn" EntitySet="IsScheduledIns" />
+    </AssociationSet>
+    <EntitySet Name="Courses" EntityType="PlannerDbModel.Course" />
+    <AssociationSet Name="FK_Course_Department" Association="PlannerDbModel.FK_Course_Department">
+      <End Role="Department" EntitySet="Departments" />
+      <End Role="Course" EntitySet="Courses" />
+    </AssociationSet>
+    <EntitySet Name="Sections" EntityType="PlannerDbModel.Section" />
+    <AssociationSet Name="FK_Section_Course" Association="PlannerDbModel.FK_Section_Course">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="Section" EntitySet="Sections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IsEnrolledIn_Section" Association="PlannerDbModel.FK_IsEnrolledIn_Section">
+      <End Role="Section" EntitySet="Sections" />
+      <End Role="IsEnrolledIn" EntitySet="IsEnrolledIns" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IsEnrollingIn_Section" Association="PlannerDbModel.FK_IsEnrollingIn_Section">
+      <End Role="Section" EntitySet="Sections" />
+      <End Role="IsEnrollingIn" EntitySet="IsEnrollingIns" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IsScheduledIn_Section" Association="PlannerDbModel.FK_IsScheduledIn_Section">
+      <End Role="Section" EntitySet="Sections" />
+      <End Role="IsScheduledIn" EntitySet="IsScheduledIns" />
+    </AssociationSet>
+    <EntitySet Name="DepartmentAvdisors" EntityType="PlannerDbModel.DepartmentAvdisor" />
+    <EntitySet Name="DepartmentDirectors" EntityType="PlannerDbModel.DepartmentDirector" />
+    <EntitySet Name="Students" EntityType="PlannerDbModel.Student" />
+    <AssociationSet Name="FK_StudentRecord_Student" Association="PlannerDbModel.FK_StudentRecord_Student">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="StudentRecord" EntitySet="StudentRecords" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentSchedule_Student" Association="PlannerDbModel.FK_StudentSchedule_Student">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="StudentSchedule" EntitySet="StudentSchedules" />
+    </AssociationSet>
+    <EntitySet Name="FallEvents" EntityType="PlannerDbModel.FallEvent" />
+    <EntitySet Name="SummerEvents" EntityType="PlannerDbModel.SummerEvent" />
+    <EntitySet Name="WinterEvents" EntityType="PlannerDbModel.WinterEvent" />
+    <EntitySet Name="StudentConstraints" EntityType="PlannerDbModel.StudentConstraint" />
+    <AssociationSet Name="FK_StudentConstraint_Student" Association="PlannerDbModel.FK_StudentConstraint_Student">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="StudentConstraint" EntitySet="StudentConstraints" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Feedback">
+    <Key>
+      <PropertyRef Name="FeedbackId" />
+    </Key>
+    <Property Name="FeedbackId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="PostDate" Type="DateTime" Precision="0" />
+    <Property Name="Subject" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="DepartmentId" />
+    </Key>
+    <Property Name="DepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ProgramOptions" Relationship="PlannerDbModel.FK_ProgramOption_Department" FromRole="Department" ToRole="ProgramOption" />
+    <NavigationProperty Name="Courses" Relationship="PlannerDbModel.FK_Course_Department" FromRole="Department" ToRole="Course" />
+  </EntityType>
+  <EntityType Name="StudentRecord">
+    <Key>
+      <PropertyRef Name="StudentRecordId" />
+    </Key>
+    <Property Name="StudentId" Type="Int32" />
+    <Property Name="StudentRecordId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="IsEnrolledIns" Relationship="PlannerDbModel.FK_IsEnrolledIn_StudentRecord" FromRole="StudentRecord" ToRole="IsEnrolledIn" />
+    <NavigationProperty Name="IsEnrollingIns" Relationship="PlannerDbModel.FK_IsEnrollingIn_StudentRecord" FromRole="StudentRecord" ToRole="IsEnrollingIn" />
+    <NavigationProperty Name="Student" Relationship="PlannerDbModel.FK_StudentRecord_Student" FromRole="StudentRecord" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="IsEnrolledIn">
+    <Key>
+      <PropertyRef Name="IsEnrolledId" />
+    </Key>
+    <Property Name="IsEnrolledId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentRecordId" Type="Int32" />
+    <Property Name="SectionId" Type="Int32" />
+    <NavigationProperty Name="StudentRecord" Relationship="PlannerDbModel.FK_IsEnrolledIn_StudentRecord" FromRole="IsEnrolledIn" ToRole="StudentRecord" />
+    <NavigationProperty Name="Section" Relationship="PlannerDbModel.FK_IsEnrolledIn_Section" FromRole="IsEnrolledIn" ToRole="Section" />
+  </EntityType>
+  <Association Name="FK_IsEnrolledIn_StudentRecord">
+    <End Type="PlannerDbModel.StudentRecord" Role="StudentRecord" Multiplicity="0..1" />
+    <End Type="PlannerDbModel.IsEnrolledIn" Role="IsEnrolledIn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentRecord">
+        <PropertyRef Name="StudentRecordId" />
+      </Principal>
+      <Dependent Role="IsEnrolledIn">
+        <PropertyRef Name="StudentRecordId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AccountUser">
+    <Key>
+      <PropertyRef Name="AccountUserId" />
+    </Key>
+    <Property Name="AccountUserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="UserType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="IsEnrollingIn">
+    <Key>
+      <PropertyRef Name="IsEnrollingInId" />
+    </Key>
+    <Property Name="IsEnrollingInId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentRecordId" Type="Int32" />
+    <Property Name="SectionId" Type="Int32" />
+    <NavigationProperty Name="StudentRecord" Relationship="PlannerDbModel.FK_IsEnrollingIn_StudentRecord" FromRole="IsEnrollingIn" ToRole="StudentRecord" />
+    <NavigationProperty Name="Section" Relationship="PlannerDbModel.FK_IsEnrollingIn_Section" FromRole="IsEnrollingIn" ToRole="Section" />
+  </EntityType>
+  <EntityType Name="ProgramOption">
+    <Key>
+      <PropertyRef Name="ProgramOptionId" />
+    </Key>
+    <Property Name="ProgramOptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DepartmentId" Type="Int32" />
+    <NavigationProperty Name="Department" Relationship="PlannerDbModel.FK_ProgramOption_Department" FromRole="ProgramOption" ToRole="Department" />
+  </EntityType>
+  <EntityType Name="SchoolUser">
+    <Key>
+      <PropertyRef Name="SchoolUserId" />
+    </Key>
+    <Property Name="SchoolUserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="UserType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_ProgramOption_Department">
+    <End Type="PlannerDbModel.Department" Role="Department" Multiplicity="0..1" />
+    <End Type="PlannerDbModel.ProgramOption" Role="ProgramOption" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="DepartmentId" />
+      </Principal>
+      <Dependent Role="ProgramOption">
+        <PropertyRef Name="DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IsEnrollingIn_StudentRecord">
+    <End Type="PlannerDbModel.StudentRecord" Role="StudentRecord" Multiplicity="0..1" />
+    <End Type="PlannerDbModel.IsEnrollingIn" Role="IsEnrollingIn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentRecord">
+        <PropertyRef Name="StudentRecordId" />
+      </Principal>
+      <Dependent Role="IsEnrollingIn">
+        <PropertyRef Name="StudentRecordId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="IsScheduledIn">
+    <Key>
+      <PropertyRef Name="IsScheduledInId" />
+    </Key>
+    <Property Name="IsScheduledInId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentScheduleId" Type="Int32" />
+    <Property Name="SectionId" Type="Int32" />
+    <NavigationProperty Name="StudentSchedule" Relationship="PlannerDbModel.FK_IsScheduledIn_StudentSchedule" FromRole="IsScheduledIn" ToRole="StudentSchedule" />
+    <NavigationProperty Name="Section" Relationship="PlannerDbModel.FK_IsScheduledIn_Section" FromRole="IsScheduledIn" ToRole="Section" />
+  </EntityType>
+  <EntityType Name="StudentSchedule">
+    <Key>
+      <PropertyRef Name="StudentScheduleId" />
+    </Key>
+    <Property Name="StudentScheduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentId" Type="Int32" />
+    <NavigationProperty Name="IsScheduledIns" Relationship="PlannerDbModel.FK_IsScheduledIn_StudentSchedule" FromRole="StudentSchedule" ToRole="IsScheduledIn" />
+    <NavigationProperty Name="Student" Relationship="PlannerDbModel.FK_StudentSchedule_Student" FromRole="StudentSchedule" ToRole="Student" />
+  </EntityType>
+  <Association Name="FK_IsScheduledIn_StudentSchedule">
+    <End Type="PlannerDbModel.StudentSchedule" Role="StudentSchedule" Multiplicity="0..1" />
+    <End Type="PlannerDbModel.IsScheduledIn" Role="IsScheduledIn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentSchedule">
+        <PropertyRef Name="StudentScheduleId" />
+      </Principal>
+      <Dependent Role="IsScheduledIn">
+        <PropertyRef Name="StudentScheduleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="CourseId" />
+    </Key>
+    <Property Name="CourseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Prerequisite1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Prerequisite2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ConcurrentPrerequisite" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="DepartmentId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Department" Relationship="PlannerDbModel.FK_Course_Department" FromRole="Course" ToRole="Department" />
+    <NavigationProperty Name="Sections" Relationship="PlannerDbModel.FK_Section_Course" FromRole="Course" ToRole="Section" />
+  </EntityType>
+  <Association Name="FK_Course_Department">
+    <End Type="PlannerDbModel.Department" Role="Department" Multiplicity="1" />
+    <End Type="PlannerDbModel.Course" Role="Course" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="DepartmentId" />
+      </Principal>
+      <Dependent Role="Course">
+        <PropertyRef Name="DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Section">
+    <Key>
+      <PropertyRef Name="SectionId" />
+    </Key>
+    <Property Name="SectionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Units" Type="Single" />
+    <Property Name="Day" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="StartTime" Type="Time" Precision="7" />
+    <Property Name="EndTime" Type="Time" Precision="7" />
+    <Property Name="Room" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Instructor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Term" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CourseId" Type="Int32" />
+    <NavigationProperty Name="Course" Relationship="PlannerDbModel.FK_Section_Course" FromRole="Section" ToRole="Course" />
+    <NavigationProperty Name="IsEnrolledIns" Relationship="PlannerDbModel.FK_IsEnrolledIn_Section" FromRole="Section" ToRole="IsEnrolledIn" />
+    <NavigationProperty Name="IsEnrollingIns" Relationship="PlannerDbModel.FK_IsEnrollingIn_Section" FromRole="Section" ToRole="IsEnrollingIn" />
+    <NavigationProperty Name="IsScheduledIns" Relationship="PlannerDbModel.FK_IsScheduledIn_Section" FromRole="Section" ToRole="IsScheduledIn" />
+  </EntityType>
+  <Association Name="FK_Section_Course">
+    <End Type="PlannerDbModel.Course" Role="Course" Multiplicity="0..1" />
+    <End Type="PlannerDbModel.Section" Role="Section" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="Section">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IsEnrolledIn_Section">
+    <End Type="PlannerDbModel.Section" Role="Section" Multiplicity="0..1" />
+    <End Type="PlannerDbModel.IsEnrolledIn" Role="IsEnrolledIn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Section">
+        <PropertyRef Name="SectionId" />
+      </Principal>
+      <Dependent Role="IsEnrolledIn">
+        <PropertyRef Name="SectionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IsEnrollingIn_Section">
+    <End Type="PlannerDbModel.Section" Role="Section" Multiplicity="0..1" />
+    <End Type="PlannerDbModel.IsEnrollingIn" Role="IsEnrollingIn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Section">
+        <PropertyRef Name="SectionId" />
+      </Principal>
+      <Dependent Role="IsEnrollingIn">
+        <PropertyRef Name="SectionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IsScheduledIn_Section">
+    <End Type="PlannerDbModel.Section" Role="Section" Multiplicity="0..1" />
+    <End Type="PlannerDbModel.IsScheduledIn" Role="IsScheduledIn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Section">
+        <PropertyRef Name="SectionId" />
+      </Principal>
+      <Dependent Role="IsScheduledIn">
+        <PropertyRef Name="SectionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="DepartmentAvdisor">
+    <Key>
+      <PropertyRef Name="DepartmentAvdisorId" />
+    </Key>
+    <Property Name="DepartmentAvdisorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="DepartmentDirector">
+    <Key>
+      <PropertyRef Name="DepartmentDirectorId" />
+    </Key>
+    <Property Name="DepartmentDirectorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentId" />
+    </Key>
+    <Property Name="StudentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="StudentRecords" Relationship="PlannerDbModel.FK_StudentRecord_Student" FromRole="Student" ToRole="StudentRecord" />
+    <NavigationProperty Name="StudentSchedules" Relationship="PlannerDbModel.FK_StudentSchedule_Student" FromRole="Student" ToRole="StudentSchedule" />
+    <NavigationProperty Name="StudentConstraints" Relationship="PlannerDbModel.FK_StudentConstraint_Student" FromRole="Student" ToRole="StudentConstraint" />
+  </EntityType>
+  <Association Name="FK_StudentRecord_Student">
+    <End Type="PlannerDbModel.Student" Role="Student" Multiplicity="0..1" />
+    <End Type="PlannerDbModel.StudentRecord" Role="StudentRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentId" />
+      </Principal>
+      <Dependent Role="StudentRecord">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentSchedule_Student">
+    <End Type="PlannerDbModel.Student" Role="Student" Multiplicity="0..1" />
+    <End Type="PlannerDbModel.StudentSchedule" Role="StudentSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentId" />
+      </Principal>
+      <Dependent Role="StudentSchedule">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="FallEvent">
+    <Key>
+      <PropertyRef Name="FallEventId" />
+    </Key>
+    <Property Name="FallEventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="SummerEvent">
+    <Key>
+      <PropertyRef Name="SummerEventId" />
+    </Key>
+    <Property Name="SummerEventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="WinterEvent">
+    <Key>
+      <PropertyRef Name="WinterEventId" />
+    </Key>
+    <Property Name="WinterEventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="StudentConstraint">
+    <Key>
+      <PropertyRef Name="StudentConstraintId" />
+    </Key>
+    <Property Name="StudentConstraintId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentId" Type="Int32" />
+    <Property Name="Day" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="StartHour" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="EndHour" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="StartMinute" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="EndMinute" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Student" Relationship="PlannerDbModel.FK_StudentConstraint_Student" FromRole="StudentConstraint" ToRole="Student" />
+  </EntityType>
+  <Association Name="FK_StudentConstraint_Student">
+    <End Type="PlannerDbModel.Student" Role="Student" Multiplicity="0..1" />
+    <End Type="PlannerDbModel.StudentConstraint" Role="StudentConstraint" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentId" />
+      </Principal>
+      <Dependent Role="StudentConstraint">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

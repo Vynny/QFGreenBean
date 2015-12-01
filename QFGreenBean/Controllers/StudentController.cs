@@ -21,7 +21,15 @@ namespace QFGreenBean.Controllers
         // GET: Student
         public ActionResult Index()
         {
-            return View(db.Students.ToList());
+            Student student;
+            if (StudentController.IsLoggedIn)
+            {
+                student = db.Students.Find(StudentController.LoggedInStudentID);
+            } else
+            {
+                return RedirectToAction("LogIn", "Student");
+            }
+            return View(student);
         }
 
         // GET: Student/Details/5

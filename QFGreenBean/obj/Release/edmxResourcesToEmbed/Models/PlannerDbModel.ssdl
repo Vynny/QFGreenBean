@@ -1,0 +1,558 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PlannerDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AccountUser">
+    <Key>
+      <PropertyRef Name="AccountUserId" />
+    </Key>
+    <Property Name="AccountUserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Telephone" Type="varchar" MaxLength="20" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar" MaxLength="200" />
+    <Property Name="UserType" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ClaimType" Type="nvarchar(max)" />
+    <Property Name="ClaimValue" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="CourseId" />
+    </Key>
+    <Property Name="CourseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="Prerequisite1" Type="varchar" MaxLength="50" />
+    <Property Name="Prerequisite2" Type="varchar" MaxLength="50" />
+    <Property Name="ConcurrentPrerequisite" Type="varchar" MaxLength="50" />
+    <Property Name="Description" Type="varchar" MaxLength="1000" />
+    <Property Name="DepartmentId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="DepartmentId" />
+    </Key>
+    <Property Name="DepartmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DepartmentAvdisor">
+    <Key>
+      <PropertyRef Name="DepartmentAvdisorId" />
+    </Key>
+    <Property Name="DepartmentAvdisorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeNumber" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Telephone" Type="varchar" MaxLength="20" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="UserType" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DepartmentDirector">
+    <Key>
+      <PropertyRef Name="DepartmentDirectorId" />
+    </Key>
+    <Property Name="DepartmentDirectorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeNumber" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Telephone" Type="varchar" MaxLength="20" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="UserType" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="FallEvent">
+    <Key>
+      <PropertyRef Name="FallEventId" />
+    </Key>
+    <Property Name="FallEventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StartTime" Type="datetime" Nullable="false" />
+    <Property Name="EndTime" Type="datetime" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="Feedback">
+    <Key>
+      <PropertyRef Name="FeedbackId" />
+    </Key>
+    <Property Name="FeedbackId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="PostDate" Type="smalldatetime" />
+    <Property Name="Subject" Type="varchar" MaxLength="100" />
+    <Property Name="Comments" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="IsEnrolledIn">
+    <Key>
+      <PropertyRef Name="IsEnrolledId" />
+    </Key>
+    <Property Name="IsEnrolledId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentRecordId" Type="int" />
+    <Property Name="SectionId" Type="int" />
+  </EntityType>
+  <EntityType Name="IsEnrollingIn">
+    <Key>
+      <PropertyRef Name="IsEnrollingInId" />
+    </Key>
+    <Property Name="IsEnrollingInId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentRecordId" Type="int" />
+    <Property Name="SectionId" Type="int" />
+  </EntityType>
+  <EntityType Name="IsScheduledIn">
+    <Key>
+      <PropertyRef Name="IsScheduledInId" />
+    </Key>
+    <Property Name="IsScheduledInId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentScheduleId" Type="int" />
+    <Property Name="SectionId" Type="int" />
+  </EntityType>
+  <EntityType Name="ProgramOption">
+    <Key>
+      <PropertyRef Name="ProgramOptionId" />
+    </Key>
+    <Property Name="ProgramOptionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="DepartmentId" Type="int" />
+  </EntityType>
+  <EntityType Name="SchoolUser">
+    <Key>
+      <PropertyRef Name="SchoolUserId" />
+    </Key>
+    <Property Name="SchoolUserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Telephone" Type="varchar" MaxLength="20" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar" MaxLength="200" />
+    <Property Name="UserType" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Section">
+    <Key>
+      <PropertyRef Name="SectionId" />
+    </Key>
+    <Property Name="SectionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Units" Type="real" />
+    <Property Name="Day" Type="varchar" MaxLength="20" />
+    <Property Name="StartTime" Type="time" Precision="7" />
+    <Property Name="EndTime" Type="time" Precision="7" />
+    <Property Name="Room" Type="varchar" MaxLength="20" />
+    <Property Name="Instructor" Type="varchar" MaxLength="50" />
+    <Property Name="Term" Type="varchar" MaxLength="20" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="EndDate" Type="date" />
+    <Property Name="Status" Type="varchar" MaxLength="20" />
+    <Property Name="CourseId" Type="int" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentId" />
+    </Key>
+    <Property Name="StudentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentNumber" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Telephone" Type="varchar" MaxLength="20" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="UserType" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="StudentConstraint">
+    <Key>
+      <PropertyRef Name="StudentConstraintId" />
+    </Key>
+    <Property Name="StudentConstraintId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentId" Type="int" />
+    <Property Name="Day" Type="varchar" MaxLength="20" />
+    <Property Name="StartHour" Type="varchar" MaxLength="7" />
+    <Property Name="EndHour" Type="varchar" MaxLength="7" />
+    <Property Name="StartMinute" Type="varchar" MaxLength="7" />
+    <Property Name="EndMinute" Type="varchar" MaxLength="7" />
+  </EntityType>
+  <EntityType Name="StudentRecord">
+    <Key>
+      <PropertyRef Name="StudentRecordId" />
+    </Key>
+    <Property Name="StudentRecordId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentId" Type="int" />
+  </EntityType>
+  <EntityType Name="StudentSchedule">
+    <Key>
+      <PropertyRef Name="StudentScheduleId" />
+    </Key>
+    <Property Name="StudentScheduleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentId" Type="int" />
+  </EntityType>
+  <EntityType Name="SummerEvent">
+    <Key>
+      <PropertyRef Name="SummerEventId" />
+    </Key>
+    <Property Name="SummerEventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StartTime" Type="datetime" Nullable="false" />
+    <Property Name="EndTime" Type="datetime" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="WinterEvent">
+    <Key>
+      <PropertyRef Name="WinterEventId" />
+    </Key>
+    <Property Name="WinterEventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StartTime" Type="datetime" Nullable="false" />
+    <Property Name="EndTime" Type="datetime" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <Association Name="FK_Course_Department">
+    <End Role="Department" Type="Self.Department" Multiplicity="1" />
+    <End Role="Course" Type="Self.Course" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="DepartmentId" />
+      </Principal>
+      <Dependent Role="Course">
+        <PropertyRef Name="DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IsEnrolledIn_Section">
+    <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
+    <End Role="IsEnrolledIn" Type="Self.IsEnrolledIn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Section">
+        <PropertyRef Name="SectionId" />
+      </Principal>
+      <Dependent Role="IsEnrolledIn">
+        <PropertyRef Name="SectionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IsEnrolledIn_StudentRecord">
+    <End Role="StudentRecord" Type="Self.StudentRecord" Multiplicity="0..1" />
+    <End Role="IsEnrolledIn" Type="Self.IsEnrolledIn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentRecord">
+        <PropertyRef Name="StudentRecordId" />
+      </Principal>
+      <Dependent Role="IsEnrolledIn">
+        <PropertyRef Name="StudentRecordId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IsEnrollingIn_Section">
+    <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
+    <End Role="IsEnrollingIn" Type="Self.IsEnrollingIn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Section">
+        <PropertyRef Name="SectionId" />
+      </Principal>
+      <Dependent Role="IsEnrollingIn">
+        <PropertyRef Name="SectionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IsEnrollingIn_StudentRecord">
+    <End Role="StudentRecord" Type="Self.StudentRecord" Multiplicity="0..1" />
+    <End Role="IsEnrollingIn" Type="Self.IsEnrollingIn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentRecord">
+        <PropertyRef Name="StudentRecordId" />
+      </Principal>
+      <Dependent Role="IsEnrollingIn">
+        <PropertyRef Name="StudentRecordId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IsScheduledIn_Section">
+    <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
+    <End Role="IsScheduledIn" Type="Self.IsScheduledIn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Section">
+        <PropertyRef Name="SectionId" />
+      </Principal>
+      <Dependent Role="IsScheduledIn">
+        <PropertyRef Name="SectionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IsScheduledIn_StudentSchedule">
+    <End Role="StudentSchedule" Type="Self.StudentSchedule" Multiplicity="0..1" />
+    <End Role="IsScheduledIn" Type="Self.IsScheduledIn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentSchedule">
+        <PropertyRef Name="StudentScheduleId" />
+      </Principal>
+      <Dependent Role="IsScheduledIn">
+        <PropertyRef Name="StudentScheduleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProgramOption_Department">
+    <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+    <End Role="ProgramOption" Type="Self.ProgramOption" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="DepartmentId" />
+      </Principal>
+      <Dependent Role="ProgramOption">
+        <PropertyRef Name="DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Section_Course">
+    <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+    <End Role="Section" Type="Self.Section" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="Section">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentConstraint_Student">
+    <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+    <End Role="StudentConstraint" Type="Self.StudentConstraint" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentId" />
+      </Principal>
+      <Dependent Role="StudentConstraint">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentRecord_Student">
+    <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+    <End Role="StudentRecord" Type="Self.StudentRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentId" />
+      </Principal>
+      <Dependent Role="StudentRecord">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentSchedule_Student">
+    <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+    <End Role="StudentSchedule" Type="Self.StudentSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentId" />
+      </Principal>
+      <Dependent Role="StudentSchedule">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PlannerDbModelStoreContainer">
+    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AccountUser" EntityType="Self.AccountUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DepartmentAvdisor" EntityType="Self.DepartmentAvdisor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DepartmentDirector" EntityType="Self.DepartmentDirector" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FallEvent" EntityType="Self.FallEvent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IsEnrolledIn" EntityType="Self.IsEnrolledIn" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IsEnrollingIn" EntityType="Self.IsEnrollingIn" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IsScheduledIn" EntityType="Self.IsScheduledIn" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProgramOption" EntityType="Self.ProgramOption" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SchoolUser" EntityType="Self.SchoolUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StudentConstraint" EntityType="Self.StudentConstraint" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StudentRecord" EntityType="Self.StudentRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StudentSchedule" EntityType="Self.StudentSchedule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SummerEvent" EntityType="Self.SummerEvent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WinterEvent" EntityType="Self.WinterEvent" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Course_Department" Association="Self.FK_Course_Department">
+      <End Role="Department" EntitySet="Department" />
+      <End Role="Course" EntitySet="Course" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IsEnrolledIn_Section" Association="Self.FK_IsEnrolledIn_Section">
+      <End Role="Section" EntitySet="Section" />
+      <End Role="IsEnrolledIn" EntitySet="IsEnrolledIn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IsEnrolledIn_StudentRecord" Association="Self.FK_IsEnrolledIn_StudentRecord">
+      <End Role="StudentRecord" EntitySet="StudentRecord" />
+      <End Role="IsEnrolledIn" EntitySet="IsEnrolledIn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IsEnrollingIn_Section" Association="Self.FK_IsEnrollingIn_Section">
+      <End Role="Section" EntitySet="Section" />
+      <End Role="IsEnrollingIn" EntitySet="IsEnrollingIn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IsEnrollingIn_StudentRecord" Association="Self.FK_IsEnrollingIn_StudentRecord">
+      <End Role="StudentRecord" EntitySet="StudentRecord" />
+      <End Role="IsEnrollingIn" EntitySet="IsEnrollingIn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IsScheduledIn_Section" Association="Self.FK_IsScheduledIn_Section">
+      <End Role="Section" EntitySet="Section" />
+      <End Role="IsScheduledIn" EntitySet="IsScheduledIn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IsScheduledIn_StudentSchedule" Association="Self.FK_IsScheduledIn_StudentSchedule">
+      <End Role="StudentSchedule" EntitySet="StudentSchedule" />
+      <End Role="IsScheduledIn" EntitySet="IsScheduledIn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProgramOption_Department" Association="Self.FK_ProgramOption_Department">
+      <End Role="Department" EntitySet="Department" />
+      <End Role="ProgramOption" EntitySet="ProgramOption" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Section_Course" Association="Self.FK_Section_Course">
+      <End Role="Course" EntitySet="Course" />
+      <End Role="Section" EntitySet="Section" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentConstraint_Student" Association="Self.FK_StudentConstraint_Student">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="StudentConstraint" EntitySet="StudentConstraint" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentRecord_Student" Association="Self.FK_StudentRecord_Student">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="StudentRecord" EntitySet="StudentRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentSchedule_Student" Association="Self.FK_StudentSchedule_Student">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="StudentSchedule" EntitySet="StudentSchedule" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
