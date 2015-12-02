@@ -48,7 +48,7 @@ namespace QFGreenBean.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CourseId,Code,Name,Prerequisite1,Prerequisite2,ConcurrentPrerequisite,Description,DepartmentId")] Course course)
+        public ActionResult Create([Bind(Include = "CourseId,Code,Name,Prerequisite1,Prerequisite2,ConcurrentPrerequisite,Description,HasTutortial,HasLab,DepartmentId")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace QFGreenBean.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CourseId,Code,Name,Prerequisite1,Prerequisite2,ConcurrentPrerequisite,Description,DepartmentId")] Course course)
+        public ActionResult Edit([Bind(Include = "CourseId,Code,Name,Prerequisite1,Prerequisite2,ConcurrentPrerequisite,Description,HasTutortial,HasLab,DepartmentId")] Course course)
         {
             if (ModelState.IsValid)
             {

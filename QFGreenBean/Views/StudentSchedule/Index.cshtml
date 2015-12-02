@@ -46,6 +46,9 @@
                 <b>Day & Times</b>
             </th>
             <th>
+                <b>Meeting Times</b>
+            </th>
+            <th>
                 <b>Room</b>
             </th>
             <th>
@@ -75,6 +78,81 @@
                     @Html.DisplayFor(modelItem => item.Section.Day) @Html.DisplayFor(modelItem => item.Section.StartTime) - @Html.DisplayFor(modelItem => item.Section.EndTime)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Section.StartDate) - @Html.DisplayFor(modelItem => item.Section.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Section.Room)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Section.Instructor)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.StudentScheduleId }) 
+                    <!-- |
+                    @Html.ActionLink("Details", "Details", new { id = item.StudentScheduleId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.StudentScheduleId }) -->
+                </td>
+            </tr>
+            }
+        }
+
+    </table>
+
+
+<p><h4>Winter 2016</h4></p>
+<table class="table">
+    <tr>
+        <th>
+            <b>Course Code</b>
+        </th>
+        <th>
+            <b>Course Name</b>
+        </th>
+        <th>
+            <b>Section</b>
+        </th>
+        <th>
+            <b>Units</b>
+        </th>
+        <th>
+            <b>Day & Times</b>
+        </th>
+        <th>
+            <b>Meeting Times</b>
+        </th>
+        <th>
+            <b>Room</b>
+        </th>
+        <th>
+            <b>Instructor</b>
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if ((item.Section.Term) == "Winter")
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Section.Course.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Section.Course.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Section.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Section.Units)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Section.Day) @Html.DisplayFor(modelItem => item.Section.StartTime) - @Html.DisplayFor(modelItem => item.Section.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Section.StartDate) - @Html.DisplayFor(modelItem => item.Section.EndDate)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Section.Room)
                 </td>
                 <td>
@@ -86,7 +164,7 @@
                     @Html.ActionLink("Delete", "Delete", new { id = item.StudentScheduleId })
                 </td>
             </tr>
-            }
-            }
+        }
+    }
 
-    </table>
+</table>

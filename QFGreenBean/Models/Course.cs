@@ -27,6 +27,8 @@ namespace QFGreenBean.Models
         public string Prerequisite2 { get; set; }
         public string ConcurrentPrerequisite { get; set; }
         public string Description { get; set; }
+        public bool HasTutortial { get; set; }
+        public bool HasLab { get; set; }
         public int DepartmentId { get; set; }
     
         public virtual Department Department { get; set; }
