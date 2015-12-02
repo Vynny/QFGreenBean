@@ -249,6 +249,7 @@
           </Key>
           <Property Name="StudentScheduleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StudentId" Type="int" />
+          <Property Name="SectionId" Type="int" />
         </EntityType>
         <EntityType Name="SummerEvent">
           <Key>
@@ -360,30 +361,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_IsScheduledIn_Section">
-          <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
-          <End Role="IsScheduledIn" Type="Self.IsScheduledIn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionId" />
-            </Principal>
-            <Dependent Role="IsScheduledIn">
-              <PropertyRef Name="SectionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IsScheduledIn_StudentSchedule">
-          <End Role="StudentSchedule" Type="Self.StudentSchedule" Multiplicity="0..1" />
-          <End Role="IsScheduledIn" Type="Self.IsScheduledIn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StudentSchedule">
-              <PropertyRef Name="StudentScheduleId" />
-            </Principal>
-            <Dependent Role="IsScheduledIn">
-              <PropertyRef Name="StudentScheduleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProgramOption_Department">
           <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
           <End Role="ProgramOption" Type="Self.ProgramOption" Multiplicity="*" />
@@ -420,27 +397,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_StudentRecord_Section">
+        <Association Name="FK_StudentSchedule_Section">
           <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
-          <End Role="StudentRecord" Type="Self.StudentRecord" Multiplicity="*" />
+          <End Role="StudentSchedule" Type="Self.StudentSchedule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Section">
               <PropertyRef Name="SectionId" />
             </Principal>
-            <Dependent Role="StudentRecord">
+            <Dependent Role="StudentSchedule">
               <PropertyRef Name="SectionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StudentRecord_Student">
-          <End Role="Student" Type="Self.Student" Multiplicity="1" />
-          <End Role="StudentRecord" Type="Self.StudentRecord" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Student">
-              <PropertyRef Name="StudentId" />
-            </Principal>
-            <Dependent Role="StudentRecord">
-              <PropertyRef Name="StudentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -510,14 +475,6 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_IsScheduledIn_Section" Association="Self.FK_IsScheduledIn_Section">
-            <End Role="Section" EntitySet="Section" />
-            <End Role="IsScheduledIn" EntitySet="IsScheduledIn" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IsScheduledIn_StudentSchedule" Association="Self.FK_IsScheduledIn_StudentSchedule">
-            <End Role="StudentSchedule" EntitySet="StudentSchedule" />
-            <End Role="IsScheduledIn" EntitySet="IsScheduledIn" />
-          </AssociationSet>
           <AssociationSet Name="FK_ProgramOption_Department" Association="Self.FK_ProgramOption_Department">
             <End Role="Department" EntitySet="Department" />
             <End Role="ProgramOption" EntitySet="ProgramOption" />
@@ -530,13 +487,9 @@
             <End Role="Student" EntitySet="Student" />
             <End Role="StudentConstraint" EntitySet="StudentConstraint" />
           </AssociationSet>
-          <AssociationSet Name="FK_StudentRecord_Section" Association="Self.FK_StudentRecord_Section">
+          <AssociationSet Name="FK_StudentSchedule_Section" Association="Self.FK_StudentSchedule_Section">
             <End Role="Section" EntitySet="Section" />
-            <End Role="StudentRecord" EntitySet="StudentRecord" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StudentRecord_Student" Association="Self.FK_StudentRecord_Student">
-            <End Role="Student" EntitySet="Student" />
-            <End Role="StudentRecord" EntitySet="StudentRecord" />
+            <End Role="StudentSchedule" EntitySet="StudentSchedule" />
           </AssociationSet>
           <AssociationSet Name="FK_StudentSchedule_Student" Association="Self.FK_StudentSchedule_Student">
             <End Role="Student" EntitySet="Student" />
@@ -665,12 +618,6 @@
             <End Role="Department" EntitySet="Departments" />
             <End Role="ProgramOption" EntitySet="ProgramOptions" />
           </AssociationSet>
-          <EntitySet Name="IsScheduledIns" EntityType="PlannerDbModel.IsScheduledIn" />
-          <EntitySet Name="StudentSchedules" EntityType="PlannerDbModel.StudentSchedule" />
-          <AssociationSet Name="FK_IsScheduledIn_StudentSchedule" Association="PlannerDbModel.FK_IsScheduledIn_StudentSchedule">
-            <End Role="StudentSchedule" EntitySet="StudentSchedules" />
-            <End Role="IsScheduledIn" EntitySet="IsScheduledIns" />
-          </AssociationSet>
           <EntitySet Name="Courses" EntityType="PlannerDbModel.Course" />
           <AssociationSet Name="FK_Course_Department" Association="PlannerDbModel.FK_Course_Department">
             <End Role="Department" EntitySet="Departments" />
@@ -681,17 +628,9 @@
             <End Role="Course" EntitySet="Courses" />
             <End Role="Section" EntitySet="Sections" />
           </AssociationSet>
-          <AssociationSet Name="FK_IsScheduledIn_Section" Association="PlannerDbModel.FK_IsScheduledIn_Section">
-            <End Role="Section" EntitySet="Sections" />
-            <End Role="IsScheduledIn" EntitySet="IsScheduledIns" />
-          </AssociationSet>
           <EntitySet Name="DepartmentAvdisors" EntityType="PlannerDbModel.DepartmentAvdisor" />
           <EntitySet Name="DepartmentDirectors" EntityType="PlannerDbModel.DepartmentDirector" />
           <EntitySet Name="Students" EntityType="PlannerDbModel.Student" />
-          <AssociationSet Name="FK_StudentSchedule_Student" Association="PlannerDbModel.FK_StudentSchedule_Student">
-            <End Role="Student" EntitySet="Students" />
-            <End Role="StudentSchedule" EntitySet="StudentSchedules" />
-          </AssociationSet>
           <EntitySet Name="FallEvents" EntityType="PlannerDbModel.FallEvent" />
           <EntitySet Name="SummerEvents" EntityType="PlannerDbModel.SummerEvent" />
           <EntitySet Name="WinterEvents" EntityType="PlannerDbModel.WinterEvent" />
@@ -702,7 +641,6 @@
           </AssociationSet>
           <EntitySet Name="CourseTakens" EntityType="PlannerDbModel.CourseTaken" />
           <EntitySet Name="IsEnrolledIns" EntityType="PlannerDbModel.IsEnrolledIn" />
-          <EntitySet Name="StudentRecords" EntityType="PlannerDbModel.StudentRecord" />
           <AssociationSet Name="FK_CourseTaken_Section" Association="PlannerDbModel.FK_CourseTaken_Section">
             <End Role="Section" EntitySet="Sections" />
             <End Role="CourseTaken" EntitySet="CourseTakens" />
@@ -711,14 +649,17 @@
             <End Role="Student" EntitySet="Students" />
             <End Role="CourseTaken" EntitySet="CourseTakens" />
           </AssociationSet>
-          <AssociationSet Name="FK_StudentRecord_Section" Association="PlannerDbModel.FK_StudentRecord_Section">
+          <EntitySet Name="IsScheduledIns" EntityType="PlannerDbModel.IsScheduledIn" />
+          <EntitySet Name="StudentSchedules" EntityType="PlannerDbModel.StudentSchedule" />
+          <AssociationSet Name="FK_StudentSchedule_Section" Association="PlannerDbModel.FK_StudentSchedule_Section">
             <End Role="Section" EntitySet="Sections" />
-            <End Role="StudentRecord" EntitySet="StudentRecords" />
+            <End Role="StudentSchedule" EntitySet="StudentSchedules" />
           </AssociationSet>
-          <AssociationSet Name="FK_StudentRecord_Student" Association="PlannerDbModel.FK_StudentRecord_Student">
+          <AssociationSet Name="FK_StudentSchedule_Student" Association="PlannerDbModel.FK_StudentSchedule_Student">
             <End Role="Student" EntitySet="Students" />
-            <End Role="StudentRecord" EntitySet="StudentRecords" />
+            <End Role="StudentSchedule" EntitySet="StudentSchedules" />
           </AssociationSet>
+          <EntitySet Name="StudentRecords" EntityType="PlannerDbModel.StudentRecord" />
         </EntityContainer>
         <EntityType Name="Feedback">
           <Key>
@@ -788,37 +729,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="IsScheduledIn">
-          <Key>
-            <PropertyRef Name="IsScheduledInId" />
-          </Key>
-          <Property Name="IsScheduledInId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentScheduleId" Type="Int32" />
-          <Property Name="SectionId" Type="Int32" />
-          <NavigationProperty Name="StudentSchedule" Relationship="PlannerDbModel.FK_IsScheduledIn_StudentSchedule" FromRole="IsScheduledIn" ToRole="StudentSchedule" />
-          <NavigationProperty Name="Section" Relationship="PlannerDbModel.FK_IsScheduledIn_Section" FromRole="IsScheduledIn" ToRole="Section" />
-        </EntityType>
-        <EntityType Name="StudentSchedule">
-          <Key>
-            <PropertyRef Name="StudentScheduleId" />
-          </Key>
-          <Property Name="StudentScheduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentId" Type="Int32" />
-          <NavigationProperty Name="IsScheduledIns" Relationship="PlannerDbModel.FK_IsScheduledIn_StudentSchedule" FromRole="StudentSchedule" ToRole="IsScheduledIn" />
-          <NavigationProperty Name="Student" Relationship="PlannerDbModel.FK_StudentSchedule_Student" FromRole="StudentSchedule" ToRole="Student" />
-        </EntityType>
-        <Association Name="FK_IsScheduledIn_StudentSchedule">
-          <End Type="PlannerDbModel.StudentSchedule" Role="StudentSchedule" Multiplicity="0..1" />
-          <End Type="PlannerDbModel.IsScheduledIn" Role="IsScheduledIn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StudentSchedule">
-              <PropertyRef Name="StudentScheduleId" />
-            </Principal>
-            <Dependent Role="IsScheduledIn">
-              <PropertyRef Name="StudentScheduleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="CourseId" />
@@ -864,9 +774,8 @@
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="CourseId" Type="Int32" />
           <NavigationProperty Name="Course" Relationship="PlannerDbModel.FK_Section_Course" FromRole="Section" ToRole="Course" />
-          <NavigationProperty Name="IsScheduledIns" Relationship="PlannerDbModel.FK_IsScheduledIn_Section" FromRole="Section" ToRole="IsScheduledIn" />
           <NavigationProperty Name="CourseTakens" Relationship="PlannerDbModel.FK_CourseTaken_Section" FromRole="Section" ToRole="CourseTaken" />
-          <NavigationProperty Name="StudentRecords" Relationship="PlannerDbModel.FK_StudentRecord_Section" FromRole="Section" ToRole="StudentRecord" />
+          <NavigationProperty Name="StudentSchedules" Relationship="PlannerDbModel.FK_StudentSchedule_Section" FromRole="Section" ToRole="StudentSchedule" />
         </EntityType>
         <Association Name="FK_Section_Course">
           <End Type="PlannerDbModel.Course" Role="Course" Multiplicity="0..1" />
@@ -877,18 +786,6 @@
             </Principal>
             <Dependent Role="Section">
               <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IsScheduledIn_Section">
-          <End Type="PlannerDbModel.Section" Role="Section" Multiplicity="0..1" />
-          <End Type="PlannerDbModel.IsScheduledIn" Role="IsScheduledIn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionId" />
-            </Principal>
-            <Dependent Role="IsScheduledIn">
-              <PropertyRef Name="SectionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -933,23 +830,10 @@
           <Property Name="Telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="StudentSchedules" Relationship="PlannerDbModel.FK_StudentSchedule_Student" FromRole="Student" ToRole="StudentSchedule" />
           <NavigationProperty Name="StudentConstraints" Relationship="PlannerDbModel.FK_StudentConstraint_Student" FromRole="Student" ToRole="StudentConstraint" />
           <NavigationProperty Name="CourseTakens" Relationship="PlannerDbModel.FK_CourseTaken_Student" FromRole="Student" ToRole="CourseTaken" />
-          <NavigationProperty Name="StudentRecord" Relationship="PlannerDbModel.FK_StudentRecord_Student" FromRole="Student" ToRole="StudentRecord" />
+          <NavigationProperty Name="StudentSchedules" Relationship="PlannerDbModel.FK_StudentSchedule_Student" FromRole="Student" ToRole="StudentSchedule" />
         </EntityType>
-        <Association Name="FK_StudentSchedule_Student">
-          <End Type="PlannerDbModel.Student" Role="Student" Multiplicity="0..1" />
-          <End Type="PlannerDbModel.StudentSchedule" Role="StudentSchedule" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Student">
-              <PropertyRef Name="StudentId" />
-            </Principal>
-            <Dependent Role="StudentSchedule">
-              <PropertyRef Name="StudentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="FallEvent">
           <Key>
             <PropertyRef Name="FallEventId" />
@@ -1019,15 +903,6 @@
           <Property Name="IsEnrolledId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SectionId" Type="Int32" />
         </EntityType>
-        <EntityType Name="StudentRecord">
-          <Key>
-            <PropertyRef Name="StudentId" />
-          </Key>
-          <Property Name="StudentId" Type="Int32" Nullable="false" />
-          <Property Name="SectionId" Type="Int32" />
-          <NavigationProperty Name="Section" Relationship="PlannerDbModel.FK_StudentRecord_Section" FromRole="StudentRecord" ToRole="Section" />
-          <NavigationProperty Name="Student" Relationship="PlannerDbModel.FK_StudentRecord_Student" FromRole="StudentRecord" ToRole="Student" />
-        </EntityType>
         <Association Name="FK_CourseTaken_Section">
           <End Type="PlannerDbModel.Section" Role="Section" Multiplicity="0..1" />
           <End Type="PlannerDbModel.CourseTaken" Role="CourseTaken" Multiplicity="*" />
@@ -1052,30 +927,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_StudentRecord_Section">
+        <EntityType Name="IsScheduledIn">
+          <Key>
+            <PropertyRef Name="IsScheduledInId" />
+          </Key>
+          <Property Name="IsScheduledInId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentScheduleId" Type="Int32" />
+          <Property Name="SectionId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="StudentSchedule">
+          <Key>
+            <PropertyRef Name="StudentScheduleId" />
+          </Key>
+          <Property Name="StudentScheduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" />
+          <Property Name="SectionId" Type="Int32" />
+          <NavigationProperty Name="Section" Relationship="PlannerDbModel.FK_StudentSchedule_Section" FromRole="StudentSchedule" ToRole="Section" />
+          <NavigationProperty Name="Student" Relationship="PlannerDbModel.FK_StudentSchedule_Student" FromRole="StudentSchedule" ToRole="Student" />
+        </EntityType>
+        <Association Name="FK_StudentSchedule_Section">
           <End Type="PlannerDbModel.Section" Role="Section" Multiplicity="0..1" />
-          <End Type="PlannerDbModel.StudentRecord" Role="StudentRecord" Multiplicity="*" />
+          <End Type="PlannerDbModel.StudentSchedule" Role="StudentSchedule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Section">
               <PropertyRef Name="SectionId" />
             </Principal>
-            <Dependent Role="StudentRecord">
+            <Dependent Role="StudentSchedule">
               <PropertyRef Name="SectionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_StudentRecord_Student">
-          <End Type="PlannerDbModel.Student" Role="Student" Multiplicity="1" />
-          <End Type="PlannerDbModel.StudentRecord" Role="StudentRecord" Multiplicity="0..1" />
+        <Association Name="FK_StudentSchedule_Student">
+          <End Type="PlannerDbModel.Student" Role="Student" Multiplicity="0..1" />
+          <End Type="PlannerDbModel.StudentSchedule" Role="StudentSchedule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Student">
               <PropertyRef Name="StudentId" />
             </Principal>
-            <Dependent Role="StudentRecord">
+            <Dependent Role="StudentSchedule">
               <PropertyRef Name="StudentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="StudentRecord">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="SectionId" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1200,23 +1100,6 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="SchoolUserId" ColumnName="SchoolUserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="IsScheduledIns">
-            <EntityTypeMapping TypeName="PlannerDbModel.IsScheduledIn">
-              <MappingFragment StoreEntitySet="IsScheduledIn">
-                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
-                <ScalarProperty Name="StudentScheduleId" ColumnName="StudentScheduleId" />
-                <ScalarProperty Name="IsScheduledInId" ColumnName="IsScheduledInId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StudentSchedules">
-            <EntityTypeMapping TypeName="PlannerDbModel.StudentSchedule">
-              <MappingFragment StoreEntitySet="StudentSchedule">
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="StudentScheduleId" ColumnName="StudentScheduleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1355,6 +1238,24 @@
               <MappingFragment StoreEntitySet="IsEnrolledIn">
                 <ScalarProperty Name="SectionId" ColumnName="SectionId" />
                 <ScalarProperty Name="IsEnrolledId" ColumnName="IsEnrolledId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IsScheduledIns">
+            <EntityTypeMapping TypeName="PlannerDbModel.IsScheduledIn">
+              <MappingFragment StoreEntitySet="IsScheduledIn">
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="StudentScheduleId" ColumnName="StudentScheduleId" />
+                <ScalarProperty Name="IsScheduledInId" ColumnName="IsScheduledInId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentSchedules">
+            <EntityTypeMapping TypeName="PlannerDbModel.StudentSchedule">
+              <MappingFragment StoreEntitySet="StudentSchedule">
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="StudentScheduleId" ColumnName="StudentScheduleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

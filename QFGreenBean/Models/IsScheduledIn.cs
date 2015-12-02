@@ -17,8 +17,5 @@ namespace QFGreenBean.Models
         public int IsScheduledInId { get; set; }
         public Nullable<int> StudentScheduleId { get; set; }
         public Nullable<int> SectionId { get; set; }
-    
-        public virtual StudentSchedule StudentSchedule { get; set; }
-        public virtual Section Section { get; set; }
     }
 }

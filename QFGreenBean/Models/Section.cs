@@ -17,9 +17,8 @@ namespace QFGreenBean.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Section()
         {
-            this.IsScheduledIns = new HashSet<IsScheduledIn>();
             this.CourseTakens = new HashSet<CourseTaken>();
-            this.StudentRecords = new HashSet<StudentRecord>();
+            this.StudentSchedules = new HashSet<StudentSchedule>();
         }
     
         public int SectionId { get; set; }
@@ -38,10 +37,8 @@ namespace QFGreenBean.Models
     
         public virtual Course Course { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IsScheduledIn> IsScheduledIns { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CourseTaken> CourseTakens { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StudentRecord> StudentRecords { get; set; }
+        public virtual ICollection<StudentSchedule> StudentSchedules { get; set; }
     }
 }

@@ -16,8 +16,5 @@ namespace QFGreenBean.Models
     {
         public int StudentId { get; set; }
         public Nullable<int> SectionId { get; set; }
-    
-        public virtual Section Section { get; set; }
-        public virtual Student Student { get; set; }
     }
 }

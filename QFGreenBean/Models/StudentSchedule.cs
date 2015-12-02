@@ -14,17 +14,11 @@ namespace QFGreenBean.Models
     
     public partial class StudentSchedule
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public StudentSchedule()
-        {
-            this.IsScheduledIns = new HashSet<IsScheduledIn>();
-        }
-    
         public int StudentScheduleId { get; set; }
         public Nullable<int> StudentId { get; set; }
+        public Nullable<int> SectionId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IsScheduledIn> IsScheduledIns { get; set; }
+        public virtual Section Section { get; set; }
         public virtual Student Student { get; set; }
     }
 }

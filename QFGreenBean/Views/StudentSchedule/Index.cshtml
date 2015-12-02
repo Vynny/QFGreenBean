@@ -1,0 +1,63 @@
+﻿@model IEnumerable<QFGreenBean.Models.StudentSchedule>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+   @Html.ActionLink("Create New", "Create")
+</p>
+
+<table style="width:100%;">
+    <tr>
+        <td class="auto-style1">Student Name:</td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.First().Student.FirstName) @Html.DisplayFor(modelItem => Model.First().Student.FirstName)
+        </td>
+    </tr>
+    <tr>
+        <td class="auto-style1">Student Number</td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.First().Student.StudentNumber)
+        </td>
+    </tr>
+ </table>
+<p>  &nbsp;</p>
+
+    <table class="table">
+        <tr>
+            <th>
+               <b>Course Code</b>
+            </th>
+            <th>
+                <b>Course Name</b>
+            </th>
+            <th>
+                <b>Section</b>
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Section.Course.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Section.Course.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Section.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.StudentScheduleId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.StudentScheduleId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.StudentScheduleId })
+                </td>
+            </tr>
+        }
+
+    </table>

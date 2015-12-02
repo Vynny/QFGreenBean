@@ -184,6 +184,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\StudentScheduleController.cs" />
     <Compile Include="Controllers\SummerEventController.cs" />
     <Compile Include="Controllers\SummerScheduleCalendarController.cs" />
     <Compile Include="Controllers\WinterEventController.cs" />
@@ -414,6 +415,11 @@
     <Content Include="Views\CourseTaken\Index.cshtml" />
     <Content Include="Views\Constraint\Index.cshtml" />
     <Content Include="Views\Student\Login.cshtml" />
+    <Content Include="Views\StudentSchedule\Create.cshtml" />
+    <Content Include="Views\StudentSchedule\Delete.cshtml" />
+    <Content Include="Views\StudentSchedule\Details.cshtml" />
+    <Content Include="Views\StudentSchedule\Edit.cshtml" />
+    <Content Include="Views\StudentSchedule\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
