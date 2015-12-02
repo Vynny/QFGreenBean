@@ -313,7 +313,9 @@
     <Content Include="Models\PlannerDbModel.edmx.diagram">
       <DependentUpon>PlannerDbModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\greenbean - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\greenbean - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\greenbean - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\greenbean - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\daypilot-all.min.js" />
@@ -403,7 +405,6 @@
     <Content Include="Views\SummerEvent\Details.cshtml" />
     <Content Include="Views\SummerEvent\Edit.cshtml" />
     <Content Include="Views\SummerEvent\Index.cshtml" />
-    <Content Include="Views\Constraint\ViewConstraints.cshtml" />
     <Content Include="Views\Constraint\_AddConstraint.cshtml" />
     <Content Include="Views\Constraint\_DeleteConstraint.cshtml" />
     <Content Include="Views\CourseTaken\Create.cshtml" />
@@ -411,6 +412,8 @@
     <Content Include="Views\CourseTaken\Details.cshtml" />
     <Content Include="Views\CourseTaken\Edit.cshtml" />
     <Content Include="Views\CourseTaken\Index.cshtml" />
+    <Content Include="Views\Constraint\Index.cshtml" />
+    <Content Include="Views\Student\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
