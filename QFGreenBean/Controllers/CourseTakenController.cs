@@ -17,8 +17,17 @@ namespace QFGreenBean.Controllers
         // GET: CourseTaken
         public ActionResult Index()
         {
-            var courseTakens = db.CourseTakens.Include(c => c.Section).Include(c => c.Student);
-            return View(courseTakens.ToList());
+            if (StudentController.IsLoggedIn)
+            {
+                int? studentId = StudentController.LoggedInStudentID;
+                var courseTakens = db.Students.Find(studentId).CourseTakens.ToList();
+           
+                return View(courseTakens);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Student");
+            }
         }
 
         // GET: CourseTaken/Details/5

@@ -1,39 +1,97 @@
 ﻿@model IEnumerable<QFGreenBean.Models.CourseTaken>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "StudentRecord";
 }
 
-<h2>Index</h2>
+<h2>Studenet Record</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@{ float? totalCredit = (float)0.0; }
+
+@foreach (var item in Model)
+{
+        totalCredit += item.Section.Units;
+}
+
+@if (totalCredit == 0.0)
+{
+    <p>Your are a freshman.</p>
+    <table style="width:30%;">
+        <tr>
+            <td class="auto-style1">Total credits earned: </td>
+            <td>
+                @totalCredit.ToString()
+            </td>
+        </tr>
+    </table>
+}
+else
+{
+
+<table style="width:30%;">
+    <tr>
+        <td class="auto-style1">Student Name:</td>
+        <td>
+           @Html.DisplayFor(modelItem => Model.First().Student.FirstName) @Html.DisplayFor(modelItem => Model.First().Student.FirstName)
+        </td>
+    </tr>
+    <tr>
+        <td class="auto-style1">Student Number</td>
+        <td>
+          @Html.DisplayFor(modelItem => Model.First().Student.StudentNumber)
+        </td>
+    </tr>
+    <tr>
+        <td class="auto-style1">Total credits earned: </td>
+        <td>
+            @totalCredit.ToString()
+        </td>
+    </tr>
+
+</table>
+
+<p>  &nbsp;</p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Section.Name)
+            <b>Course Code</b>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Student.StudentNumber)
+            <b>Course Name</b>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Section.Units)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Section.Name)
+            @Html.DisplayFor(modelItem => item.Section.Course.Code)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Student.StudentNumber)
+            @Html.DisplayFor(modelItem => item.Section.Course.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CourseTakenId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CourseTakenId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CourseTakenId })
+            @Html.DisplayFor(modelItem => item.Section.Units)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.CourseTakenId }) 
+            <!--|
+            @Html.ActionLink("Details", "Details", new { id = item.CourseTakenId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.CourseTakenId })
+                -->
         </td>
     </tr>
 }
 
 </table>
+
+} <!-- end of if (totalCredit == 0.0)-->
