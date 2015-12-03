@@ -4,7 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using QFGreenBean.Models;
+<<<<<<< HEAD
 using QFGreenBean.Utils;
+=======
+using QFGreenBean.Helpers;
+>>>>>>> before list change
 
 namespace QFGreenBean.Controllers
 {
@@ -15,6 +19,7 @@ namespace QFGreenBean.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+<<<<<<< HEAD
             if (StudentController.IsLoggedIn)
             {
                 int? studentId = StudentController.LoggedInStudentID;
@@ -42,6 +47,13 @@ namespace QFGreenBean.Controllers
             {
                 return RedirectToAction("Login", "Student");
             }
+=======
+            Programs p = new Programs();
+            Scheduler s = new Scheduler(db.Students.Find(7), Programs.SOEN_General);
+            s.GenerateSchedule();
+            s.DebugPrint();
+            return View();
+>>>>>>> before list change
         }
 
         [HttpPost]

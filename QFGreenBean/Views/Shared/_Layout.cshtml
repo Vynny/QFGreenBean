@@ -7,6 +7,12 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    <style>
+        footer {
+            clear:both;
+        }
+    </style>
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -32,10 +38,10 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content" > 
         @RenderBody()
-        <hr />
         <footer>
+            <hr />
             <p>&copy; @DateTime.Now.Year - Green Bean Software</p>
         </footer>
     </div>

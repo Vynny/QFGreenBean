@@ -71,5 +71,5 @@
         <td class="tg-yw4l">@Html.DropDownListFor(m => m.EndHour, new SelectList(hourItems, "Value", "Text")):@Html.DropDownListFor(m => m.EndMinute, new SelectList(minuteItems, "Value", "Text"))</td>
         <td class="tg-yw4l"><button name="Submit" value="SubmitConstraint">Add</button></td>
     </tr>
-    <h3>@Html.ValidationMessageFor(m => m.EndHour)</h3>
+    @Html.ValidationMessageFor(m => m.EndHour)
 }

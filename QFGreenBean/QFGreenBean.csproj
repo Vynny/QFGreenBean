@@ -193,6 +193,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Scheduler.cs" />
+    <Compile Include="Helpers\ProgramSequence.cs" />
     <Compile Include="Models\AccountUser.cs">
       <DependentUpon>PlannerDbModel.tt</DependentUpon>
     </Compile>
