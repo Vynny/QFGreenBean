@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Web;
+using System.Collections.ObjectModel;
 
 namespace QFGreenBean.Helpers
 {
@@ -41,7 +42,7 @@ namespace QFGreenBean.Helpers
                 .AddCourse("ENGR 233", Semester.WINTER)
                 .AddCourse("SOEN 228", Semester.WINTER)
                 .AddCourse("SOEN 287", Semester.WINTER)
-                .AddCourse("SCIENCE", Semester.WINTER);
+                .AddCourse("SCIENCE1", Semester.WINTER);
 
             SOEN_General.Year(2)
                 //Fall
@@ -49,7 +50,7 @@ namespace QFGreenBean.Helpers
                 .AddCourse("COMP 352", Semester.FALL)
                 .AddCourse("ELEC 375", Semester.FALL)
                 .AddCourse("ENCS 282", Semester.FALL)
-                .AddCourse("SCIENCE", Semester.FALL)
+                .AddCourse("SCIENCE2", Semester.FALL)
                 //Winter
                 .AddCourse("COMP 346", Semester.WINTER)
                 .AddCourse("ENGR 275", Semester.WINTER)
@@ -69,21 +70,21 @@ namespace QFGreenBean.Helpers
                 .AddCourse("SOEN 345", Semester.WINTER)
                 .AddCourse("SOEN 357", Semester.WINTER)
                 .AddCourse("SOEN 390", Semester.WINTER)
-                .AddCourse("ELECTIVE", Semester.WINTER);
+                .AddCourse("ELECTIVE1", Semester.WINTER);
 
             SOEN_General.Year(4)
                 //Fall
-                .AddCourse("SOEN 490-1", Semester.FALL)
+                .AddCourse("SOEN 490_1", Semester.FALL)
                 .AddCourse("ENGR 301", Semester.FALL)
                 .AddCourse("SOEN 321", Semester.FALL)
-                .AddCourse("ELECTIVE-1", Semester.FALL)
-                .AddCourse("ELECTIVE-2", Semester.FALL)
+                .AddCourse("ELECTIVE2", Semester.FALL)
+                .AddCourse("ELECTIVE3", Semester.FALL)
                 //Winter
                 .AddCourse("SOEN 385", Semester.WINTER)
                 .AddCourse("ENGR 392", Semester.WINTER)
-                .AddCourse("SOEN 490-2", Semester.WINTER)
-                .AddCourse("ELECTIVE-3", Semester.WINTER)
-                .AddCourse("ELECTIVE-4", Semester.WINTER);
+                .AddCourse("SOEN 490_2", Semester.WINTER)
+                .AddCourse("ELECTIVE4", Semester.WINTER)
+                .AddCourse("ELECTIVE5", Semester.WINTER);
 
         }
 
@@ -92,39 +93,45 @@ namespace QFGreenBean.Helpers
     [Serializable]
     public class ProgramSequence
     {
-
         private int curYear  = -1;
         public string Program { get; set; }
-        public string Option { get; set; }
-        private Dictionary<string, Semester> CourseToSemester { get; set; }
-        public List<Dictionary<string, Semester>> YearToListOfCourses { get; set; }
+        public string Option { get; set; }   
+        public List<List<string>> YearToListOfCourses { get; set; }
+
+        //private List<string> CourseToSemester;
+        private Dictionary<string, Semester> SemesterMapping;
 
         public ProgramSequence(string Program, string Option)
         {
-            this.YearToListOfCourses = new List<Dictionary<string, Semester>>();
+            this.YearToListOfCourses = new List<List<string>>();
+            this.SemesterMapping = new Dictionary<string, Semester>();
             this.Program = Program;
             this.Option = Option;
         }
 
         public ProgramSequence Year(int year)
         {
-            YearToListOfCourses.Add(new Dictionary<string, Semester>());
+            YearToListOfCourses.Add(new List<string>());
             curYear++;
             return this;
         }
 
-        public ProgramSequence AddCourse(string courseID, Semester sem)
-        {          
-            YearToListOfCourses[curYear].Add(courseID, sem);
+        public ProgramSequence AddCourse(string courseID, Semester s)
+        {
+            SemesterMapping.Add(courseID, s);
+            YearToListOfCourses[curYear].Add(courseID);
             return this;
         }
 
         public void RemoveCourse(string courseID)
         {
-            foreach (Dictionary<string, Semester> course in YearToListOfCourses.ToList())
+            foreach (List<string> course in YearToListOfCourses.ToList())
             {
-                if (course.ContainsKey(courseID))
-                    YearToListOfCourses.Remove(course);
+               foreach (string c in course.ToList())
+                {
+                    if (courseID == c)
+                        course.Remove(c);
+                }
             }
         }
 
@@ -149,6 +156,12 @@ namespace QFGreenBean.Helpers
                 stream.Seek(0, SeekOrigin.Begin);
                 return (T)formatter.Deserialize(stream);
             }
+        }
+
+
+        public Semester getSemester(string courseID)
+        {
+            return SemesterMapping[courseID];
         }
 
     }

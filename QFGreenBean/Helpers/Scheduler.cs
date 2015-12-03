@@ -9,99 +9,108 @@ namespace QFGreenBean.Helpers
     public class Scheduler
     {
 
-        //Utils
-        private PlannerDbEntities db = new PlannerDbEntities();
+        /*Utils*/
+        private PlannerDbEntities db = new PlannerDbEntities();//Database to retreive data
 
-        //Input
-        private Student Student;
-        private List<Course> CoursesTaken;
-        private ProgramSequence MasterSequence;
+        /*Input*/
+        private Student Student;//The Student
+        private List<Course> CoursesTaken;//The Courses the Student has already taken
+        private ProgramSequence MasterSequence;//The master sequence, containing the recommended sequence for a particular program and choice
 
-        //Helpful Structures
-        private ProgramSequence LocalSequence; /* Output */
-        private List<Course> PrereqsMissing;
+        /*Helpful Structures*/
+        private ProgramSequence LocalSequence;//A DEEP copy of the master sequence, used to track user's schedule throughout generation. The final result is the list of courses that must be added to the schedule"
+        private List<Course> PrereqsMissing;//Courses are added to this list when prereqs for it are missing (ex: Student did COMP249 but not COMP232, COMP352 would be added to this list when encountered
 
-        //Code
+
         public Scheduler(Student Student, ProgramSequence MasterSequence)
         {
             this.Student = Student;
             this.MasterSequence = MasterSequence;
-            this.LocalSequence = ProgramSequence.DeepClone(MasterSequence);
-            this.CoursesTaken = new List<Course>();
-            this.PrereqsMissing = new List<Course>();
-
+            LocalSequence = ProgramSequence.DeepClone(MasterSequence);
+            CoursesTaken = new List<Course>();
+            PrereqsMissing = new List<Course>();
 
             foreach (CourseTaken s in db.Students.Find(Student.StudentId).CourseTakens.ToList())
                 CoursesTaken.Add(s.Section.Course);
         }
 
-        public void GenerateSchedule()
+        public void GenerateSchedule(int year)
         {
-            foreach (var year in MasterSequence.YearToListOfCourses)
+            List<string> YearMap = MasterSequence.YearToListOfCourses[year];
+            bool SwitchSemester = false;
+
+            foreach (string course in YearMap)
             {
-                foreach (KeyValuePair<string, Semester> course in year)
+                if (MasterSequence.getSemester(course) == Semester.WINTER && !SwitchSemester)
                 {
-                    //The Student already took the course, remove it 
-                    if (CoursesTaken.Contains(CourseByCode(course.Key)))
-                    {
-                        LocalSequence.RemoveCourse(course.Key);
-                        System.Diagnostics.Debug.WriteLine("!!!ALREADY TOOK!!! ~ " + course.Key.ToString());
-                        continue;
-                    }
-
-                    Course Prereq1 = null;
-                    Course Prereq2 = null;
-                    try
-                    {
-                        Prereq1 = CourseByCode(CourseByCode(course.Key).Prerequisite1);
-                        Prereq2 = CourseByCode(CourseByCode(course.Key).Prerequisite2);
-                    }
-                    catch (NullReferenceException) { }
-
-
-                    if (Prereq1 != null && Prereq2 != null)
-                    {
-                        System.Diagnostics.Debug.WriteLine("Prereqs Missing For ({0}), Prereqs are {1}, {2} ", course.Key, Prereq1.Name.ToString(), Prereq2.Name.ToString());
-                        if (!CoursesTaken.Contains(Prereq1))
-                        {
-                            PrereqsMissing.Add(CourseByCode(course.Key));
-                        }
-                        if (!CoursesTaken.Contains(Prereq2))
-                        {
-                            PrereqsMissing.Add(CourseByCode(course.Key));
-                        }
-                    }
-                    else if (Prereq1 != null)
-                    {
-                        System.Diagnostics.Debug.WriteLine("Prereq Missing For ({0}), Prereq is {1}", course.Key, Prereq1.Name.ToString());
-                        if (!CoursesTaken.Contains(Prereq1))
-                        {
-                            PrereqsMissing.Add(CourseByCode(course.Key));
-                        }
-                    }
-                    else if (Prereq2 != null)
-                    {
-                        System.Diagnostics.Debug.WriteLine("Prereq Missing For ({0}), Prereq is {1} ", course.Key, Prereq2.Name.ToString());
-                        if (!CoursesTaken.Contains(Prereq2))
-                        {
-                            PrereqsMissing.Add(CourseByCode(course.Key));
-                        }
-                    }
-
+                    SwitchSemester = true;
+                    AddTakenCourses(YearMap, Semester.FALL);
                 }
 
-                //Now that the year has been sifted, assume the student passes all his/her classes
-                AddTakenCourses(year);
+                //The Student already took the course, remove it 
+                if (CoursesTaken.Contains(CourseByCode(course)))
+                {
+                    LocalSequence.RemoveCourse(course);
+                    System.Diagnostics.Debug.WriteLine("[ALREADY TOOK]: " + course.ToString());
+                    continue;
+                }
+
+                //Check if course has prerequisites
+                Course Prereq1 = null;
+                Course Prereq2 = null;
+                try
+                {
+                    Prereq1 = CourseByCode(CourseByCode(course).Prerequisite1);
+                    Prereq2 = CourseByCode(CourseByCode(course).Prerequisite2);
+                }
+                catch (NullReferenceException) { }
+
+                //Case 1, course has 2 non null prereqs
+                if (Prereq1 != null && Prereq2 != null)
+                {
+                    if (CoursesTaken.Exists(x => x.Code == Prereq1.Code))
+                    {
+                        PrereqsMissing.Add(CourseByCode(course));
+                    }
+                    if (!CoursesTaken.Exists(x => x.Code == Prereq2.Code))
+                    {
+                        PrereqsMissing.Add(CourseByCode(course));
+                    }
+                }
+                //Case 2: Only prereq1 present
+                else if (Prereq1 != null)
+                {
+                    if (!CoursesTaken.Exists(x => x.Code == Prereq1.Code))
+                    {
+                        PrereqsMissing.Add(CourseByCode(course));
+                    }
+                }
+                //Case 3: Only prereq2 present
+                else if (Prereq2 != null)
+                {
+                    if (!CoursesTaken.Exists(x => x.Code == Prereq2.Code))
+                    {
+                        PrereqsMissing.Add(CourseByCode(course));
+                    }
+                }
             }
 
+            //Now that the year has been sifted, assume the student passes all his/her classes
+            AddTakenCourses(YearMap, Semester.WINTER);
+            //Update the local sequence
+            UpdateLocal();
         }
 
-        private void AddTakenCourses(Dictionary<string, Semester> year)
+        private void AddTakenCourses(List<string> year, Semester s)
         {
-            foreach (KeyValuePair<string, Semester> course in year)
+            System.Diagnostics.Debug.WriteLine("Adding courses for " + s.ToString());
+            foreach (string course in year)
             {
-                System.Diagnostics.Debug.WriteLine("Course " + course.Key + " was taken.");
-                CoursesTaken.Add(CourseByCode(course.Key));
+                if (MasterSequence.getSemester(course) == s)
+                {
+                    System.Diagnostics.Debug.WriteLine("Course " + course + " was taken.");
+                    CoursesTaken.Add(CourseByCode(course));
+                }
             }
 
         }
@@ -116,13 +125,36 @@ namespace QFGreenBean.Helpers
             int c = 1;
             foreach (var year in LocalSequence.YearToListOfCourses)
             {
-
                 System.Diagnostics.Debug.WriteLine("Year: " + c.ToString());
-                foreach (KeyValuePair<string, Semester> course in year)
+                foreach (string course in year)
                 {
-                    System.Diagnostics.Debug.WriteLine("\tKey is " + course.Key.ToString());
+                    System.Diagnostics.Debug.WriteLine("\tKey is " + course);
                 }
                 c++;
+            }
+        }
+
+        public void PrintCoursesTaken()
+        {
+            foreach (Course c in CoursesTaken)
+            {
+                try
+                {
+                    System.Diagnostics.Debug.WriteLine("[TAKEN-LIST]: " + c.Code);
+                }
+                catch (NullReferenceException) { }
+            }
+        }
+
+        private void UpdateLocal()
+        {
+            foreach (var year in LocalSequence.YearToListOfCourses.ToList())
+            {
+                foreach (string course in year.ToList())
+                {
+                    if (CoursesTaken.Contains(CourseByCode(course)))
+                        LocalSequence.RemoveCourse(course);
+                }
             }
         }
     }
