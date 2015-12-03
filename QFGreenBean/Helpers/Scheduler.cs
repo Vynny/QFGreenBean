@@ -20,7 +20,6 @@ namespace QFGreenBean.Helpers
         //Helpful Structures
         private ProgramSequence LocalSequence; /* Output */
         private List<Course> PrereqsMissing;
-        private Dictionary<string, Semester> b;
 
         //Code
         public Scheduler(Student Student, ProgramSequence MasterSequence)
@@ -36,7 +35,7 @@ namespace QFGreenBean.Helpers
                 CoursesTaken.Add(s.Section.Course);
         }
 
-        public void RemoveCompletedCourses()
+        public void GenerateSchedule()
         {
             foreach (var year in MasterSequence.YearToListOfCourses)
             {
@@ -49,42 +48,62 @@ namespace QFGreenBean.Helpers
                         System.Diagnostics.Debug.WriteLine("!!!ALREADY TOOK!!! ~ " + course.Key.ToString());
                         continue;
                     }
-                    //
 
-                    //The Student is missing a pre-req
-                    if (!(CoursesTaken.Contains(CourseByCode(CourseByCode(course.Key).Prerequisite1))))
+                    Course Prereq1 = null;
+                    Course Prereq2 = null;
+                    try
                     {
-                        PrereqsMissing.Add(CourseByCode(CourseByCode(course.Key).Prerequisite1));
+                        Prereq1 = CourseByCode(CourseByCode(course.Key).Prerequisite1);
+                        Prereq2 = CourseByCode(CourseByCode(course.Key).Prerequisite2);
                     }
-                    if (!(CoursesTaken.Contains(CourseByCode(CourseByCode(course.Key).Prerequisite2))))
+                    catch (NullReferenceException) { }
+
+
+                    if (Prereq1 != null && Prereq2 != null)
                     {
-                        PrereqsMissing.Add(CourseByCode(CourseByCode(course.Key).Prerequisite2));
+                        System.Diagnostics.Debug.WriteLine("Prereqs Missing For ({0}), Prereqs are {1}, {2} ", course.Key, Prereq1.Name.ToString(), Prereq2.Name.ToString());
+                        if (!CoursesTaken.Contains(Prereq1))
+                        {
+                            PrereqsMissing.Add(CourseByCode(course.Key));
+                        }
+                        if (!CoursesTaken.Contains(Prereq2))
+                        {
+                            PrereqsMissing.Add(CourseByCode(course.Key));
+                        }
                     }
-                    //
-
-
+                    else if (Prereq1 != null)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Prereq Missing For ({0}), Prereq is {1}", course.Key, Prereq1.Name.ToString());
+                        if (!CoursesTaken.Contains(Prereq1))
+                        {
+                            PrereqsMissing.Add(CourseByCode(course.Key));
+                        }
+                    }
+                    else if (Prereq2 != null)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Prereq Missing For ({0}), Prereq is {1} ", course.Key, Prereq2.Name.ToString());
+                        if (!CoursesTaken.Contains(Prereq2))
+                        {
+                            PrereqsMissing.Add(CourseByCode(course.Key));
+                        }
+                    }
 
                 }
+
+                //Now that the year has been sifted, assume the student passes all his/her classes
+                AddTakenCourses(year);
             }
 
         }
 
-        public void aa(List<Dictionary<string,Semester>> year)
+        private void AddTakenCourses(Dictionary<string, Semester> year)
         {
-            foreach (Dictionary<string, Semester> course in year)
+            foreach (KeyValuePair<string, Semester> course in year)
             {
-
-                //The Student is missing a pre-req
-                if (!(CoursesTaken.Contains(CourseByCode(CourseByCode(course.Key).Prerequisite1))))
-                {
-                    PrereqsMissing.Add(CourseByCode(CourseByCode(course.Key).Prerequisite1));
-                }
-                if (!(CoursesTaken.Contains(CourseByCode(CourseByCode(course.Key).Prerequisite2))))
-                {
-                    PrereqsMissing.Add(CourseByCode(CourseByCode(course.Key).Prerequisite2));
-                }
-                //
+                System.Diagnostics.Debug.WriteLine("Course " + course.Key + " was taken.");
+                CoursesTaken.Add(CourseByCode(course.Key));
             }
+
         }
 
         private Course CourseByCode(string Code)
@@ -95,7 +114,7 @@ namespace QFGreenBean.Helpers
         public void DebugPrint()
         {
             int c = 1;
-            foreach (var year in MasterSequence.YearToListOfCourses)
+            foreach (var year in LocalSequence.YearToListOfCourses)
             {
 
                 System.Diagnostics.Debug.WriteLine("Year: " + c.ToString());
