@@ -1,80 +1,10 @@
-﻿@model QFGreenBean.Models.Student
+﻿@model IEnumerable<QFGreenBean.Models.Student>
 
 @{
     ViewBag.Title = "Index";
 }
-<style>
-    table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-</style>
-<h2>Student Record</h2>
 
-<table style="width:100%">
-    <tr>
-        <td>First name: </td>
-        <td>Last name: </td>
-    </tr>
-    <tr>
-        <td>Telephone</td>
-        <td>Email</td>
-
-    </tr>
-
-</table>
-
-</br>
-
-
-<div id="showStudentRecord">
-
-    <label>Course Taking</label>
-    <table style="width:100%">
-        <th>
-        <td>Course Code</td>
-        <td>Course Name</td>
-        <td>Unit</td>
-        </th>
-
-    
-        <tr>
-
-            <td>@Html.DisplayFor(modelItem => Model.FirstName)</td>
-                <td>@Html.DisplayFor(modelItem => Model.StudentId)</td>
-                    <td>@Html.DisplayFor(modelItem => Model.StudentId)</td>
-
-        </tr>
-
-    </table>
-    </br>
-    <label>Course Taken</label>
-    <table style="width:100%">
-        <th>
-        <td>Course Code</td>
-        <td>Course Name</td>
-        <td>Unit</td>
-        </th>
-
-       
-            <tr>
-
-                <td>@Html.DisplayFor(modelItem => Model.StudentId)</td>
-                    <td>@Html.DisplayFor(modelItem => Model.StudentId)</td>
-                     <td>@Html.DisplayFor(modelItem => Model.StudentId)</td>
-
-            </tr>
-        
-    </table>
-
-
-
-
-
-    test
-    <p>@ViewBag.getStudentId</p>
-
-</div>
+<h2>Student</h2>
 
 
 <p>
@@ -100,7 +30,8 @@
         <th></th>
     </tr>
 
-@*@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.StudentNumber)
@@ -118,11 +49,12 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.StudentId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.StudentId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.StudentId })
+            <!--
+            @Html.ActionLink("Edit", "Edit", new { id = item.StudentId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.StudentId }) | 
+            @Html.ActionLink("Delete", "Delete", new { id = item.StudentId })-->
         </td>
     </tr>
-}*@
+}
 
 </table>
