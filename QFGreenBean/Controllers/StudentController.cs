@@ -184,5 +184,10 @@ namespace QFGreenBean.Controllers
             base.Dispose(disposing);
         }
 
+        public ActionResult FailLogin()
+        {
+            return View();
+        }
+
     }
 }

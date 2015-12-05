@@ -24,13 +24,7 @@
             @Html.DisplayNameFor(model => model.Units)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Day)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndTime)
+            Day & Times
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Room)
@@ -74,13 +68,7 @@
             @Html.DisplayFor(modelItem => item.Units)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Day)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndTime)
+            @Html.DisplayFor(modelItem => item.Day) @Html.DisplayFor(modelItem => item.StartTime) - @Html.DisplayFor(modelItem => item.EndTime)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Room)
@@ -99,17 +87,16 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SectionId }) 
-            <!--|
+        </td>        
+        <td>            
+            @Html.ActionLink("Edit", "Edit", new { id=item.SectionId }) <!-- |
             @Html.ActionLink("Details", "Details", new { id=item.SectionId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SectionId })
-                -->
+            @Html.ActionLink("Delete", "Delete", new { id=item.SectionId })-->            
         </td>
     </tr>
 
     ViewBag.PreviousCourseCode = item.Course.Code;
+
 }
 
 </table>

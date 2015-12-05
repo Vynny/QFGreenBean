@@ -43,8 +43,6 @@ namespace QFGreenBean.Models
         public virtual DbSet<WinterEvent> WinterEvents { get; set; }
         public virtual DbSet<StudentConstraint> StudentConstraints { get; set; }
         public virtual DbSet<CourseTaken> CourseTakens { get; set; }
-        public virtual DbSet<IsEnrolledIn> IsEnrolledIns { get; set; }
-        public virtual DbSet<IsScheduledIn> IsScheduledIns { get; set; }
         public virtual DbSet<StudentSchedule> StudentSchedules { get; set; }
         public virtual DbSet<StudentRecord> StudentRecords { get; set; }
         public virtual DbSet<Course> Courses { get; set; }

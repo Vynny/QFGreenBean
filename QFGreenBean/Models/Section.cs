@@ -34,6 +34,10 @@ namespace QFGreenBean.Models
         public Nullable<System.DateTime> EndDate { get; set; }
         public string Status { get; set; }
         public string Type { get; set; }
+        public Nullable<System.DateTime> StartDayTime1 { get; set; }
+        public Nullable<System.DateTime> EndDayTime1 { get; set; }
+        public Nullable<System.DateTime> StartDayTime2 { get; set; }
+        public Nullable<System.DateTime> EndDayTime2 { get; set; }
         public Nullable<int> CourseId { get; set; }
     
         public virtual Course Course { get; set; }

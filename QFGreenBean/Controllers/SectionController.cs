@@ -48,7 +48,7 @@ namespace QFGreenBean.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SectionId,Name,Units,Day,StartTime,EndTime,Room,Instructor,Term,StartDate,EndDate,Status,Type,CourseId")] Section section)
+        public ActionResult Create([Bind(Include = "SectionId,Name,Units,Day,StartTime,EndTime,Room,Instructor,Term,StartDate,EndDate,Status,Type,StartDayTime1,EndDayTime1,StartDayTime2,EndDayTime2,CourseId")] Section section)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace QFGreenBean.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SectionId,Name,Units,Day,StartTime,EndTime,Room,Instructor,Term,StartDate,EndDate,Status,Type,CourseId")] Section section)
+        public ActionResult Edit([Bind(Include = "SectionId,Name,Units,Day,StartTime,EndTime,Room,Instructor,Term,StartDate,EndDate,Status,Type,StartDayTime1,EndDayTime1,StartDayTime2,EndDayTime2,CourseId")] Section section)
         {
             if (ModelState.IsValid)
             {

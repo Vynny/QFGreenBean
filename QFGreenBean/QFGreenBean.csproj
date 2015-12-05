@@ -233,12 +233,6 @@
       <DependentUpon>PlannerDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\IsEnrolledIn.cs">
-      <DependentUpon>PlannerDbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\IsScheduledIn.cs">
-      <DependentUpon>PlannerDbModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PlannerDbModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -421,6 +415,7 @@
     <Content Include="Views\Section\Details.cshtml" />
     <Content Include="Views\Section\Edit.cshtml" />
     <Content Include="Views\Section\Index.cshtml" />
+    <Content Include="Views\Student\FailLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
