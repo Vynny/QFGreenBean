@@ -18,116 +18,73 @@ namespace QFGreenBean.Controllers
         // GET: StudentSchedule
         public ActionResult Index()
         {
-            // Reset event tables
+            ViewBag.StartTerm = db.StudentScheduleGenerators.First().StartTerm;
+            ViewBag.IncludeSummer = db.StudentScheduleGenerators.First().IncludeSummer;
+
             if (ModelState.IsValid)
             {
-                foreach (var item in db.FallEvents)
-                {
-                    db.FallEvents.Remove(item);
-                }
-
-                foreach (var item in db.WinterEvents)
-                {
-                    db.WinterEvents.Remove(item);
-                }
-
-                foreach (var item in db.SummerEvents)
-                {
-                    db.SummerEvents.Remove(item);
-                }
-                db.SaveChanges();
-   
                 // Fill event table for calendar view
-                foreach(var item in db.StudentSchedules)
+                foreach (var item in db.StudentSchedules)
                 {
                     if (item.Section.Term == "Fall")
                     {
                         FallEvent event1 = new FallEvent();
                         FallEvent event2 = new FallEvent();
 
-                        if ((item.Section.StartDayTime1 != null) && (item.Section.EndDayTime1 != null))
-                        {
-                            DateTime startDayTime1 = (System.DateTime)item.Section.StartDayTime1;
-                            DateTime endDayTime1 = (System.DateTime)item.Section.EndDayTime1;
+                        DateTime startDayTime1 = item.Section.StartDayTime1;
+                        DateTime endDayTime1 = item.Section.EndDayTime1;
 
-                            event1.StartTime = startDayTime1.EqualTodayWeekDayTime();
-                            event1.EndTime = endDayTime1.EqualTodayWeekDayTime();
-                            event1.Description = item.Section.Course.Code + " - " + item.Section.Course.Name + "<br/>" + item.Section.Room;
-                            db.FallEvents.Add(event1);
-                        }
 
-                        if ((item.Section.StartDayTime2 != null) && (item.Section.EndDayTime2 != null))
+                        event1.StartTime = startDayTime1.EqualTodayWeekDayTime();
+                        event1.EndTime = endDayTime1.EqualTodayWeekDayTime();
+                        event1.Description = item.Section.Course.Code + " - " + item.Section.Course.Name + "<br/>" + item.Section.Room;
+                        db.FallEvents.Add(event1);
+
+                        if (item.Section.StartDayTime2 != null)
                         {
-                            DateTime startDayTime2 = (System.DateTime)item.Section.StartDayTime2;
-                            DateTime endDayTime2 = (System.DateTime)item.Section.EndDayTime2;
+                            DateTime startDayTime2 = (DateTime)item.Section.StartDayTime2;
+                            DateTime endDayTime2 = (DateTime)item.Section.EndDayTime2;
 
                             event2.StartTime = startDayTime2.EqualTodayWeekDayTime();
                             event2.EndTime = endDayTime2.EqualTodayWeekDayTime();
                             event2.Description = item.Section.Course.Code + " - " + item.Section.Course.Name + "<br/>" + item.Section.Room;
+
                             db.FallEvents.Add(event2);
                         }
+
                     }
-                    else if (item.Section.Term == "Winter")
+
+                        if (item.Section.Term == "Winter")
                     {
                         WinterEvent event1 = new WinterEvent();
                         WinterEvent event2 = new WinterEvent();
+                        DateTime startDayTime1 = item.Section.StartDayTime1;
+                        DateTime endDayTime1 = item.Section.EndDayTime1;
 
-                        if ((item.Section.StartDayTime1 != null) && (item.Section.EndDayTime1 != null))
+                        event1.StartTime = startDayTime1.EqualTodayWeekDayTime();
+                        event1.EndTime = endDayTime1.EqualTodayWeekDayTime();
+                        event1.Description = item.Section.Course.Code + " - " + item.Section.Course.Name + "<br/>" + item.Section.Room;
+
+                        db.WinterEvents.Add(event1);
+
+                        if (item.Section.StartDayTime2 != null)
                         {
-                            DateTime startDayTime1 = (System.DateTime)item.Section.StartDayTime1;
-                            DateTime endDayTime1 = (System.DateTime)item.Section.EndDayTime1;
-
-                            event1.StartTime = startDayTime1.EqualTodayWeekDayTime();
-                            event1.EndTime = endDayTime1.EqualTodayWeekDayTime();
-                            event1.Description = item.Section.Course.Code + " - " + item.Section.Course.Name + "<br/>" + item.Section.Room;
-                            db.WinterEvents.Add(event1);
-                        }
-
-                        if ((item.Section.StartDayTime2 != null) && (item.Section.EndDayTime2 != null))
-                        {
-                            DateTime startDayTime2 = (System.DateTime)item.Section.StartDayTime2;
-                            DateTime endDayTime2 = (System.DateTime)item.Section.EndDayTime2;
+                            DateTime startDayTime2 = (DateTime)item.Section.StartDayTime2;
+                            DateTime endDayTime2 = (DateTime)item.Section.EndDayTime2;
 
                             event2.StartTime = startDayTime2.EqualTodayWeekDayTime();
                             event2.EndTime = endDayTime2.EqualTodayWeekDayTime();
                             event2.Description = item.Section.Course.Code + " - " + item.Section.Course.Name + "<br/>" + item.Section.Room;
+
                             db.WinterEvents.Add(event2);
                         }
                     }
-                    else if (item.Section.Term == "Summer")
-                    {
-                        SummerEvent event1 = new SummerEvent();
-                        SummerEvent event2 = new SummerEvent();
-
-                        if ((item.Section.StartDayTime1 != null) && (item.Section.EndDayTime1 != null))
-                        {
-                            DateTime startDayTime1 = (System.DateTime)item.Section.StartDayTime1;
-                            DateTime endDayTime1 = (System.DateTime)item.Section.EndDayTime1;
-
-                            event1.StartTime = startDayTime1.EqualTodayWeekDayTime();
-                            event1.EndTime = endDayTime1.EqualTodayWeekDayTime();
-                            event1.Description = item.Section.Course.Code + " - " + item.Section.Course.Name + "<br/>" + item.Section.Room;
-                            db.SummerEvents.Add(event1);
-                        }
-
-                        if ((item.Section.StartDayTime2 != null) && (item.Section.EndDayTime2 != null))
-                        {
-                            DateTime startDayTime2 = (System.DateTime)item.Section.StartDayTime2;
-                            DateTime endDayTime2 = (System.DateTime)item.Section.EndDayTime2;
-
-                            event2.StartTime = startDayTime2.EqualTodayWeekDayTime();
-                            event2.EndTime = endDayTime2.EqualTodayWeekDayTime();
-                            event2.Description = item.Section.Course.Code + " - " + item.Section.Course.Name + "<br/>" + item.Section.Room;
-                            db.SummerEvents.Add(event2);
-                        }
-
-                    } // end of else if (item.Section.Term == "Summer")
+                                       
                 } // end of foreach(var item in db.StudentSchedules)
 
                 db.SaveChanges();
-
             }
-
+     
             var studentSchedules = db.StudentSchedules.Include(s => s.Section).Include(s => s.Student);
             return View(studentSchedules.ToList());
         }

@@ -1,8 +1,14 @@
-﻿@model IEnumerable<QFGreenBean.Models.StudentSchedule>
+﻿@using DayPilot.Web.Mvc;
+@using DayPilot.Web.Mvc.Events.Calendar
+@using ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType
+
+@model IEnumerable<QFGreenBean.Models.StudentSchedule>
 
 @{
     ViewBag.Title = "StudentSchedule";
 }
+
+<script src="@Url.Content("~/Scripts/daypilot-all.min.js")" type="text/javascript"></script>
 
 <h2>Student Schedule</h2>
 
@@ -11,7 +17,7 @@
 </p>
 
 
-<table style="width:100%;">
+<table style="width:30%;">
     <tr>
         <td class="auto-style1">Student Name:</td>
         <td>
@@ -25,9 +31,19 @@
         </td>
     </tr>
  </table>
-<p><h3>List View</h3></p>
 
-<p><h4>Fall 2015</h4></p>
+@if (ViewBag.StartTerm == "Fall 2015")
+{
+
+<p><h3>Fall 2015</h3></p>
+@Html.DayPilotCalendar("dp1", new DayPilotCalendarConfig
+{
+    BackendUrl = Url.Action("Backend", "FallScheduleCalendar"),
+    ViewType = ViewType.Week
+})
+
+<p><h4>List View</h4></p>
+
     <table class="table">
         <tr>
             <th>
@@ -87,9 +103,11 @@
                     @Html.DisplayFor(modelItem => item.Section.Instructor)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.StudentScheduleId })  |
+                    <!--
+                    @Html.ActionLink("Edit", "Edit", new { id = item.StudentScheduleId }) 
+                     |
                     @Html.ActionLink("Details", "Details", new { id = item.StudentScheduleId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.StudentScheduleId }) 
+                    @Html.ActionLink("Delete", "Delete", new { id = item.StudentScheduleId }) -->
                 </td>
             </tr>
             }
@@ -98,7 +116,15 @@
     </table>
 
 
-<p><h4>Winter 2016</h4></p>
+<p><h3>Winter 2016</h3></p>
+@Html.DayPilotCalendar("dp2", new DayPilotCalendarConfig
+{
+    BackendUrl = Url.Action("Backend", "WinterScheduleCalendar"),
+    ViewType = ViewType.Week
+})
+
+<p><h4>List View</h4></p>
+
 <table class="table">
     <tr>
         <th>
@@ -158,12 +184,182 @@
                     @Html.DisplayFor(modelItem => item.Section.Instructor)
                 </td>
                 <td>
+                    <!--
                     @Html.ActionLink("Edit", "Edit", new { id = item.StudentScheduleId }) |
                     @Html.ActionLink("Details", "Details", new { id = item.StudentScheduleId }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.StudentScheduleId })
+                        -->
                 </td>
             </tr>
         }
     }
 
 </table>
+} 
+
+
+@if (ViewBag.StartTerm == "Winter 2016")
+{
+    <p><h3>Winter 2016</h3></p>
+    @Html.DayPilotCalendar("dp3", new DayPilotCalendarConfig
+    {
+        BackendUrl = Url.Action("Backend", "WinterScheduleCalendar"),
+        ViewType = ViewType.Week
+    })
+
+    <p><h4>List View</h4></p>
+
+    <table class="table">
+        <tr>
+            <th>
+                <b>Course Code</b>
+            </th>
+            <th>
+                <b>Course Name</b>
+            </th>
+            <th>
+                <b>Section</b>
+            </th>
+            <th>
+                <b>Units</b>
+            </th>
+            <th>
+                <b>Day & Times</b>
+            </th>
+            <th>
+                <b>Meeting Times</b>
+            </th>
+            <th>
+                <b>Room</b>
+            </th>
+            <th>
+                <b>Instructor</b>
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            if ((item.Section.Term) == "Winter")
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section.Course.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section.Course.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section.Units)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section.Day) @Html.DisplayFor(modelItem => item.Section.StartTime) - @Html.DisplayFor(modelItem => item.Section.EndTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section.StartDate) - @Html.DisplayFor(modelItem => item.Section.EndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section.Room)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section.Instructor)
+                    </td>
+                    <td>
+                        <!--
+                        @Html.ActionLink("Edit", "Edit", new { id = item.StudentScheduleId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.StudentScheduleId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.StudentScheduleId })
+                            -->
+                    </td>
+                </tr>
+            }
+        }
+
+    </table>
+}
+
+@if ( (ViewBag.StartTerm == "Summer 2016") || (ViewBag.IncludeSummer) )
+{
+    <p><h3>Summer 2016</h3></p>
+    @Html.DayPilotCalendar("dp4", new DayPilotCalendarConfig
+{
+    BackendUrl = Url.Action("Backend", "SummerScheduleCalendar"),
+    ViewType = ViewType.Week
+})
+
+    <p><h4>List View</h4></p>
+
+    <table class="table">
+        <tr>
+            <th>
+                <b>Course Code</b>
+            </th>
+            <th>
+                <b>Course Name</b>
+            </th>
+            <th>
+                <b>Section</b>
+            </th>
+            <th>
+                <b>Units</b>
+            </th>
+            <th>
+                <b>Day & Times</b>
+            </th>
+            <th>
+                <b>Meeting Times</b>
+            </th>
+            <th>
+                <b>Room</b>
+            </th>
+            <th>
+                <b>Instructor</b>
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            if ((item.Section.Term) == "Summer 2016")
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section.Course.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section.Course.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section.Units)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section.Day) @Html.DisplayFor(modelItem => item.Section.StartTime) - @Html.DisplayFor(modelItem => item.Section.EndTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section.StartDate) - @Html.DisplayFor(modelItem => item.Section.EndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section.Room)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section.Instructor)
+                    </td>
+                    <td>
+                        <!--
+                        @Html.ActionLink("Edit", "Edit", new { id = item.StudentScheduleId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.StudentScheduleId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.StudentScheduleId })
+                            -->
+                    </td>
+                </tr>
+            }
+        }
+
+    </table>
+}

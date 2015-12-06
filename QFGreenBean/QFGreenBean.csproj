@@ -45,7 +45,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DayPilot.Web.Mvc">
-      <HintPath>..\..\..\DayPilotLiteMvc-1.5.414\Binary\Mvc5\DayPilot.Web.Mvc.dll</HintPath>
+      <HintPath>E:\MAXSOFTCS\VS2015\DayPilotLiteMvc-1.5.414\Binary\Mvc5\DayPilot.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -316,6 +316,8 @@
     <None Include="Properties\PublishProfiles\greenbean - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\greenbean - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\greenbean - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\greenbean1 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\greenbean1 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\daypilot-all.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

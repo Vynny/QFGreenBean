@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using QFGreenBean.Models;
+using QFGreenBean.Utils;
 
 namespace QFGreenBean.Controllers
 {
@@ -19,6 +20,22 @@ namespace QFGreenBean.Controllers
                 int? studentId = StudentController.LoggedInStudentID;
                 ViewBag.StudentNumber = db.Students.Find(studentId).StudentNumber;
 
+                foreach (var item in db.FallEvents)
+                {
+                    db.FallEvents.Remove(item);
+                }
+                foreach (var item in db.WinterEvents)
+                {
+                    db.WinterEvents.Remove(item);
+                }
+
+                foreach (var item in db.StudentScheduleGenerators)
+                {
+                    db.StudentScheduleGenerators.Remove(item);
+                }
+
+                db.SaveChanges();
+ 
                 return View();
             }
             else
@@ -30,19 +47,15 @@ namespace QFGreenBean.Controllers
         [HttpPost]
         public ActionResult Index([Bind(Include = "StudentScheduleGeneratorId,StudentNumber,StartTerm,DepartmentName,ProgramOptionName,IncludeSummer,DateGenerated")] StudentScheduleGenerator generator)
         {
-            if (ModelState.IsValid)
-            {
-                if (StudentController.IsLoggedIn)
-                {
-                    int? studentId = StudentController.LoggedInStudentID;
-                    generator.StudentNumber = db.Students.Find(studentId).StudentNumber;
-                    generator.DateGenerated = DateTime.Now;
-                    db.StudentScheduleGenerators.Add(generator);
-                    db.SaveChanges();
-                }
-            }
 
-            return View("DisplayCurrentYearSchedules", generator);
+            int? studentId = StudentController.LoggedInStudentID;
+            generator.StudentNumber = db.Students.Find(studentId).StudentNumber;
+            generator.DateGenerated = DateTime.Now;
+            db.StudentScheduleGenerators.Add(generator);
+            db.SaveChanges();
+
+            // return View("DisplayCurrentYearSchedules", generator);
+            return RedirectToAction("Index", "StudentSchedule");
         }
 
 

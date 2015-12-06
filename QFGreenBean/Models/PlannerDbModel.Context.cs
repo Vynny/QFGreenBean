@@ -46,7 +46,7 @@ namespace QFGreenBean.Models
         public virtual DbSet<StudentSchedule> StudentSchedules { get; set; }
         public virtual DbSet<StudentRecord> StudentRecords { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
-        public virtual DbSet<Section> Sections { get; set; }
         public virtual DbSet<StudentScheduleGenerator> StudentScheduleGenerators { get; set; }
+        public virtual DbSet<Section> Sections { get; set; }
     }
 }

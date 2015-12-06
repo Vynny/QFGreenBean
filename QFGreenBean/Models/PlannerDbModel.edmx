@@ -143,8 +143,8 @@
             <PropertyRef Name="FallEventId" />
           </Key>
           <Property Name="FallEventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StartTime" Type="datetime" Nullable="false" />
-          <Property Name="EndTime" Type="datetime" Nullable="false" />
+          <Property Name="StartTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="Feedback">
@@ -196,8 +196,8 @@
           <Property Name="EndDate" Type="date" />
           <Property Name="Status" Type="varchar" MaxLength="20" />
           <Property Name="Type" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="StartDayTime1" Type="datetime" />
-          <Property Name="EndDayTime1" Type="datetime" />
+          <Property Name="StartDayTime1" Type="datetime" Nullable="false" />
+          <Property Name="EndDayTime1" Type="datetime" Nullable="false" />
           <Property Name="StartDayTime2" Type="datetime" />
           <Property Name="EndDayTime2" Type="datetime" />
           <Property Name="CourseId" Type="int" />
@@ -253,7 +253,7 @@
           <Property Name="DepartmentName" Type="varchar" MaxLength="50" />
           <Property Name="ProgramOptionName" Type="varchar" MaxLength="50" />
           <Property Name="IncludeSummer" Type="bit" Nullable="false" />
-          <Property Name="DateGenerated" Type="date" />
+          <Property Name="DateGenerated" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="SummerEvent">
           <Key>
@@ -648,6 +648,7 @@
             <End Role="Department" EntitySet="Departments" />
             <End Role="Course" EntitySet="Courses" />
           </AssociationSet>
+          <EntitySet Name="StudentScheduleGenerators" EntityType="PlannerDbModel.StudentScheduleGenerator" />
           <EntitySet Name="Sections" EntityType="PlannerDbModel.Section" />
           <AssociationSet Name="FK_Section_Course" Association="PlannerDbModel.FK_Section_Course">
             <End Role="Course" EntitySet="Courses" />
@@ -661,7 +662,6 @@
             <End Role="Section" EntitySet="Sections" />
             <End Role="StudentSchedule" EntitySet="StudentSchedules" />
           </AssociationSet>
-          <EntitySet Name="StudentScheduleGenerators" EntityType="PlannerDbModel.StudentScheduleGenerator" />
           </EntityContainer>
         <EntityType Name="Feedback">
           <Key>
@@ -781,8 +781,8 @@
             <PropertyRef Name="FallEventId" />
           </Key>
           <Property Name="FallEventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SummerEvent">
@@ -908,6 +908,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="StudentScheduleGenerator">
+          <Key>
+            <PropertyRef Name="StudentScheduleGeneratorId" />
+          </Key>
+          <Property Name="StudentScheduleGeneratorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StartTerm" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProgramOptionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IncludeSummer" Type="Boolean" Nullable="false" />
+          <Property Name="DateGenerated" Type="DateTime" Precision="7" />
+        </EntityType>
         <EntityType Name="Section">
           <Key>
             <PropertyRef Name="SectionId" />
@@ -925,8 +937,8 @@
           <Property Name="EndDate" Type="DateTime" Precision="0" />
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="StartDayTime1" Type="DateTime" Precision="3" />
-          <Property Name="EndDayTime1" Type="DateTime" Precision="3" />
+          <Property Name="StartDayTime1" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDayTime1" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="StartDayTime2" Type="DateTime" Precision="3" />
           <Property Name="EndDayTime2" Type="DateTime" Precision="3" />
           <Property Name="CourseId" Type="Int32" />
@@ -970,18 +982,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="StudentScheduleGenerator">
-          <Key>
-            <PropertyRef Name="StudentScheduleGeneratorId" />
-          </Key>
-          <Property Name="StudentScheduleGeneratorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="StartTerm" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ProgramOptionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IncludeSummer" Type="Boolean" Nullable="false" />
-          <Property Name="DateGenerated" Type="DateTime" Precision="0" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1239,6 +1239,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="StudentScheduleGenerators">
+            <EntityTypeMapping TypeName="PlannerDbModel.StudentScheduleGenerator">
+              <MappingFragment StoreEntitySet="StudentScheduleGenerator">
+                <ScalarProperty Name="DateGenerated" ColumnName="DateGenerated" />
+                <ScalarProperty Name="IncludeSummer" ColumnName="IncludeSummer" />
+                <ScalarProperty Name="ProgramOptionName" ColumnName="ProgramOptionName" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="StartTerm" ColumnName="StartTerm" />
+                <ScalarProperty Name="StudentNumber" ColumnName="StudentNumber" />
+                <ScalarProperty Name="StudentScheduleGeneratorId" ColumnName="StudentScheduleGeneratorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Sections">
             <EntityTypeMapping TypeName="PlannerDbModel.Section">
               <MappingFragment StoreEntitySet="Section">
@@ -1260,19 +1273,6 @@
                 <ScalarProperty Name="Units" ColumnName="Units" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="SectionId" ColumnName="SectionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StudentScheduleGenerators">
-            <EntityTypeMapping TypeName="PlannerDbModel.StudentScheduleGenerator">
-              <MappingFragment StoreEntitySet="StudentScheduleGenerator">
-                <ScalarProperty Name="DateGenerated" ColumnName="DateGenerated" />
-                <ScalarProperty Name="IncludeSummer" ColumnName="IncludeSummer" />
-                <ScalarProperty Name="ProgramOptionName" ColumnName="ProgramOptionName" />
-                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
-                <ScalarProperty Name="StartTerm" ColumnName="StartTerm" />
-                <ScalarProperty Name="StudentNumber" ColumnName="StudentNumber" />
-                <ScalarProperty Name="StudentScheduleGeneratorId" ColumnName="StudentScheduleGeneratorId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

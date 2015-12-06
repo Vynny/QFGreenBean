@@ -12,7 +12,7 @@ namespace QFGreenBean.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class Section
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -37,8 +37,8 @@ namespace QFGreenBean.Models
         public Nullable<System.DateTime> EndDate { get; set; }
         public string Status { get; set; }
         public string Type { get; set; }
-        public Nullable<System.DateTime> StartDayTime1 { get; set; }
-        public Nullable<System.DateTime> EndDayTime1 { get; set; }
+        public System.DateTime StartDayTime1 { get; set; }
+        public System.DateTime EndDayTime1 { get; set; }
         public Nullable<System.DateTime> StartDayTime2 { get; set; }
         public Nullable<System.DateTime> EndDayTime2 { get; set; }
         public Nullable<int> CourseId { get; set; }
