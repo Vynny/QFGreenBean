@@ -51,11 +51,11 @@
         <EntityTypeShape EntityType="PlannerDbModel.StudentRecord" Width="1.5" PointX="9.375" PointY="0.75" />
         <EntityTypeShape EntityType="PlannerDbModel.Course" Width="1.5" PointX="3.875" PointY="15.625" />
         <AssociationConnector Association="PlannerDbModel.FK_Course_Department" />
+        <EntityTypeShape EntityType="PlannerDbModel.StudentScheduleGenerator" Width="1.5" PointX="8.375" PointY="3.75" />
         <EntityTypeShape EntityType="PlannerDbModel.Section" Width="1.5" PointX="6.125" PointY="14.75" />
         <AssociationConnector Association="PlannerDbModel.FK_Section_Course" />
         <AssociationConnector Association="PlannerDbModel.FK_CourseTaken_Section" />
         <AssociationConnector Association="PlannerDbModel.FK_StudentSchedule_Section" />
-        <EntityTypeShape EntityType="PlannerDbModel.StudentScheduleGenerator" Width="1.5" PointX="8.375" PointY="3.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
