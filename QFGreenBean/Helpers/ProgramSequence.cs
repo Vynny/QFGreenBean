@@ -12,9 +12,9 @@ namespace QFGreenBean.Helpers
 
     public enum Semester
     {
-        FALL,
-        WINTER,
-        SUMMER
+        Fall,
+        Winter,
+        Summer
     }
 
     public class Programs
@@ -31,60 +31,60 @@ namespace QFGreenBean.Helpers
             */
             SOEN_General.Year(1)
                 //Fall
-                .AddCourse("COMP 232", Semester.FALL)
-                .AddCourse("COMP 248", Semester.FALL)
-                .AddCourse("ENGR 201", Semester.FALL)
-                .AddCourse("ENGR 213", Semester.FALL)
-                .AddCourse("GENERAL", Semester.FALL)
+                .AddCourse("COMP 232", Semester.Fall)
+                .AddCourse("COMP 248", Semester.Fall)
+                .AddCourse("ENGR 201", Semester.Fall)
+                .AddCourse("ENGR 213", Semester.Fall)
+                .AddCourse("GENERAL", Semester.Fall)
 
                 //Winter
-                .AddCourse("COMP 249", Semester.WINTER)
-                .AddCourse("ENGR 233", Semester.WINTER)
-                .AddCourse("SOEN 228", Semester.WINTER)
-                .AddCourse("SOEN 287", Semester.WINTER)
-                .AddCourse("SCIENCE1", Semester.WINTER);
+                .AddCourse("COMP 249", Semester.Winter)
+                .AddCourse("ENGR 233", Semester.Winter)
+                .AddCourse("SOEN 228", Semester.Winter)
+                .AddCourse("SOEN 287", Semester.Winter)
+                .AddCourse("SCIENCE1", Semester.Winter);
 
             SOEN_General.Year(2)
                 //Fall
-                .AddCourse("COMP 348", Semester.FALL)
-                .AddCourse("COMP 352", Semester.FALL)
-                .AddCourse("ELEC 375", Semester.FALL)
-                .AddCourse("ENCS 282", Semester.FALL)
-                .AddCourse("SCIENCE2", Semester.FALL)
+                .AddCourse("COMP 348", Semester.Fall)
+                .AddCourse("COMP 352", Semester.Fall)
+                .AddCourse("ELEC 375", Semester.Fall)
+                .AddCourse("ENCS 282", Semester.Fall)
+                .AddCourse("SCIENCE2", Semester.Fall)
                 //Winter
-                .AddCourse("COMP 346", Semester.WINTER)
-                .AddCourse("ENGR 275", Semester.WINTER)
-                .AddCourse("ENGR 371", Semester.WINTER)
-                .AddCourse("SOEN 331", Semester.WINTER)
-                .AddCourse("SOEN 341", Semester.WINTER);
+                .AddCourse("COMP 346", Semester.Winter)
+                .AddCourse("ENGR 275", Semester.Winter)
+                .AddCourse("ENGR 371", Semester.Winter)
+                .AddCourse("SOEN 331", Semester.Winter)
+                .AddCourse("SOEN 341", Semester.Winter);
 
             SOEN_General.Year(3)
                 //Fall
-                .AddCourse("COMP 335", Semester.FALL)
-                .AddCourse("COMP 342", Semester.FALL)
-                .AddCourse("ENGR 343", Semester.FALL)
-                .AddCourse("ENGR 384", Semester.FALL)
-                .AddCourse("ENGR 391", Semester.FALL)
+                .AddCourse("COMP 335", Semester.Fall)
+                .AddCourse("COMP 342", Semester.Fall)
+                .AddCourse("ENGR 343", Semester.Fall)
+                .AddCourse("ENGR 384", Semester.Fall)
+                .AddCourse("ENGR 391", Semester.Fall)
                 //Winter
-                .AddCourse("SOEN 344", Semester.WINTER)
-                .AddCourse("SOEN 345", Semester.WINTER)
-                .AddCourse("SOEN 357", Semester.WINTER)
-                .AddCourse("SOEN 390", Semester.WINTER)
-                .AddCourse("ELECTIVE1", Semester.WINTER);
+                .AddCourse("SOEN 344", Semester.Winter)
+                .AddCourse("SOEN 345", Semester.Winter)
+                .AddCourse("SOEN 357", Semester.Winter)
+                .AddCourse("SOEN 390", Semester.Winter)
+                .AddCourse("ELECTIVE1", Semester.Winter);
 
             SOEN_General.Year(4)
                 //Fall
-                .AddCourse("SOEN 490_1", Semester.FALL)
-                .AddCourse("ENGR 301", Semester.FALL)
-                .AddCourse("SOEN 321", Semester.FALL)
-                .AddCourse("ELECTIVE2", Semester.FALL)
-                .AddCourse("ELECTIVE3", Semester.FALL)
+                .AddCourse("SOEN 490_1", Semester.Fall)
+                .AddCourse("ENGR 301", Semester.Fall)
+                .AddCourse("SOEN 321", Semester.Fall)
+                .AddCourse("ELECTIVE2", Semester.Fall)
+                .AddCourse("ELECTIVE3", Semester.Fall)
                 //Winter
-                .AddCourse("SOEN 385", Semester.WINTER)
-                .AddCourse("ENGR 392", Semester.WINTER)
-                .AddCourse("SOEN 490_2", Semester.WINTER)
-                .AddCourse("ELECTIVE4", Semester.WINTER)
-                .AddCourse("ELECTIVE5", Semester.WINTER);
+                .AddCourse("SOEN 385", Semester.Winter)
+                .AddCourse("ENGR 392", Semester.Winter)
+                .AddCourse("SOEN 490_2", Semester.Winter)
+                .AddCourse("ELECTIVE4", Semester.Winter)
+                .AddCourse("ELECTIVE5", Semester.Winter);
 
         }
 

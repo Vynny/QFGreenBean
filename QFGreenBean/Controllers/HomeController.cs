@@ -50,8 +50,10 @@ namespace QFGreenBean.Controllers
 =======
             Programs p = new Programs();
             Scheduler s = new Scheduler(db.Students.Find(7), Programs.SOEN_General);
-            s.GenerateSchedule(0);
+            s.GenerateSchedule(Semester.Fall);
             s.DebugPrint();
+            s.PrintList(s.CoursesToTake, "CoursesToTake");
+            s.GenerateSectionList(Semester.Fall);
             return View();
 >>>>>>> before list change
         }
