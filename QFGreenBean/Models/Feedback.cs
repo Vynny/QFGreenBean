@@ -11,11 +11,13 @@ namespace QFGreenBean.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Feedback
     {
         public int FeedbackId { get; set; }
         public string Name { get; set; }
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> PostDate { get; set; }
         public string Subject { get; set; }
         public string Comments { get; set; }

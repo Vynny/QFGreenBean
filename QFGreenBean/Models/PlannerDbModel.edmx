@@ -243,6 +243,18 @@
           <Property Name="StudentId" Type="int" />
           <Property Name="SectionId" Type="int" />
         </EntityType>
+        <EntityType Name="StudentScheduleGenerator">
+          <Key>
+            <PropertyRef Name="StudentScheduleGeneratorId" />
+          </Key>
+          <Property Name="StudentScheduleGeneratorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentNumber" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="StartTerm" Type="varchar" MaxLength="20" />
+          <Property Name="DepartmentName" Type="varchar" MaxLength="50" />
+          <Property Name="ProgramOptionName" Type="varchar" MaxLength="50" />
+          <Property Name="IncludeSummer" Type="bit" Nullable="false" />
+          <Property Name="DateGenerated" Type="date" />
+        </EntityType>
         <EntityType Name="SummerEvent">
           <Key>
             <PropertyRef Name="SummerEventId" />
@@ -435,6 +447,7 @@
           <EntitySet Name="StudentConstraint" EntityType="Self.StudentConstraint" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentRecord" EntityType="Self.StudentRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentSchedule" EntityType="Self.StudentSchedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentScheduleGenerator" EntityType="Self.StudentScheduleGenerator" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SummerEvent" EntityType="Self.SummerEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WinterEvent" EntityType="Self.WinterEvent" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Course_Department" Association="Self.FK_Course_Department">
@@ -648,6 +661,7 @@
             <End Role="Section" EntitySet="Sections" />
             <End Role="StudentSchedule" EntitySet="StudentSchedules" />
           </AssociationSet>
+          <EntitySet Name="StudentScheduleGenerators" EntityType="PlannerDbModel.StudentScheduleGenerator" />
           </EntityContainer>
         <EntityType Name="Feedback">
           <Key>
@@ -956,6 +970,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="StudentScheduleGenerator">
+          <Key>
+            <PropertyRef Name="StudentScheduleGeneratorId" />
+          </Key>
+          <Property Name="StudentScheduleGeneratorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StartTerm" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProgramOptionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IncludeSummer" Type="Boolean" Nullable="false" />
+          <Property Name="DateGenerated" Type="DateTime" Precision="0" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1234,6 +1260,19 @@
                 <ScalarProperty Name="Units" ColumnName="Units" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentScheduleGenerators">
+            <EntityTypeMapping TypeName="PlannerDbModel.StudentScheduleGenerator">
+              <MappingFragment StoreEntitySet="StudentScheduleGenerator">
+                <ScalarProperty Name="DateGenerated" ColumnName="DateGenerated" />
+                <ScalarProperty Name="IncludeSummer" ColumnName="IncludeSummer" />
+                <ScalarProperty Name="ProgramOptionName" ColumnName="ProgramOptionName" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="StartTerm" ColumnName="StartTerm" />
+                <ScalarProperty Name="StudentNumber" ColumnName="StudentNumber" />
+                <ScalarProperty Name="StudentScheduleGeneratorId" ColumnName="StudentScheduleGeneratorId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

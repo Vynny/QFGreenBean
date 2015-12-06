@@ -1,0 +1,66 @@
+﻿@model QFGreenBean.Models.StudentScheduleGenerator
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StudentScheduleGenerator</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartTerm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartTerm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartmentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartmentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProgramOptionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProgramOptionName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IncludeSummer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IncludeSummer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateGenerated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateGenerated)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StudentScheduleGeneratorId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

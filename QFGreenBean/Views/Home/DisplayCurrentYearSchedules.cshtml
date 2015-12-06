@@ -18,9 +18,9 @@
 
 <p><h3>Student Number: @Model.StudentNumber</h3></P>   
  
-@if (@Model.StartingSemester == "Fall 2015")
+@if (@Model.StartTerm == "Fall 2015")
 {
-    <p><h3>@Model.StartingSemester</h3></p>
+    <p><h3>@Model.StartTerm</h3></p>
     @Html.DayPilotCalendar("dp1", new DayPilotCalendarConfig
     {
         BackendUrl = Url.Action("Backend", "FallScheduleCalendar"),
@@ -35,7 +35,7 @@
     })
 }
 
-@if (@Model.StartingSemester == "Winter 2016")
+@if (@Model.StartTerm == "Winter 2016")
 {
     <p><h3>Winter 2016</h3></p>
     @Html.DayPilotCalendar("dp2", new DayPilotCalendarConfig
@@ -45,7 +45,7 @@
     })
 }
 
-@if ( (@Model.StartingSemester == "Summer 2016") || (@Model.IncludeSummer) )
+@if ( (@Model.StartTerm == "Summer 2016") || (@Model.IncludeSummer) )
 {
     <p><h3>Summer 2016</h3></p>
 

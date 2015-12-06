@@ -8,8 +8,8 @@
     <h2>Student Scheduler</h2>
 </p>
 
-<p>Student Scheduler is a tool to generate recommended student schedules in the coming year and subsequent years until graduation. The schedules can be readjusted automatically to meet a student's specific needs or preferences.</p>
-<p>Please enter your student number and other scheduling parameters.</p>
+<p>Student Scheduler is a tool to generate recommended student schedules in the coming year. The schedules can be readjusted automatically to meet a student's specific constraints or preferences.</p>
+<p>Please select scheduling parameters.</p>
 
 @using (Html.BeginForm())
 {
@@ -17,13 +17,14 @@
         <tr>
             <td class="auto-style1">Student Number</td>
             <td>
-                @Html.TextBoxFor(x => x.StudentNumber)
+               @ViewBag.StudentNumber 
+                       
             </td>
         </tr>
         <tr>
             <td class="auto-style1">Starting Term</td>
             <td>
-                @Html.DropDownListFor(x => x.StartingSemester,
+                @Html.DropDownListFor(x => x.StartTerm,
                                            new[] {new SelectListItem() { Text = "Fall 2015", Value = "Fall 2015" },
                                                   new SelectListItem() { Text = "Winter 2016", Value = "Winter 2016" },
                                                   new SelectListItem() { Text = "Summer 2016", Value = "Summer 2016" }
@@ -34,14 +35,23 @@
         <tr>
             <td class="auto-style1">Department</td>
             <td>
-                @Html.TextBoxFor(x => x.Department)
+                 @Html.DropDownListFor(x => x.DepartmentName,
+                                           new[] {new SelectListItem() { Text = "SOEN", Value = "SOEN" },
+                                                  new SelectListItem() { Text = "COMP", Value = "COMP" }
+                                                })
+
             </td>
         </tr>
 
         <tr>
             <td class="auto-style1">Program Option</td>
             <td>
-                @Html.TextBoxFor(x => x.ProgramOption)
+                @Html.DropDownListFor(x => x.ProgramOptionName,
+                                           new[] {new SelectListItem() { Text = "General Program", Value = "General Program" },
+                                                  new SelectListItem() { Text = "Computer Games", Value = "Computer Games" },
+                                                  new SelectListItem() { Text = "Web Services", Value = "Web Services" },
+                                                  new SelectListItem() { Text = "Avionics Software", Value = "Avionics Software" }
+                                                 })
             </td>
         </tr>
 

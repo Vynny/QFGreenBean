@@ -185,6 +185,7 @@
     <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\StudentScheduleController.cs" />
+    <Compile Include="Controllers\StudentScheduleGeneratorController.cs" />
     <Compile Include="Controllers\SummerEventController.cs" />
     <Compile Include="Controllers\SummerScheduleCalendarController.cs" />
     <Compile Include="Controllers\WinterEventController.cs" />
@@ -270,7 +271,9 @@
     <Compile Include="Models\StudentSchedule.cs">
       <DependentUpon>PlannerDbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StudentScheduleGenerator.cs" />
+    <Compile Include="Models\StudentScheduleGenerator.cs">
+      <DependentUpon>PlannerDbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SummerEvent.cs">
       <DependentUpon>PlannerDbModel.tt</DependentUpon>
     </Compile>
@@ -416,6 +419,11 @@
     <Content Include="Views\Section\Edit.cshtml" />
     <Content Include="Views\Section\Index.cshtml" />
     <Content Include="Views\Student\FailLogin.cshtml" />
+    <Content Include="Views\StudentScheduleGenerator\Create.cshtml" />
+    <Content Include="Views\StudentScheduleGenerator\Delete.cshtml" />
+    <Content Include="Views\StudentScheduleGenerator\Details.cshtml" />
+    <Content Include="Views\StudentScheduleGenerator\Edit.cshtml" />
+    <Content Include="Views\StudentScheduleGenerator\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
