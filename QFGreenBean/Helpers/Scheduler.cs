@@ -9,7 +9,7 @@ namespace QFGreenBean.Helpers
     public class Scheduler
     {
         /*DEBUG PRINTING FLAG*/
-        private bool DEBUG = false;
+        private bool DEBUG = true;
         static int MaxSemesterCourses = 5;
 
         /*Utils*/
@@ -368,15 +368,29 @@ namespace QFGreenBean.Helpers
                 {
                     if (output.Count > 0)
                     {
+                        int NoOverlapCount = 0;
                         foreach (Section sched in output.ToList())
                         {
                             if (!isOverlap(sec, sched))
-                            {
-                                if (!output.Exists(x => x == sec))
-                                    output.Add(sec);
-                                return;
-                            }
+                                NoOverlapCount++;
+                            //if (!isOverlap(sec, sched))
+                            //{
+                            //    if (!output.Exists(x => x == sec))
+                            //        output.Add(sec);
+                            //    return;
+                            //}
                         }
+
+                        if (NoOverlapCount == output.Count)
+                        {
+                            if (!output.Exists(x => x == sec))
+                                output.Add(sec);
+                            return;
+                        } else
+                        {
+                            System.Diagnostics.Debug.WriteLine("[Overlap Check]: Cant add section due to overlap - " + sec.Name);
+                        }
+
                     }
                     else
                     {
@@ -441,7 +455,7 @@ namespace QFGreenBean.Helpers
             int bStart = Convert.ToInt32(bStartHour + bStartMinute);
             int aEnd = Convert.ToInt32(aEndHour + aEndMinute);
             int bEnd = Convert.ToInt32(bEndHour + bEndMinute);
-            
+
             return aStart < bEnd && bStart < aEnd && DayOverlap(a, b);
         }
 
@@ -508,8 +522,8 @@ namespace QFGreenBean.Helpers
 
             foreach (StudentConstraint constraint in s.StudentConstraints.ToList())
             {
-                if (!HasDay(constraint,sec))
-                    continue;
+                if (!HasDay(constraint, sec))
+                    return false;
 
                 if (constraint.EndHour == startHour && constraint.EndMinute == startMinute)
                     return false;
