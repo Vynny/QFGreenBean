@@ -4,11 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using QFGreenBean.Models;
-<<<<<<< HEAD
-using QFGreenBean.Utils;
-=======
 using QFGreenBean.Helpers;
->>>>>>> before list change
 
 namespace QFGreenBean.Controllers
 {
@@ -17,12 +13,40 @@ namespace QFGreenBean.Controllers
         private PlannerDbEntities db = new PlannerDbEntities();
 
         [HttpGet]
-<<<<<<< HEAD
         public ActionResult Index()
         {
-<<<<<<< HEAD
+            //To LAY
+            //!! THIS IS HERE FOR TESTING, ONCE LOGGED IN A SCHEDULE WILL BE GENERATED FOR THE LOGGED IN STUDENT
+            //RUN WITH DEBUG AND LOOK AT OUTPUT CONSOLE FOR PRINT OUTS !!
+            //THIS CODE HAS BEEN PASTED INTO THE INDEX POST BUT NEEDS MODIFICATION
             if (StudentController.IsLoggedIn)
             {
+                //Object containing course sequences, initialize once
+                Programs p = new Programs();
+                //Scheduler object, first parameter is student (change to logged in student), second parameter is the program option (from Programs object).
+
+                //LAY: Student should work, add programs to Programs object and insert into second parameter
+                Scheduler s = new Scheduler(db.Students.Find(StudentController.LoggedInStudentID), Programs.SOEN_General);
+
+                //Generate a schedule. Argument is semester. If fall, you get fall and winter schedule. If winter, only winter schedule
+                s.GenerateSchedule(Semester.Fall); //LAY: if starting term is fall, put Semester.Fall. If winter, put Semester.Winter
+
+                //Once generated, retrieve the list of scheduled sections. These are the sections to put on the schedule.
+                List<Section> sectionsFall = s.ScheduledSectionsFall;
+                List<Section> sectionsWinter = s.ScheduledSectionsWinter;
+
+                //Print out the sections for DEBUG 
+                foreach (Section sec in sectionsFall)
+                {
+                    System.Diagnostics.Debug.WriteLine("[Fall] : " + sec.Course.Code + " : " + sec.Name);
+
+                }
+                foreach (Section sec in sectionsWinter)
+                {
+                    System.Diagnostics.Debug.WriteLine("[Winter] : " + sec.Course.Code + " : " + sec.Name);
+
+                }
+
                 int? studentId = StudentController.LoggedInStudentID;
                 ViewBag.StudentNumber = db.Students.Find(studentId).StudentNumber;
 
@@ -41,22 +65,79 @@ namespace QFGreenBean.Controllers
                 }
 
                 db.SaveChanges();
- 
+
                 return View();
             }
             else
             {
                 return RedirectToAction("Login", "Student");
             }
-=======
+        }
+
+        [HttpPost]
+        public ActionResult Index([Bind(Include = "StudentScheduleGeneratorId,StudentNumber,StartTerm,DepartmentName,ProgramOptionName,IncludeSummer,DateGenerated")] StudentScheduleGenerator generator)
+        {
+
+            int? studentId = StudentController.LoggedInStudentID;
+            generator.StudentNumber = db.Students.Find(studentId).StudentNumber;
+            generator.DateGenerated = DateTime.Now;
+            db.StudentScheduleGenerators.Add(generator);
+            db.SaveChanges();
+
+            //Sylvain Code Here
+
+            /*Schedule Generation*/
+
+            //Object containing course sequences, initialize once
             Programs p = new Programs();
-            Scheduler s = new Scheduler(db.Students.Find(7), Programs.SOEN_General);
-            s.GenerateSchedule(Semester.Fall);
-            s.DebugPrint();
-            s.PrintList(s.CoursesToTake, "CoursesToTake");
-            s.GenerateSectionList(Semester.Fall);
-=======
-        public ActionResult Index() {
+            //Scheduler object, first parameter is student (change to logged in student), second parameter is the program option (from Programs object).
+
+            //LAY: Student should work, add programs to Programs object and insert into second parameter
+            Scheduler s = new Scheduler(db.Students.Find(StudentController.LoggedInStudentID), Programs.SOEN_General); 
+
+            //Generate a schedule. Argument is semester. If fall, you get fall and winter schedule. If winter, only winter schedule
+            s.GenerateSchedule(Semester.Winter); //LAY: if starting term is fall, put Semester.Fall. If winter, put Semester.Winter
+
+            //Once generated, retrieve the list of scheduled sections. These are the sections to put on the schedule.
+            List<Section> sectionsFall = s.ScheduledSectionsFall;
+            List<Section> sectionsWinter = s.ScheduledSectionsWinter;
+
+            //Print out the sections for DEBUG 
+            foreach (Section sec in sectionsFall)
+            {
+                System.Diagnostics.Debug.WriteLine("[Fall] : " + sec.Course.Code + " : " + sec.Name);
+
+            }
+            foreach (Section sec in sectionsWinter)
+            {
+                System.Diagnostics.Debug.WriteLine("[Winter] : " + sec.Course.Code + " : " + sec.Name);
+
+            }
+            /*END Schedule Generation*/
+
+
+            // return View("DisplayCurrentYearSchedules", generator);
+            return RedirectToAction("Index", "StudentSchedule");
+        }
+
+
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        //Place holder for schedule generation
+        public ActionResult GenerateSchedule()
+        {
             if (StudentController.IsLoggedIn)
             {
                 /*Schedule Generation*/
@@ -82,46 +163,11 @@ namespace QFGreenBean.Controllers
                     System.Diagnostics.Debug.WriteLine("[Winter] : " + sec.Course.Code + " : " + sec.Name);
 
                 }
-                /*END Schedule Generation*/
             }
->>>>>>> scheduler in working state
-            return View();
->>>>>>> before list change
-        }
-
-        [HttpPost]
-        public ActionResult Index([Bind(Include = "StudentScheduleGeneratorId,StudentNumber,StartTerm,DepartmentName,ProgramOptionName,IncludeSummer,DateGenerated")] StudentScheduleGenerator generator)
-        {
-
-            int? studentId = StudentController.LoggedInStudentID;
-            generator.StudentNumber = db.Students.Find(studentId).StudentNumber;
-            generator.DateGenerated = DateTime.Now;
-            db.StudentScheduleGenerators.Add(generator);
-            db.SaveChanges();
-
-            // return View("DisplayCurrentYearSchedules", generator);
-            return RedirectToAction("Index", "StudentSchedule");
-        }
-
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        //Place holder for schedule generation
-        public ActionResult GenerateSchedule()
-        {
+            /*END Schedule Generation*/
             return View("Index");
         }
+
+
     }
 }
