@@ -39,7 +39,7 @@ namespace QFGreenBean.Controllers
 
                         event1.StartTime = startDayTime1.EqualTodayWeekDayTime();
                         event1.EndTime = endDayTime1.EqualTodayWeekDayTime();
-                        event1.Description = item.Section.Course.Code + " - " + item.Section.Course.Name + "<br/>" + item.Section.Room;
+                        event1.Description = item.Section.Course.Code + " (" + item.Section.Type + ")" + "<br/>" + item.Section.Course.Name + "<br/>" + item.Section.Room;
                         fallEventList.Add(event1);
                         if (item.Section.StartDayTime2 != null)
                         {
@@ -48,7 +48,7 @@ namespace QFGreenBean.Controllers
 
                             event2.StartTime = startDayTime2.EqualTodayWeekDayTime();
                             event2.EndTime = endDayTime2.EqualTodayWeekDayTime();
-                            event2.Description = item.Section.Course.Code + " - " + item.Section.Course.Name + "<br/>" + item.Section.Room;
+                            event2.Description = item.Section.Course.Code + " (" + item.Section.Type + ")" + "<br/>" + item.Section.Course.Name + "<br/>" + item.Section.Room;
                             //db.FallEvents.Add(event2);
                             fallEventList.Add(event2);
                         }
@@ -63,7 +63,7 @@ namespace QFGreenBean.Controllers
 
                         event1.StartTime = startDayTime1.EqualTodayWeekDayTime();
                         event1.EndTime = endDayTime1.EqualTodayWeekDayTime();
-                        event1.Description = item.Section.Course.Code + " - " + item.Section.Course.Name + "<br/>" + item.Section.Room;
+                        event1.Description = item.Section.Course.Code + " (" + item.Section.Type + ")" + "<br/>" + item.Section.Course.Name + "<br/>" + item.Section.Room;
                         //db.WinterEvents.Add(event1);
                         winterEventList.Add(event1);
 
@@ -74,7 +74,7 @@ namespace QFGreenBean.Controllers
 
                             event2.StartTime = startDayTime2.EqualTodayWeekDayTime();
                             event2.EndTime = endDayTime2.EqualTodayWeekDayTime();
-                            event2.Description = item.Section.Course.Code + " - " + item.Section.Course.Name + "<br/>" + item.Section.Room;
+                            event2.Description = item.Section.Course.Code + " (" + item.Section.Type + ")" + "<br/>" + item.Section.Course.Name + "<br/>" + item.Section.Room;
                             // db.WinterEvents.Add(event2);
                             winterEventList.Add(event2);
                         }
