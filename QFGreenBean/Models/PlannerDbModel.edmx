@@ -143,9 +143,9 @@
             <PropertyRef Name="FallEventId" />
           </Key>
           <Property Name="FallEventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StartTime" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="EndTime" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="300" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="Feedback">
           <Key>
@@ -262,7 +262,7 @@
           <Property Name="SummerEventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StartTime" Type="datetime" Nullable="false" />
           <Property Name="EndTime" Type="datetime" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="300" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="WinterEvent">
           <Key>
@@ -271,7 +271,7 @@
           <Property Name="WinterEventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StartTime" Type="datetime" Nullable="false" />
           <Property Name="EndTime" Type="datetime" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="300" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
         </EntityType>
         <Association Name="FK_Course_Department">
           <End Role="Department" Type="Self.Department" Multiplicity="1" />
@@ -781,27 +781,27 @@
             <PropertyRef Name="FallEventId" />
           </Key>
           <Property Name="FallEventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SummerEvent">
           <Key>
             <PropertyRef Name="SummerEventId" />
           </Key>
           <Property Name="SummerEventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="WinterEvent">
           <Key>
             <PropertyRef Name="WinterEventId" />
           </Key>
           <Property Name="WinterEventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="StudentConstraint">
           <Key>

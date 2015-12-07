@@ -23,8 +23,11 @@ namespace QFGreenBean.Controllers
 
             if (ModelState.IsValid)
             {
+                List<FallEvent> fallEventList = new List<FallEvent>();
+                List<WinterEvent> winterEventList = new List<WinterEvent>();
+
                 // Fill event table for calendar view
-                foreach (var item in db.StudentSchedules)
+                foreach (var item in db.StudentSchedules.ToList())
                 {
                     if (item.Section.Term == "Fall")
                     {
@@ -34,12 +37,10 @@ namespace QFGreenBean.Controllers
                         DateTime startDayTime1 = item.Section.StartDayTime1;
                         DateTime endDayTime1 = item.Section.EndDayTime1;
 
-
                         event1.StartTime = startDayTime1.EqualTodayWeekDayTime();
                         event1.EndTime = endDayTime1.EqualTodayWeekDayTime();
                         event1.Description = item.Section.Course.Code + " - " + item.Section.Course.Name + "<br/>" + item.Section.Room;
-                        db.FallEvents.Add(event1);
-
+                        fallEventList.Add(event1);
                         if (item.Section.StartDayTime2 != null)
                         {
                             DateTime startDayTime2 = (DateTime)item.Section.StartDayTime2;
@@ -48,14 +49,13 @@ namespace QFGreenBean.Controllers
                             event2.StartTime = startDayTime2.EqualTodayWeekDayTime();
                             event2.EndTime = endDayTime2.EqualTodayWeekDayTime();
                             event2.Description = item.Section.Course.Code + " - " + item.Section.Course.Name + "<br/>" + item.Section.Room;
-
-                            db.FallEvents.Add(event2);
+                            //db.FallEvents.Add(event2);
+                            fallEventList.Add(event2);
                         }
-
                     }
-
-                        if (item.Section.Term == "Winter")
+                    else if (item.Section.Term == "Winter")
                     {
+
                         WinterEvent event1 = new WinterEvent();
                         WinterEvent event2 = new WinterEvent();
                         DateTime startDayTime1 = item.Section.StartDayTime1;
@@ -64,8 +64,8 @@ namespace QFGreenBean.Controllers
                         event1.StartTime = startDayTime1.EqualTodayWeekDayTime();
                         event1.EndTime = endDayTime1.EqualTodayWeekDayTime();
                         event1.Description = item.Section.Course.Code + " - " + item.Section.Course.Name + "<br/>" + item.Section.Room;
-
-                        db.WinterEvents.Add(event1);
+                        //db.WinterEvents.Add(event1);
+                        winterEventList.Add(event1);
 
                         if (item.Section.StartDayTime2 != null)
                         {
@@ -75,16 +75,19 @@ namespace QFGreenBean.Controllers
                             event2.StartTime = startDayTime2.EqualTodayWeekDayTime();
                             event2.EndTime = endDayTime2.EqualTodayWeekDayTime();
                             event2.Description = item.Section.Course.Code + " - " + item.Section.Course.Name + "<br/>" + item.Section.Room;
-
-                            db.WinterEvents.Add(event2);
+                            // db.WinterEvents.Add(event2);
+                            winterEventList.Add(event2);
                         }
                     }
-                                       
+                         
                 } // end of foreach(var item in db.StudentSchedules)
 
+                db.FallEvents.AddRange(fallEventList);
+                db.WinterEvents.AddRange(winterEventList);
                 db.SaveChanges();
-            }
-     
+
+            } // end of if (ModelState.IsValid)
+
             var studentSchedules = db.StudentSchedules.Include(s => s.Section).Include(s => s.Student);
             return View(studentSchedules.ToList());
         }

@@ -10,12 +10,7 @@
 
 <script src="@Url.Content("~/Scripts/daypilot-all.min.js")" type="text/javascript"></script>
 
-<h2>Student Schedule</h2>
-
-<p>
-   @Html.ActionLink("Create New", "Create")
-</p>
-
+<h2>Weekly Schedule</h2>
 
 <table style="width:30%;">
     <tr>
@@ -70,7 +65,8 @@
             <th>
                 <b>Instructor</b>
             </th>
-            <th></th>
+            <!--
+            <th></th>-->
         </tr>
 
         @foreach (var item in Model)
@@ -102,13 +98,12 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Section.Instructor)
                 </td>
-                <td>
-                    <!--
-                    @Html.ActionLink("Edit", "Edit", new { id = item.StudentScheduleId }) 
-                     |
+                <!--
+                <td>                    
+                    @Html.ActionLink("Edit", "Edit", new { id = item.StudentScheduleId })   |
                     @Html.ActionLink("Details", "Details", new { id = item.StudentScheduleId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.StudentScheduleId }) -->
-                </td>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.StudentScheduleId }) 
+                </td> -->
             </tr>
             }
         }
@@ -151,7 +146,8 @@
         <th>
             <b>Instructor</b>
         </th>
-        <th></th>
+        <!--
+        <th></th>-->
     </tr>
 
     @foreach (var item in Model)
@@ -183,13 +179,12 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Section.Instructor)
                 </td>
-                <td>
-                    <!--
+                <!--
+                <td>                    
                     @Html.ActionLink("Edit", "Edit", new { id = item.StudentScheduleId }) |
                     @Html.ActionLink("Details", "Details", new { id = item.StudentScheduleId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.StudentScheduleId })
-                        -->
-                </td>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.StudentScheduleId })                        
+                </td>-->
             </tr>
         }
     }
@@ -235,7 +230,8 @@
             <th>
                 <b>Instructor</b>
             </th>
-            <th></th>
+            <!--
+            <th></th>-->
         </tr>
 
         @foreach (var item in Model)
@@ -267,13 +263,12 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Section.Instructor)
                     </td>
-                    <td>
-                        <!--
+                    <!--
+                    <td>                        
                         @Html.ActionLink("Edit", "Edit", new { id = item.StudentScheduleId }) |
                         @Html.ActionLink("Details", "Details", new { id = item.StudentScheduleId }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.StudentScheduleId })
-                            -->
-                    </td>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.StudentScheduleId })                            
+                    </td>-->
                 </tr>
             }
         }
@@ -318,7 +313,8 @@
             <th>
                 <b>Instructor</b>
             </th>
-            <th></th>
+            <!--
+            <th></th>-->
         </tr>
 
         @foreach (var item in Model)
@@ -350,13 +346,12 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Section.Instructor)
                     </td>
+                    <!--
                     <td>
-                        <!--
                         @Html.ActionLink("Edit", "Edit", new { id = item.StudentScheduleId }) |
                         @Html.ActionLink("Details", "Details", new { id = item.StudentScheduleId }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.StudentScheduleId })
-                            -->
-                    </td>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.StudentScheduleId })                            
+                    </td>-->
                 </tr>
             }
         }
