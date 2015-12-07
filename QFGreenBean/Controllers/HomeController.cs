@@ -21,6 +21,7 @@ namespace QFGreenBean.Controllers
             //THIS CODE HAS BEEN PASTED INTO THE INDEX POST BUT NEEDS MODIFICATION
             if (StudentController.IsLoggedIn)
             {
+                /*
                 //Object containing course sequences, initialize once
                 Programs p = new Programs();
                 //Scheduler object, first parameter is student (change to logged in student), second parameter is the program option (from Programs object).
@@ -46,6 +47,7 @@ namespace QFGreenBean.Controllers
                     System.Diagnostics.Debug.WriteLine("[Winter] : " + sec.Course.Code + " : " + sec.Name);
 
                 }
+                */
 
                 int? studentId = StudentController.LoggedInStudentID;
                 ViewBag.StudentNumber = db.Students.Find(studentId).StudentNumber;
@@ -57,6 +59,11 @@ namespace QFGreenBean.Controllers
                 foreach (var item in db.WinterEvents)
                 {
                     db.WinterEvents.Remove(item);
+                }
+
+                foreach (var item in db.StudentSchedules)
+                {
+                    db.StudentSchedules.Remove(item);
                 }
 
                 foreach (var item in db.StudentScheduleGenerators)
@@ -82,7 +89,7 @@ namespace QFGreenBean.Controllers
             generator.StudentNumber = db.Students.Find(studentId).StudentNumber;
             generator.DateGenerated = DateTime.Now;
             db.StudentScheduleGenerators.Add(generator);
-            db.SaveChanges();
+           // db.SaveChanges();
 
             //Sylvain Code Here
 
@@ -93,14 +100,49 @@ namespace QFGreenBean.Controllers
             //Scheduler object, first parameter is student (change to logged in student), second parameter is the program option (from Programs object).
 
             //LAY: Student should work, add programs to Programs object and insert into second parameter
-            Scheduler s = new Scheduler(db.Students.Find(StudentController.LoggedInStudentID), Programs.SOEN_General); 
+            Scheduler s = new Scheduler(db.Students.Find(StudentController.LoggedInStudentID), Programs.SOEN_General);
 
             //Generate a schedule. Argument is semester. If fall, you get fall and winter schedule. If winter, only winter schedule
-            s.GenerateSchedule(Semester.Winter); //LAY: if starting term is fall, put Semester.Fall. If winter, put Semester.Winter
+            if (generator.StartTerm == "Fall 2015")
+            {
+                s.GenerateSchedule(Semester.Fall); //LAY: if starting term is fall, put Semester.Fall. If winter, put Semester.Winter
+            }
+            else if (generator.StartTerm == "Winter 2016")
+            {
+                s.GenerateSchedule(Semester.Winter);
+            }
+            else
+            {
+                s.GenerateSchedule(Semester.Summer);
+            }
 
             //Once generated, retrieve the list of scheduled sections. These are the sections to put on the schedule.
             List<Section> sectionsFall = s.ScheduledSectionsFall;
             List<Section> sectionsWinter = s.ScheduledSectionsWinter;
+            List<StudentSchedule> scheduleList = new List<StudentSchedule>();
+            
+            foreach (var item in sectionsFall)
+            {
+                StudentSchedule schedule = new StudentSchedule();
+
+                schedule.StudentId = studentId;
+                schedule.SectionId = item.SectionId;
+
+                scheduleList.Add(schedule);
+            }
+
+            foreach (var item in sectionsWinter)
+            {
+                StudentSchedule schedule = new StudentSchedule();
+
+                schedule.StudentId = studentId;
+                schedule.SectionId = item.SectionId;
+
+                scheduleList.Add(schedule);
+            }
+
+            db.StudentSchedules.AddRange(scheduleList);
+            db.SaveChanges();
 
             //Print out the sections for DEBUG 
             foreach (Section sec in sectionsFall)
