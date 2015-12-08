@@ -495,8 +495,8 @@ namespace QFGreenBean.Helpers
 
         private bool HasDay(StudentConstraint c, Section s)
         {
-            string day1 = null;
-            string day2 = null;
+            string day1 = "TBA";
+            string day2 = "TBA";
 
             System.Diagnostics.Debug.WriteLine("Section Day is: " + s.Day);
             if (s.Day.Length > 3)
