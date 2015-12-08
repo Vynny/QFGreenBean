@@ -285,6 +285,10 @@ namespace QFGreenBean.Helpers
                 {
                     TakeWinter.Add(CourseByCode(s));
                 }
+                else if (Fall.Exists(x => x.Code == s))
+                {
+                    TakeFall.Add(CourseByCode(s));
+                }
             }
 
             foreach (Course c in TakeFall)
