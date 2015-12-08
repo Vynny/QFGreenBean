@@ -48,12 +48,13 @@ namespace QFGreenBean.Helpers
                 //Fall
                 .AddCourse("COMP 348", Semester.Fall)
                 .AddCourse("COMP 352", Semester.Fall)
-                .AddCourse("ELEC 375", Semester.Fall)
                 .AddCourse("ENCS 282", Semester.Fall)
+                .AddCourse("ENGR 202", Semester.Fall)
                 .AddCourse("SCIENCE2", Semester.Fall)
+
                 //Winter
                 .AddCourse("COMP 346", Semester.Winter)
-                .AddCourse("ENGR 275", Semester.Winter)
+                .AddCourse("ELEC 275", Semester.Winter)
                 .AddCourse("ENGR 371", Semester.Winter)
                 .AddCourse("SOEN 331", Semester.Winter)
                 .AddCourse("SOEN 341", Semester.Winter);
@@ -61,10 +62,11 @@ namespace QFGreenBean.Helpers
             SOEN_General.Year(3)
                 //Fall
                 .AddCourse("COMP 335", Semester.Fall)
-                .AddCourse("COMP 342", Semester.Fall)
-                .AddCourse("ENGR 343", Semester.Fall)
-                .AddCourse("ENGR 384", Semester.Fall)
+                .AddCourse("SOEN 342", Semester.Fall)
+                .AddCourse("SOEN 343", Semester.Fall)
+                .AddCourse("SOEN 384", Semester.Fall)
                 .AddCourse("ENGR 391", Semester.Fall)
+
                 //Winter
                 .AddCourse("SOEN 344", Semester.Winter)
                 .AddCourse("SOEN 345", Semester.Winter)
