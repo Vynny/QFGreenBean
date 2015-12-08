@@ -26,8 +26,7 @@
             <td>
                 @Html.DropDownListFor(x => x.StartTerm,
                                            new[] {new SelectListItem() { Text = "Fall 2015", Value = "Fall 2015" },
-                                                  new SelectListItem() { Text = "Winter 2016", Value = "Winter 2016" },
-                                                  new SelectListItem() { Text = "Summer 2016", Value = "Summer 2016" }
+                                                  new SelectListItem() { Text = "Winter 2016", Value = "Winter 2016" }
                                                  } )
             </td>
         </tr>
@@ -59,13 +58,6 @@
             <td class="auto-style1">Preferences / Constraints</td>
             <td>
                 @Html.ActionLink("Enter Student Preferences", "Index", "Constraint")
-            </td>
-        </tr>
-
-        <tr>
-            <td class="auto-style1">Include a summer session</td>
-            <td>
-                @Html.CheckBoxFor(x => x.IncludeSummer)
             </td>
         </tr>
 

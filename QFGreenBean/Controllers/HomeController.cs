@@ -122,39 +122,5 @@ namespace QFGreenBean.Controllers
             return View();
         }
 
-        //Place holder for schedule generation
-        public ActionResult GenerateSchedule()
-        {
-            if (StudentController.IsLoggedIn)
-            {
-                /*Schedule Generation*/
-
-                //Object containing course sequences, initialize once
-                Programs p = new Programs();
-                //Scheduler object, first parameter is student (change to logged in student), second parameter is the program option (from Programs object).
-                Scheduler s = new Scheduler(db.Students.Find(StudentController.LoggedInStudentID), Programs.SOEN_General);
-                //Generate a schedule. Argument is semester. If fall, you get fall and winter schedule. If winter, only winter schedule.
-                s.GenerateSchedule(Semester.Winter);
-                //Once generated, retrieve the list of scheduled sections. These are the sections to put on the schedule.
-                List<Section> sectionsFall = s.ScheduledSectionsFall;
-                List<Section> sectionsWinter = s.ScheduledSectionsWinter;
-
-                //Print out the sections for DEBUG 
-                foreach (Section sec in sectionsFall)
-                {
-                    System.Diagnostics.Debug.WriteLine("[Fall] : " + sec.Course.Code + " : " + sec.Name);
-
-                }
-                foreach (Section sec in sectionsWinter)
-                {
-                    System.Diagnostics.Debug.WriteLine("[Winter] : " + sec.Course.Code + " : " + sec.Name);
-
-                }
-            }
-            /*END Schedule Generation*/
-            return View("Index");
-        }
-
-
     }
 }

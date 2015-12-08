@@ -8,8 +8,11 @@ namespace QFGreenBean.Helpers
 {
     public class Scheduler
     {
+
         /*DEBUG PRINTING FLAG*/
         private bool DEBUG = true;
+
+        /*Attributes*/
         static int MaxSemesterCourses = 5;
 
         /*Utils*/
@@ -49,7 +52,6 @@ namespace QFGreenBean.Helpers
         //NO SUMMER
         public void GenerateSchedule(Semester sem)
         {
-            // bool SwitchSemester = false;
             //10 if Fall, 5 if Winter
             int ClassCount = (sem == Semester.Fall) ? 10 : 5;
 
@@ -60,7 +62,7 @@ namespace QFGreenBean.Helpers
                 {
                     if (DEBUG)
                         System.Diagnostics.Debug.WriteLine("Course Count is: " + CoursesToTake.Count);
-                    if (CoursesToTake.Count <= ClassCount)
+                    if (CoursesToTake.Count < ClassCount)
                     {
                         //The Student already took the course, remove it 
                         if (CoursesTaken.Contains(CourseByCode(course)))
@@ -266,8 +268,6 @@ namespace QFGreenBean.Helpers
             List<Course> TakeFall = new List<Course>();
             List<Course> TakeWinter = new List<Course>();
 
-            //TakeFall.AddRange(Fall);
-
             foreach (string s in CoursesToTake)
             {
                 if (s.Contains("_"))
@@ -280,6 +280,10 @@ namespace QFGreenBean.Helpers
                         TakeFall.Add(CourseByCode(s));
                     else
                         TakeWinter.Add(CourseByCode(s));
+                }
+                else if (Winter.Exists(x => x.Code == s))
+                {
+                    TakeWinter.Add(CourseByCode(s));
                 }
             }
 
@@ -373,12 +377,6 @@ namespace QFGreenBean.Helpers
                         {
                             if (!isOverlap(sec, sched))
                                 NoOverlapCount++;
-                            //if (!isOverlap(sec, sched))
-                            //{
-                            //    if (!output.Exists(x => x == sec))
-                            //        output.Add(sec);
-                            //    return;
-                            //}
                         }
 
                         if (NoOverlapCount == output.Count)
@@ -386,7 +384,8 @@ namespace QFGreenBean.Helpers
                             if (!output.Exists(x => x == sec))
                                 output.Add(sec);
                             return;
-                        } else
+                        }
+                        else
                         {
                             System.Diagnostics.Debug.WriteLine("[Overlap Check]: Cant add section due to overlap - " + sec.Name);
                         }
@@ -494,15 +493,19 @@ namespace QFGreenBean.Helpers
         {
             string day1 = null;
             string day2 = null;
-            if (s.Day.Length > 2)
+
+            System.Diagnostics.Debug.WriteLine("Section Day is: " + s.Day);
+            if (s.Day.Length > 3)
             {
-                day1 = FormatDay(s.Day.Substring(0, 2));
-                day2 = FormatDay(s.Day.Substring(2, 2));
+                day1 = FormatDay(s.Day.Substring(0, 2)).ToLower();
+                day2 = FormatDay(s.Day.Substring(2, 2)).ToLower();
             }
             else
             {
-                day1 = FormatDay(s.Day);
+                day1 = FormatDay(s.Day).ToLower();
             }
+
+            System.Diagnostics.Debug.WriteLine("Comparing: " + c.Day + " to " + day1 + " and " + day2);
 
             if (c.Day == day1)
                 return true;
@@ -520,10 +523,13 @@ namespace QFGreenBean.Helpers
             string endHour = sec.EndTime.ToString().Split(':')[0];
             string endMinute = sec.EndTime.ToString().Split(':')[1];
 
+
+            System.Diagnostics.Debug.WriteLine("Section: " + startHour + ":" + startMinute + " -> " + endHour + ":" + endMinute);
             foreach (StudentConstraint constraint in s.StudentConstraints.ToList())
             {
+                System.Diagnostics.Debug.WriteLine("\tCosntraint Compared: " + constraint.StartHour + " : " + constraint.StartMinute + " -> " + constraint.EndHour + ":" + constraint.EndMinute);
                 if (!HasDay(constraint, sec))
-                    return false;
+                    continue;
 
                 if (constraint.EndHour == startHour && constraint.EndMinute == startMinute)
                     return false;
@@ -531,21 +537,16 @@ namespace QFGreenBean.Helpers
                 if (constraint.StartHour == endHour && constraint.StartMinute == endMinute)
                     return false;
 
-                DateTime startTime = DateTime.Parse(constraint.StartHour + ":" + constraint.StartMinute + ":" + "00");
-                DateTime endTime = DateTime.Parse(constraint.EndHour + ":" + constraint.EndMinute + ":" + "00");
-                while (startTime <= endTime)
+                int startCons = Convert.ToInt32(constraint.StartHour + constraint.StartMinute);
+                int endCons = Convert.ToInt32(constraint.EndHour + constraint.EndMinute);
+                int startSec = Convert.ToInt32(startHour + startMinute);
+                int endSec = Convert.ToInt32(endHour + endMinute);
+
+                if (startCons < endSec && startSec < endCons)
                 {
-                    if (startTime.Hour.ToString() == startHour && startTime.Minute.ToString() == startMinute)
-                        return true;
-
-                    startTime = startTime.AddMinutes(15);
+                    System.Diagnostics.Debug.WriteLine("\t\t!!!!!!!!CONSTRAINED!!!!!!!!!!!");
+                    return true;
                 }
-                //int aStart = Convert.ToInt32(constraint.StartHour + constraint.StartMinute);
-                //int aEnd = Convert.ToInt32(constraint.EndHour + constraint.EndMinute);
-                //int bStart = Convert.ToInt32(startHour + startMinute);
-                //int bEnd = Convert.ToInt32(endHour + endMinute);
-
-                //return aStart < bEnd && bStart < aEnd;
 
             }
             return false;
