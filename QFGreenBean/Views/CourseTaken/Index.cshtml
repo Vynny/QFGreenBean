@@ -6,9 +6,11 @@
 
 <h2>Studenet Record</h2>
 
+<!--
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+    -->
 
 @{ float? totalCredit = (float)0.0; }
 
@@ -19,7 +21,7 @@
 
 @if (totalCredit == 0.0)
 {
-    <p>Your are a freshman.</p>
+    <p>You are a freshman.</p>
     <table style="width:30%;">
         <tr>
             <td class="auto-style1">Total credits earned: </td>
@@ -82,9 +84,8 @@ else
         <td>
             @Html.DisplayFor(modelItem => item.Section.Units)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.CourseTakenId }) 
-            <!--|
+        <td><!--
+            @Html.ActionLink("Edit", "Edit", new { id = item.CourseTakenId })   |
             @Html.ActionLink("Details", "Details", new { id = item.CourseTakenId }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.CourseTakenId })
                 -->
